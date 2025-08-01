@@ -54,3 +54,6 @@ jobs:
           app-name: 'Tester'
           package: ./artifacts/api_release.zip
           publish-profile: ${{ secrets.TESTER_PUBLISH_PROFILE }}
+          
+          scm-do-build-during-deployment: false
+          enable-oryx-build: false
