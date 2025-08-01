@@ -18,7 +18,7 @@ jobs:
         with:
           name: artifact-SWA
           path: artifacts/
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
       - name: Unzip SWA for deployment
