@@ -24,7 +24,7 @@ jobs:
 
       - name: Build SWA
         run: |
-          zip -r swa_release.zip dist/
+          zip -r swa_release.zip . -i dist/
 
       - name: Upload QA SWA artifact
         uses: actions/upload-artifact@v4
