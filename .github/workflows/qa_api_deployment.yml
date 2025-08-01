@@ -49,7 +49,7 @@ jobs:
 
       - name: 'Verify publish profile format'
         run: |
-          echo ${{ secrets.TESTER_PUBLISH_PROFILE }}
+          echo "yea"
 
       - name: 'Deploy function app'
         uses: Azure/functions-action@v1
