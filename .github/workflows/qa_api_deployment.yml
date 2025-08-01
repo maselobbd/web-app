@@ -49,8 +49,7 @@ jobs:
 
       - name: 'Verify publish profile format'
         run: |
-          # Check if publish profile contains expected elements (without exposing secrets)
-          PROFILE="${{ secrets.TESTER_PUBLISH_PROFILE }}"
+          PROFILE=${{ secrets.TESTER_PUBLISH_PROFILE }}
           echo $PROFILE
 
       - name: 'Deploy function app'
