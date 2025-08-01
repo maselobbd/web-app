@@ -21,32 +21,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Verify artifact downloaded
-        run: |
-          ls -la artifacts/
-          if [ ! -f "artifacts/api_release.zip" ]; then
-            echo "Error: api_release.zip not found"
-            exit 1
-          fi
-          echo "Artifact size: $(du -h artifacts/api_release.zip)"
-
-      - name: Debug publish profile
-        run: |
-          echo "Checking if publish profile secret exists..."
-          if [ -z "${{ secrets.TESTER_PUBLISH_PROFILE }}" ]; then
-            echo "ERROR: TESTER_PUBLISH_PROFILE secret is empty!"
-            exit 1
-          else
-            echo "Publish profile secret exists and has content"
-          fi
-
-      - name: Debug deployment package
-        run: |
-          echo "=== Package Details ==="
-          ls -la ./artifacts/
-          echo "=== ZIP Contents ==="
-          unzip -l ./artifacts/api_release.zip | head -20
-
       - name: 'Deploy function app'
         uses: Azure/functions-action@v1
         id: fa
