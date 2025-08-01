@@ -28,4 +28,5 @@ jobs:
           app-name: 'Tester'
           package: ./artifacts/api_release.zip
           publish-profile: ${{ secrets.TESTER_PUBLISH_PROFILE }}
-          sku: 'flexconsumption'
+          scm-do-build-during-deployment: true
+          enable-oryx-build: true
