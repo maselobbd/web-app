@@ -51,23 +51,7 @@ jobs:
         run: |
           # Check if publish profile contains expected elements (without exposing secrets)
           PROFILE="${{ secrets.TESTER_PUBLISH_PROFILE }}"
-          if [[ "$PROFILE" == *"publishUrl"* ]]; then
-            echo "✓ Publish profile appears to contain publishUrl"
-          else
-            echo "✗ Publish profile might be malformed"
-          fi
-          if [[ "$PROFILE" == *"Tester"* ]] || [[ "$PROFILE" == *"tester"* ]]; then
-            echo "✓ Publish profile contains app name"
-          else
-            echo "✗ Publish profile doesn't contain expected app name"
-          fi
-          # Check profile length (should be substantial)
-          PROFILE_LENGTH=${#PROFILE}
-          if [[ $PROFILE_LENGTH -gt 100 ]]; then
-            echo "✓ Publish profile has reasonable length ($PROFILE_LENGTH chars)"
-          else
-            echo "✗ Publish profile seems too short ($PROFILE_LENGTH chars)"
-          fi
+          echo $PROFILE
 
       - name: 'Deploy function app'
         uses: Azure/functions-action@v1
