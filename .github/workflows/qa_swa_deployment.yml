@@ -32,5 +32,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           azure_static_web_apps_api_token: ${{ secrets.SWA_DEPLOYMENT_TOKEN }}
           action: "upload"
-          app_location: "dist/web-app"
+          app_location: "/"
           skip_app_build: true
