@@ -30,7 +30,7 @@ jobs:
       - name: 'Resolve API Dependencies Using Npm'
         shell: bash
         run: |
-          pushd '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pushd "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
           npm install
           zip api_release.zip ./* -r
           popd
