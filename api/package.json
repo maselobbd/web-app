@@ -1,5 +1,5 @@
 {
-  "name": "Tester",
+  "name": "web-app",
   "version": "1.0.0",
   "description": "Sample Azure Function",
   "main": "index.js",

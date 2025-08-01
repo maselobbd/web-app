@@ -24,7 +24,6 @@ jobs:
 
       - name: Build SWA
         run: |
-          func start
           cp staticwebapp.config.json dist/web-app
           zip swa_release.zip dist/ -r
 
