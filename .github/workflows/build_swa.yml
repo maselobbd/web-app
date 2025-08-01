@@ -24,7 +24,7 @@ jobs:
 
       - name: Build SWA
         run: |
-          cp staticwebapp.config.json dist/ukukhula/browser
+          cp staticwebapp.config.json dist/web-app
           zip swa_release.zip dist/ -r
 
       - name: Upload QA SWA artifact
