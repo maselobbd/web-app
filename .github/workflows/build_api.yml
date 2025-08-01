@@ -41,3 +41,12 @@ jobs:
           name: artifact-API
           path: ./api/api_release.zip
           if-no-files-found: error
+      
+      - name: List downloaded artifacts
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "List contents of artifacts:"
+          ls -l artifacts
+          echo "Verify zip content:"
+          unzip -l artifacts/api_release.zip
