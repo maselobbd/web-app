@@ -15,10 +15,6 @@ on:
     #   - 'documentation/**'
   workflow_dispatch:
 
-permissions:
-  actions: read
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
