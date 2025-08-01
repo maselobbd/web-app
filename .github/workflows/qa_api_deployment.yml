@@ -20,14 +20,12 @@ jobs:
           path: artifacts/
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
-      
-      - name: List artifacts
-        run: ls -l artifacts/
 
       - name: 'Deploy function app'
         uses: Azure/functions-action@v1
         id: fa
         with:
           app-name: 'Tester'
+          slot-name: 'Production'
           package: ./artifacts/api_release.zip
           publish-profile: ${{ secrets.TESTER_PUBLISH_PROFILE }}
