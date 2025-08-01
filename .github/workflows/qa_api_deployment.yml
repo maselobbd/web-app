@@ -50,11 +50,7 @@ jobs:
       - name: 'Verify publish profile format'
         run: |
           PROFILE="${{ secrets.TESTER_PUBLISH_PROFILE }}"
-          if [[ "$PROFILE" == *"publishUrl"* ]]; then
-            echo "✓ Publish profile appears to contain publishUrl"
-          else
-            echo "✗ Publish profile might be malformed"
-          fi
+          echo "$PROFILE"
 
       - name: 'Deploy function app'
         uses: Azure/functions-action@v1
