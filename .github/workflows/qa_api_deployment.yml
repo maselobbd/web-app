@@ -25,7 +25,7 @@ jobs:
         uses: Azure/functions-action@v1
         id: fa
         with:
-          app-name: 'qa-function-app-for-ukukhula'
+          app-name: 'web-app'
           slot-name: 'Production'
           package: ./artifacts/api_release.zip
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_00E6FEA8F1C642A0B9847ED8AC4061BF }}
+          publish-profile: ${{ secrets.TESTER_PUBLISH_PROFILE }}

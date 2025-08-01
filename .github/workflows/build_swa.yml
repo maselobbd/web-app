@@ -26,7 +26,7 @@ jobs:
         run: |
           yarn
           yarn build
-          cp staticwebapp.config.json dist/ukukhula/browser
+          cp staticwebapp.config.json dist/web-app/browser
           zip swa_release.zip dist/ -r
 
       - name: Upload QA SWA artifact
