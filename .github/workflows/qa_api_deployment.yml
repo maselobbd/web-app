@@ -33,6 +33,6 @@ jobs:
         uses: Azure/functions-action@v1
         id: fa
         with:
-          app-name: 'Tester'
+          app-name: 'Tester - Web Deploy'
           package: ./artifacts/api_release.zip
           publish-profile: ${{ secrets.TESTER_PUBLISH_PROFILE }}
