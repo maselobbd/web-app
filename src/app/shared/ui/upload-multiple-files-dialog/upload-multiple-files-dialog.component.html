@@ -1,0 +1,33 @@
+<main class="dialogContainer">
+    <section class="dialogHeader">
+        <h2 mat-dialog-title>{{uploadFileDialogData.title}}</h2>
+        <p [ngClass]="{ 'requestedChange': hasRequestedChange() }">{{ uploadFileDialogData.requestedChange || uploadFileDialogData.message}}</p>
+    </section>
+    <section class="totalAllocation">
+        <p>Total Allocation</p>
+        <p>{{uploadFileDialogData.totalAllocation | customCurrency}}</p>
+    </section>
+    
+    <mat-dialog-content class="dialogContent">
+        <ng-container *ngFor="let expense of uploadFileDialogData.expenseCategories">
+            <section class="dialogFields">
+                <p>{{expense.category | titlecase}}</p>
+                <p>{{expense.amount | customCurrency}}</p>
+                <button mat-flat-button color="primary" *ngIf="!expense.isUploaded" (click)="uploadFile(expense)"> Upload {{this.uploadFileDialogData.currentStep.toLocaleLowerCase()}}
+                    </button>
+                <button mat-flat-button color="accent" *ngIf="expense.isUploaded" (click)="viewFile(expense)"> View {{this.uploadFileDialogData.currentStep.toLocaleLowerCase()}}</button>
+            </section>
+        </ng-container>
+        <mat-divider></mat-divider>
+           
+    </mat-dialog-content>
+    <mat-dialog-actions class="matDialogActions">
+      <button mat-flat-button color="accent" class="matDialogCancelButton" (click)="closeDialog()">Cancel</button>
+        <section class="dialogButtons">
+            <button mat-flat-button color="accent" [disabled]="!hasFiles()" *ngIf="uploadFileDialogData.rank !== ranksEnum.assistant_admin" (click)="RequestChanges()" >Send back for changes</button>
+            <button mat-flat-button color="primary" *ngIf="uploadFileDialogData.rank === ranksEnum.assistant_admin || uploadFileDialogData.rank === ranksEnum.chief_admin" [disabled]="enableSaveForLater()"  class="matDialogActionButton" (click)="onSubmit(true)" >Save for later</button>
+            <button mat-flat-button color="primary"  [disabled]="enableSubmit()"  class="matDialogActionButton" (click)="onSubmit(false)" >{{uploadFileDialogData.buttonLabel}}</button>
+        </section>
+    </mat-dialog-actions>
+
+</main>

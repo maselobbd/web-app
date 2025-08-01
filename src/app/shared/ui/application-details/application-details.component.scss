@@ -1,0 +1,95 @@
+.custom-table {
+  width: 100%;
+}
+
+.custom-table thead {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.custom-table thead tr {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+.custom-table th,
+.custom-table td {
+  flex: 1;
+  padding: 0.5rem 0;
+  text-align: left;
+}
+
+.custom-table tbody tr {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+.button-container,
+.contract-button {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.contract-button button {
+  margin-left: 2rem;
+}
+
+.upload-button {
+  margin-left: 2rem;
+  min-width: 10rem;
+  max-width: 20rem;
+}
+
+.invoice-button {
+  margin-left: 2rem;
+}
+.warn-invoice{
+  color: var(--warn-color);
+}
+.custom-table td {
+  display: flex;
+  align-items: center;
+
+  & p {
+    margin: 0;
+  }
+}
+.button-container {
+  gap: 0.5rem;
+}
+
+@media screen and (max-width: 900px) {
+  .custom-table thead {
+    display: none;
+  }
+  .custom-table tbody tr {
+    display: table-row;
+  }
+
+  .custom-table td {
+    display: block;
+  }
+
+  .custom-table td:nth-child(3n) {
+    border-bottom: 1px solid var(--primary-color);
+  }
+
+  .custom-table td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  .contract-button button {
+    margin-left: 0.5rem;
+  }
+  .upload-button {
+    margin-left: 0.5rem;
+  }
+  .invoice-button {
+    margin-left: 2rem;
+  }
+}

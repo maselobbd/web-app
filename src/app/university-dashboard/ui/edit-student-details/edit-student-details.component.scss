@@ -1,0 +1,150 @@
+.view-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.top-name-section {
+  display: flex;
+  gap: 1rem;
+  align-self: flex-start;
+  justify-content: space-between;
+}
+.candidate-name {
+  margin: 0;
+  padding-top: 0.3rem;
+}
+
+.bursar-details {
+  align-self: flex-start;
+  width: 98%;
+  margin-top: 1rem;
+}
+.bursar-amount {
+  flex: 1 1 50%;
+}
+.info {
+  margin: 0;
+  padding-bottom: 0.5rem;
+}
+.amount-status {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.personal-info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.title {
+  padding-bottom: 0;
+}
+.bursary-detail {
+  display: flex;
+  flex-direction: column;
+}
+.university-info {
+  padding-top: 1rem;
+}
+p {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.2rem;
+  color: #282728;
+}
+.details {
+  font-weight: bold;
+}
+
+.row-one,
+.row-two {
+  display: flex;
+  justify-content: space-between;
+  width: 70vw;
+}
+
+.row-two {
+  padding-top: 0.625rem;
+}
+.lastname-container,
+.phone-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.name-container,
+.email-container {
+  width: 100%;
+}
+.input-box {
+  width: 99%;
+}
+.bursary-amount,
+.status {
+  padding-bottom: 1rem;
+}
+.university-container{
+  margin-top: 1rem;
+}
+
+.footer.update-dialog-buttons {
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  border-top: 0.03rem solid rgba(0, 0, 0, 0.05);
+
+  .footer-button {
+    min-width: 7rem;
+    height: 2.5rem;
+    &.cancel-button:hover {
+        background-color: #f5f5f5;
+    }
+    &.update-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.button-text-full {
+  display: inline;
+}
+
+.button-text-short {
+  display: none;
+}
+
+@media screen and (max-width: 610px) {
+  .amount-status {
+    flex-direction: column;
+  }
+  .row-one,
+  .row-two {
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+  }
+  .name-container {
+    margin-bottom: 1rem;
+  }
+
+  .phone-container {
+    margin-top: 1rem;
+  }
+
+  .footer.update-dialog-buttons {
+    padding: 0.5rem 1rem;
+  }
+
+  .button-text-full {
+    display: none;
+  }
+  
+  .button-text-short {
+    display: inline;
+  }
+}

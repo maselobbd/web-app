@@ -1,0 +1,93 @@
+.individualUniversityDetailView {
+    margin-top: 0.5rem;
+}
+
+.allActiveUniversitiesDetails {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.total-fund-container{
+    display: flex;
+    flex-direction: column;
+    align-items:end;
+}
+.departmentTotal,
+.individualUniversityDepartmentName{
+    font-size: medium;
+    font-weight: bold;
+}
+
+.universityTotal,
+.individualUniversityName {
+    font-size: large;
+    font-weight: bold;
+}
+
+.individualUniversityName {
+    margin: 0;
+    cursor: pointer;
+}
+
+.matDivider {
+    margin: 1rem 0;
+    background-color: var(--primary-color);
+}
+
+.departmentTotal,
+.universityTotal {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.leftArrow {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.individualUniversityDepartmentName {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 0;
+    flex: 1;
+}
+
+.universityAndTotal {
+    display: flex;
+    justify-content: space-between;
+}
+
+.allocationUsage {
+    margin: 0 5rem;
+}
+
+.department-total {
+    display: flex;
+    justify-content: space-between;
+}
+
+.arrow-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+@media (max-width: 412px) {
+    .universityAndTotal {
+        flex-wrap: wrap;
+    }
+
+    .arrow-container {
+        justify-content: flex-start;
+    }
+
+    .individualUniversityName {
+        letter-spacing: none;
+    }
+
+    .allActiveUniversitiesDetails {
+        margin-left: -0.5rem;
+    }
+}

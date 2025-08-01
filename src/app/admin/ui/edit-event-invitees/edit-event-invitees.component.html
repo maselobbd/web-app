@@ -1,0 +1,59 @@
+<mat-dialog-content>
+  <section class="event-invitees">
+    <form>
+      <section class="add-invitees-container">
+        <h2 class="dialog-heading">{{ dialogTitles.ADD_INVITEES }}</h2>
+        <p>{{ dialogMessages.EDIT_INVITEES_INSTRUCTIONS }}</p>
+        <mat-form-field
+          class="search-box"
+          appearance="outline"
+          subscriptSizing="dynamic"
+        >
+          <mat-icon matSuffix>search</mat-icon>
+          <mat-label for="name">Search</mat-label>
+          <input
+              #searchInput
+              matInput
+              (input)="onSearch(searchInput.value)"
+              placeholder="Search for existing bursars you would like to invite to your event"
+              type="text"
+          />
+        </mat-form-field>
+        <ng-container *ngFor="let group of groupedBursars">
+          <app-bursar-tiers
+            [tier]="group.tier"
+            [isPreview]="isPreview"
+            [bursars]="group.bursars"
+            [currentInvitees]="currentInvitees"
+            [selectedIds]="selectedBursarIds"
+            (bursarSelected)="onBursarSelected($event)"
+            (bursarDeselected)="onBursarDeselected($event)"
+            (clearSelectedBursars)="clearSelectedBursars($event)"
+          ></app-bursar-tiers>
+        </ng-container>
+      </section>
+    </form>
+  </section>
+</mat-dialog-content>
+
+<mat-dialog-actions class="footer invite-dialog-buttons">
+  <button
+    id="cancel-button"
+    mat-flat-button
+    color="accent"
+    class="footer-button cancel-button"
+    (click)="onCancel()"
+  >
+    {{buttonActions.CANCEL}}
+  </button>
+  <button
+    id="update-button"
+    mat-flat-button
+    color="primary"
+    class="footer-button update-button"
+    [disabled]="selectedBursars.length === 0"
+    (click)="onUpdate()"
+  >
+    {{buttonActions.UPDATE_INVITEES}}
+  </button>
+</mat-dialog-actions>

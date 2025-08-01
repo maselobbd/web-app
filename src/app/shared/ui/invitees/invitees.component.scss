@@ -1,0 +1,48 @@
+.divider {
+  margin: 1rem;
+}
+
+.invitee-info-card {
+    border-color: black;
+    border-radius: 0.5rem;
+}
+
+.event-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  mat-card-title {
+    font-weight: bold;
+    font-size: large;
+  }
+
+  .invitees-header {
+    display: flex;
+    flex: 1;
+    gap: 3%;
+  }
+
+  .filter-section {
+    gap: 1rem;
+    display: flex;
+    padding-bottom: 0.35rem;
+    align-items: center;
+
+    p{
+      margin: 0;
+    }
+
+    img {
+      font-size: smaller;
+      cursor: pointer;
+    }
+
+    .material-symbols-outlined {
+      cursor: pointer;
+      font-size: 2rem; 
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+  }
+}

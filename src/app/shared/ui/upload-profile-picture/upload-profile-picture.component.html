@@ -1,0 +1,29 @@
+<main>
+    <section class="upload-profile-photo-container">
+      <section class="profile-header">
+        <h1>{{ fileUploaded ? 'Preview' : title}}</h1>
+        <mat-icon (click)="close()">clear</mat-icon>
+      </section>
+      <ng-container *ngIf="!fileUploaded">
+        <app-upload-files
+          fieldLabel={{documentType}}
+          (fileEmitter)="addFile($event)"
+        ></app-upload-files>
+      </ng-container>
+      <ng-container *ngIf="fileUploaded && isPictureUpdate()">
+        <section class="profile-photo-container">
+          <img [src]="fileUrl" alt="{{title}} Preview" *ngIf="fileUrl" [ngClass]="{ 'event-photo': isEventPhoto }">
+        </section>
+      </ng-container>
+      <section class="action-container">
+        <button mat-flat-button color="accent" (click)="close()">Cancel</button>
+        <button mat-flat-button *ngIf="isPictureUpdate()" color="primary" (click)="fileUploaded ?  uploadProfilePhoto(): previewProfilePhoto()">
+          {{ fileUploaded ? addImageButton() : ButtonAction.NEXT }}
+        </button>
+        <button mat-flat-button [disabled]=!file *ngIf="!isPictureUpdate()" color="primary" (click)="upload()">
+          ButtonAction.UPLOAD
+        </button>
+      </section>
+    </section>
+  </main>
+  

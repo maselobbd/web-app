@@ -1,0 +1,51 @@
+.pdf-view {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pdf-view-container {
+  border: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.document-view-header {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.document-view-heading {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+
+.document-view-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.view-button {
+  flex: 1;
+  border: none;
+  font-size: medium;
+  background-color: white;
+  cursor: pointer;
+}
+
+.download {
+  flex: 4;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+main {
+  display: flex;
+  align-items: start;
+}

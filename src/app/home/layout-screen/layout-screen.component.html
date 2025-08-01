@@ -1,0 +1,49 @@
+<app-landing-screen [backgroundImageUrl]="backgroundImageUrl">
+  <section *ngIf="userRole !== rolesEnum.admin"
+  [ngClass]="{ 'student-contents-container': isLoggedIn && userRole === rolesEnum.student, 'contents-container':!studentRoute() }">
+    <section class="contents"  [ngClass]="{ 'student-contents': isLoggedIn && userRole === rolesEnum.student, 'contents': !studentRoute() }">
+      <ng-container>
+
+      </ng-container>
+      <section class="about-img" *ngIf="userRole !== rolesEnum.student">
+        <p class="contents-about" *ngIf="!applicationUrlChecks()">About the</p>
+        <img
+          class="home-page-logo"
+          [src]="logoUrl"
+        />
+      </section>
+      <p class="slogan" *ngIf="!applicationUrlChecks() &&userRole !== rolesEnum.student">
+        {{ slogans.UKUKHULA_SLOGAN }}
+      </p>
+      <section *ngIf="!isLoggedIn&&userRole !== rolesEnum.student" >
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="login()"
+          class="login-button"
+        >
+          Log in
+        </button>
+      </section>
+      <section *ngIf="isLoggedIn">
+        <button
+          *ngIf="!userRole"
+          mat-flat-button
+          color="primary"
+          (click)="navigateToApplication()"
+        >
+          New application
+        </button>
+      </section>
+    </section>
+    <section class="bursary-information-container" #studentContentProjection *ngIf="isLoggedIn && userRole === rolesEnum.student">
+      <app-bursary-information></app-bursary-information>
+    </section>
+
+  </section>
+  <section id="admin-content-projection" #adminContentProjection   *ngIf="userRole === rolesEnum.admin">
+    <app-admin-landing ></app-admin-landing>
+  </section>
+</app-landing-screen>
+
+<app-loader ></app-loader>

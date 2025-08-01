@@ -1,0 +1,211 @@
+.nav-bar {
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.mat-toolbar-row {
+  justify-content: space-between;
+  padding: 0 3rem;
+}
+
+a {
+  text-decoration: none;
+  color: #282728;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.options,
+.application-options {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fff;
+  margin-top: 1rem;
+  width: auto;
+  border-radius: 0.2rem;
+  z-index: 5;
+  padding: 1rem 1rem 1rem 0;
+  margin-left: 1rem;
+}
+
+.options {
+  margin-left: 5rem;
+}
+
+#toolbar-menu {
+  display: flex;
+}
+
+.nav-menu {
+  display: none;
+}
+
+.logo {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.logo,
+.reviews-logo {
+  max-height: 3.75rem;
+  max-width: 9.125rem;
+}
+
+.menu-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-width: 100%;
+}
+.menu-items a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+.button-container {
+  position: relative;
+  display: flex;
+ 
+}
+.button-container a {
+  color: #ffffff;
+  cursor: pointer;
+}
+.mat-menu {
+cursor: pointer;
+margin-left: 1rem;
+}
+
+.white-nav-button a {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.white-nav-button a:hover {
+  background-color: rgb(236, 236, 236);
+}
+.white-nav-button {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.options a {
+  padding-top: 0.5rem;
+}
+
+.bursary-funds-arrow {
+  align-items: center;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.bursary-funds-arrow-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+}
+
+.main-content {
+  width: 100%;
+  height: 100%;
+}
+.application-options a {
+  color: var(--primary-color);
+}
+.button-container-white {
+  display: flex;
+  color: var(--primary-color);
+}
+
+.not-loggedIn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menu-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4rem
+
+}
+
+.hod-admin-navbar-menu-container {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.adminDashboardMatMenuOption {
+  display: flex;
+  margin: 0 0.5rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .menu-icon {
+    display: none;
+  }
+  .mobile-menu {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .menu-icon {
+    display: flex;
+    border: none;
+  }
+
+  .mat-menu{
+    display:none;
+  }
+  
+  .menu-items {
+    display: none;
+  }
+
+  .mat-toolbar-row {
+    padding: 0 1rem;
+  }
+  .button-container {
+    display: none;
+  }
+  .white-nav-button {
+    display: none;
+  }
+}
+
+.shadow {
+  box-shadow: 0px 2px 8px 0px #0000001a;
+}
+
+.dark-nav-bar {
+  background-color: transparent;
+  .menu-items a,
+  .menu-icon {
+    color: white;
+  }
+
+  .options a {
+    color: var(--primary-color);
+  }
+  .application-options a {
+    color: var(--primary-color);
+  }
+  img {
+    height: 100%;
+  }
+
+  .nav-arrow-icon {
+    color: var(--primary-color);
+  }
+
+  .shadow {
+    box-shadow: none;
+  }
+}

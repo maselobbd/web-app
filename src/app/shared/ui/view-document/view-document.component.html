@@ -1,0 +1,37 @@
+<main>
+  <section class="dialogHeader">
+    <h2 class="quick-view">Quick View</h2>
+
+    <section class="button-actions">
+      <button
+        mat-flat-button
+        color="accent"
+        class="matDialogCancelButton"
+        (click)="remove()"
+      >
+        Remove {{currentTab}}
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="matDialogActionButton"
+        (click)="download()"
+      >
+        Download
+      </button>
+    
+    </section>
+  </section>
+  <mat-icon class="close" (click)="close()">close</mat-icon>
+</main>
+
+<iframe
+  #iframeEl
+  [src]="file | urlSanitation: 'resourceUrl'"
+  style="
+    border: none;
+    justify-content: center;
+    min-width: 100%;
+    min-height: calc(100% - 13.75rem);
+  "
+></iframe>

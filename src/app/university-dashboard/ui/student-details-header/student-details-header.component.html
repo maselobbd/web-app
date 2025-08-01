@@ -1,0 +1,43 @@
+<section class="top-name-section" [ngClass]="{'admin' : isAdmin}">
+  <a class="back-button" (click)="onGoBack()">
+    <mat-icon class="back-icon">keyboard_arrow_left</mat-icon>
+    <h1 class="fullName">{{ student.name }} {{ student.surname }}</h1>
+  </a>
+  <aside id="revert-edit">
+    <mat-icon
+    svgIcon="revert"
+    (click)="revertApplication()"
+      *ngIf="
+        false
+      "
+    >
+    </mat-icon>
+    <mat-icon
+      (click)="navigateToEditDetails()"
+      *ngIf="
+        (student.status === documentsStatus.IN_REVIEW || student.status === documentsStatus.ONBOARDED) && isAdmin
+      "
+      >edit</mat-icon
+    >
+  </aside>
+  <section class="header-buttons">
+    <button
+      *ngIf="isValidStatus()"
+      mat-flat-button
+      [color]="showRenewButton() ? 'accent' : 'primary'"
+      (click)="onTerminateBursary()"
+    >
+      {{ ButtonAction.TERMINATE_BURSARY }}
+    </button>
+    <button
+      *ngIf="showRenewButton()"
+      mat-flat-button
+      color="primary"
+      class="apply-button"
+      [disabled]="canRenew()"
+      (click)="onRenewApplication()"
+    >
+      {{ ButtonAction.APPLY_TO_RENEW_FUNDING }}
+    </button>
+  </section>
+</section>

@@ -1,0 +1,22 @@
+<ng-container *ngFor="let panel of panelsTitle">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="panel-title">
+        {{ panel.title }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <app-users-detail-table
+        [dataSource]="panel.dataSource"
+        [tabLabel]="tabLabel"
+        [role]="role"
+      ></app-users-detail-table>
+      <section class="button-container">
+        <button mat-flat-button color="accent" (click)="addProfile()">
+          + Add profile
+        </button>
+      </section>
+    </ng-template>
+  </mat-expansion-panel>
+  <mat-divider class="matDivider"></mat-divider>
+</ng-container>

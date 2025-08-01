@@ -1,0 +1,50 @@
+.university-card {
+  width: auto;
+  text-align: center;
+  border-radius: 1rem;
+  cursor: pointer;
+  .university-card-content {
+    padding: 0 12%;
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}
+::ng-deep .university-card .mat-badge-content {
+  font-size: 1rem !important;
+}
+.university-card-footer {
+  background-color: var(--primary-color);
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+.university-card-header {
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 17rem;
+  height: 4rem;
+  padding: 1rem 1rem 0 1rem;
+}
+p {
+  color: white;
+}
+.university-card:hover {
+  transform: scale(1.03);
+}
+.fund-allocation {
+  margin: 0.8rem auto;
+}
+.bursary-details {
+  margin-top: 0.5rem;
+
+  & p {
+    margin-bottom: 0.5rem;
+  }
+}
+#number {
+  font-weight: bold;
+}

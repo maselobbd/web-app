@@ -1,0 +1,27 @@
+.footer {
+    padding: 0 5% 1rem 5%;
+    display: flex;
+    width: 90%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    box-shadow: 0px 2px 8px 0px #0000001a;
+    background-color: white;
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+    gap: 1rem;
+
+    .footer-buttons {
+      margin-top: 1rem;
+    }
+  }
+
+.footer-split {
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 415px){
+    .footer {
+      gap: 0;
+    }
+}

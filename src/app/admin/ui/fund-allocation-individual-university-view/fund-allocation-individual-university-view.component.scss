@@ -1,0 +1,112 @@
+.individualUniversityData {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p {
+        margin: 0;
+    }
+}
+
+.rightArrow {
+  margin: 0;
+}
+
+.activeUniversityName,
+.totalAmountAllocated {
+  font-weight: bold;
+}
+
+.totalAmountAllocated {
+  display: flex;
+}
+
+.individualUniverstiyButton {
+  border: 1px solid var(--primary-color);
+  max-height: 10%;
+  max-width: 2%;
+}
+
+
+.progressBarMatDivider {
+  background: var(--primary-color);
+  margin-top: 0;
+  height: 1.37rem;
+  border-radius: 0.5rem;
+  margin-bottom: -1.4rem;
+  position: relative;
+  z-index: 999;
+}
+
+.matProgressBarSectionContainer {
+  flex: 3;
+  margin: 0 1.5rem 0 0;
+}
+
+.activeUniversityName {
+  min-width: 16rem;
+}
+
+
+.totalAllocationSection {
+  min-width: 7rem;
+  display: flex;
+  flex-direction: column;
+}
+
+
+::ng-deep .mdc-linear-progress__bar-inner {
+  border-radius: 0.5rem;
+}
+
+.progressBar {
+  border-radius: 0.5rem;
+  --mdc-linear-progress-active-indicator-height: 1.4rem;
+  --mdc-linear-progress-track-height: 1.4rem;
+  --mdc-linear-progress-track-color: var(--primary-dark-color);
+  --mdc-linear-progress-active-indicator-color: var(--accent-color);
+}
+
+.giveWarning {
+  border-radius: 0.5rem;
+  --mdc-linear-progress-active-indicator-height: 1.4rem;
+  --mdc-linear-progress-track-height: 1.4rem;
+  --mdc-linear-progress-active-indicator-color: var(--warn-color);
+  --mdc-linear-progress-active-indicator-radius: 0.5rem;
+}
+
+.warnRequested {
+  background: var(--warn-color);
+  margin-top: 0;
+  height: 1.4rem;
+  border-radius: 0.5rem;
+  margin-bottom: -1.4rem;
+  position: relative;
+  z-index: 999;
+}
+
+.displayProgressbarSection {
+  display: none;
+}
+
+.totalAllocation {
+  font-size: small;
+}
+
+@media screen and (max-width: 768px) {
+
+  .totalAllocationSection,
+  .individualUniverstiyButton,
+  .activeUniversityName,
+  .matProgressBarSectionContainer {
+    flex:1 1 100%;
+  }
+
+  .individualUniversityData {
+    flex-wrap: wrap;
+  }
+
+  .matProgressBarSectionContainer {
+    flex: 3;
+    margin: 0 1.5rem 0 0;
+  }
+}

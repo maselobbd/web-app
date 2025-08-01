@@ -1,0 +1,18 @@
+<mat-card matBadge="{{university.universityDetails?.applications}}" matBadgeSize="large" class="university-card" (click)="onCardClick(university)">
+    <mat-card-header class="university-card-header">
+      <mat-card-title>{{ university.universityDetails?.universityName }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="university-card-content">
+        <img [ngSrc]="university.universityDetails?.imageUrl!" width="300" height="300" priority  alt="{{university.universityDetails?.universityName}} Logo" />
+    </mat-card-content>
+    <mat-card-footer class="university-card-footer">
+      <section>
+        <p class="fund-allocation">Fund Allocation: <span id="number">{{ university.universityDetails?.totalAllocationAmount! | customCurrency }}</span></p>
+      </section>
+      <mat-divider class="divider"></mat-divider>
+      <section class="bursary-details">
+        <p class="active-bursaries"><span id="number">{{ university.universityDetails?.activeBursaries }}</span> active bursaries</p>
+        <p class="applications"><span id="number">{{ university.universityDetails?.applications}}</span> applications</p>
+      </section>
+    </mat-card-footer>
+  </mat-card>

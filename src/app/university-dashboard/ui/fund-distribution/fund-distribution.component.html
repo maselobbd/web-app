@@ -1,0 +1,35 @@
+<ng-container *ngIf="student; else noDataAvailable">
+    <h2 class="Fund-distribution">Fund distribution</h2>
+    <mat-divider class="divider"></mat-divider>
+    <section class="student-info-more">
+      <section class="student-info-item">
+        <p class="grey-text">Tuition</p>
+        <p class="black-text">{{ student.tuition | customCurrency }}</p>
+      </section>
+      <section class="student-info-item">
+        <p class="grey-text">Accommodation</p>
+        <p class="black-text">{{ student.accommodation | customCurrency }}</p>
+      </section>
+      <section class="student-info-item">
+        <p class="grey-text">Meals</p>
+        <p class="black-text">{{ student.meals | customCurrency }}</p>
+      </section>
+      <section class="student-info-item">
+        <p class="grey-text">Other</p>
+        <ng-container *ngIf="student.otherDescription; else noDescription">
+          <p class="black-text">
+            {{ student.other | customCurrency }} ({{ student.otherDescription }})
+          </p>
+        </ng-container>
+        <ng-template #noDescription>
+          <p class="black-text">
+            {{ student.other | customCurrency }}
+          </p>
+        </ng-template>
+      </section>
+    </section>
+  </ng-container>
+  
+  <ng-template #noDataAvailable>
+    <p>Fund distribution details are not available.</p>
+  </ng-template>

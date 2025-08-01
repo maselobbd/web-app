@@ -1,0 +1,21 @@
+.year-of-study-field
+{
+  width: 10rem ;
+  align-self: flex-start;
+}
+
+.year-of-study-container{
+  flex-direction: column ;
+}
+.custom-table td:nth-child(3n) {
+  border-bottom: none !important;
+}
+
+.matError{
+  align-self: flex-start;
+}
+@media screen and (max-width: 1024px) {
+  .custom-table td:nth-child(5n) {
+    border-bottom: 1px solid var(--primary-color);
+  }
+}

@@ -1,0 +1,157 @@
+.nudge-container {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.5rem;
+  padding-left: 7rem;
+}
+.header-container {
+  display: flex;
+  margin-top: 0.5rem;
+  justify-content: space-between;
+}
+.year-container {
+  display: flex;
+  width: 98%;
+  justify-content: space-between;
+}
+.year-container h2 {
+  width: 15rem;
+}
+.action-container {
+  margin-right: 1.5rem;
+  justify-content: flex-end;
+}
+.year-container p {
+  width: 50%;
+  padding-top: 0.5rem;
+}
+.table-container {
+  width: 95%;
+  margin-left: 2rem;
+
+  & h3 {
+    margin: 0;
+    padding-top: 1rem;
+    padding-bottom: 0.3rem;
+  }
+}
+.Nudge-button {
+  margin-right: 2rem;
+}
+table {
+  width: 100%;
+}
+
+th,
+td {
+  padding: 0;
+  text-align: left;
+  border-bottom: 1px solid var(--primary-color);
+}
+th {
+  padding: 0;
+  text-align: left;
+  font-weight: bold;
+}
+
+mat-expansion-panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-container {
+  flex: 0 1 auto;
+}
+
+.nudge-button {
+  white-space: nowrap;
+}
+
+.bold-header {
+  font-weight: bold;
+}
+@media screen and (max-width: 1024px) {
+  .nudge-container {
+    width: 80vw;
+    padding-left: 6rem;
+  }
+  mat-expansion-panel-header {
+    height: fit-content;
+  }
+  mat-expansion-panel-header.mat-expanded {
+    height: fit-content !important;
+  }
+  .year-container {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    margin-bottom: 1rem;
+    width: fit-content;
+  }
+
+  .year-container p {
+    margin-left: 0;
+    width: 100%;
+  }
+  .nudge-button {
+    width: 100%;
+  }
+
+  .table-container {
+    margin-left: 0;
+  }
+
+  .custom-table,
+  .custom-table th,
+  .custom-table td {
+    display: block;
+    width: 70vw;
+  }
+
+  .custom-table th {
+    display: none;
+  }
+
+  .custom-table th {
+    display: none;
+  }
+
+  .custom-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+    height: 4rem;
+
+    box-sizing: border-box;
+  }
+  .custom-table td:nth-child(3n) {
+    border-bottom: 1px solid var(--primary-color);
+  }
+  .custom-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    font-weight: bold;
+    text-align: left;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .nudge-container {
+    width: 80vw;
+    padding-left: 2rem;
+  }
+
+  .header {
+    margin-left: 2rem;
+  }
+
+  .year-container h2 {
+    font-size: 14pt;
+  }
+}

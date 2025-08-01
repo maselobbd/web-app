@@ -1,0 +1,56 @@
+<main class="candidatesMainContainer">
+  <h1 class="allocateFundsHeading">Allocate Funds</h1>
+  <p class="allocate-funds-second-paragraph">
+    A maximum of {{allocationMaximum | customCurrency}} is allowed to be allocated to a single student.
+  </p>
+  <app-allocation-usage
+    [newAllocationsTotal]="newAllocationsTotal || 0"
+    [error]="error"
+    (remainingExceeded)="hasAmountBeenExceeded($event)"
+  ></app-allocation-usage>
+
+  <article class="candidatesSection" >
+    <form
+      class="allocateFundsForm"
+      *ngFor="let applicant of applications.controls; let i = index; let last = last"
+      #allocationForm="ngForm"
+    >
+      <section class="allocateFundsFormTopSection">
+        <p class="candidateName">
+          {{ i + 1 }}. {{ applicant.get('name')?.getRawValue() }} {{ applicant.get('surname')?.getRawValue()}}
+        </p>
+
+        <section class="inputAndError">
+          <form class = "allocationForm" [formGroup]="getFormGroup(applicant)">
+            <mat-form-field
+              appearance="outline"
+              subscriptSizing="dynamic"
+              class="matFormField"
+            >
+              <mat-label class="mat-label">Bursary Allocation</mat-label>
+              <span matPreffix id="prefix">R &nbsp;</span>
+              <input
+                matInput
+                placeholder="Input Fund Allocation"
+                formControlName="amount"
+             
+                appAllowNumbersOnly [maxValue]="allocationMaximum"
+                (input)="onInputChange()"
+                class="alloctionInput"
+              />
+            </mat-form-field>
+          </form>
+          
+          <mat-error *ngIf="applicant.get('amount')?.getRawValue()!==0 && applicant.get('amount')?.getRawValue() > allocationMaximum">
+            {{ maxWarningMessage }}
+          </mat-error>
+          <mat-error *ngIf="applicant.get('amount')?.getRawValue()!==0 && applicant.get('amount')?.getRawValue() < allocationMinimum">
+            {{ minWarningMessage }}
+          </mat-error>
+        </section>
+      </section>
+
+      <mat-divider *ngIf="!last" class="divider"></mat-divider>
+    </form>
+  </article>
+</main>

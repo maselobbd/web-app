@@ -1,0 +1,220 @@
+.table-container {
+  width: 42rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.expenses-table {
+  width: 86vw;
+}
+
+.expenses-table th,
+.expenses-table td {
+  padding-bottom: 1rem;
+  text-align: left;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+.search-input {
+  width: 10rem;
+  padding: 0.5rem;
+}
+.mat-divider {
+  color: var(--primary-color);
+}
+.custom-divider {
+  background-color: var(--primary-color);
+}
+.other-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 42rem;
+}
+.other-input {
+  display: flex;
+  width: 16.5rem;
+}
+#prefix {
+  position: absolute;
+  margin-left: 0.5rem;
+  padding-top: 0.05rem;
+  text-align: center;
+  color: var(--background-dark-color);
+}
+
+td {
+  vertical-align: top;
+}
+button[type="submit"] {
+  width: 100%;
+}
+.list-info {
+  width: 10rem;
+}
+
+.fund-spread-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.header-container,
+.amount-container {
+  display: flex;
+  flex-direction: column;
+  width: 42rem;
+}
+.form-container {
+  display: flex;
+}
+
+.funds-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 42rem;
+}
+.mat-divider {
+  margin-bottom: 1rem;
+  background-color: var(--primary-color);
+}
+
+.save-later-button {
+  margin-right: 1rem;
+}
+
+.amount {
+  font-weight: 900;
+}
+span {
+  font-weight: 100;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-grid {
+  display: flex;
+  flex-direction: column;
+}
+.confirm-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+.dialog-title {
+  display: flex;
+  margin: 0;
+}
+.dialog-subtitle {
+  padding-left: 1.5rem;
+}
+.dialog-subheading {
+  font-weight: 600;
+  padding-left: 1.5rem;
+}
+
+.dialog-content-container {
+  display: flex;
+}
+.dialog-content-label {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+}
+.dialog-content-value {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 600;
+  width: 20%;
+}
+.dialog-content .dialog-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.dialog-content-item {
+  margin-right: 2rem;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.label {
+  width: 8rem;
+  margin-left: 1.2rem;
+}
+.other-label {
+  width: 16rem;
+}
+.error-message {
+  margin: 1rem;
+  color: var(--warn-color);
+}
+
+.amount-container {
+  border-bottom: 1px solid var(--primary-color);
+}
+.divider{
+  width: 100%;
+}
+@media screen and (max-width: 840px) {
+  .fund-spread-container {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .dialog-content-label {
+    display: flex;
+    justify-content: flex-start;
+    width: 80%;
+    font-size: 3vw;
+  }
+  .header-container,
+  .amount-container,
+  .error-message-container {
+    display: flex;
+    flex-direction: column;
+    width: 16rem;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .funds-button-container {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 16rem;
+  }
+  .action-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16rem;
+    margin-bottom: 0.5rem;
+  }
+  .custom-dialog-content {
+    padding: 1rem !important;
+  }
+  .table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .error-message {
+    font-size: 2.5vw;
+  }
+}

@@ -1,0 +1,141 @@
+<ng-container *ngIf="data">
+  <mat-dialog-content *ngIf="(fundAllocationStep$ | async) === fundAllocationSteps.CONFIRM_ACTION">
+    <h2 class="matDialogTitle" *ngIf="data.action === actions.ADD">{{ fundAllocationsTitles.ADD_FUNDS }}</h2>
+    <h2 class="matDialogTitle" *ngIf="data.action === actions.REALLOCATE">{{ fundAllocationsTitles.REALLOCATE_FUNDS }}</h2>
+    <h2 class="matDialogTitle" *ngIf="data.action === actions.MOVE_FUNDS">{{ fundAllocationsTitles.MOVE_FUNDS }}</h2>
+    <h2 class="matDialogTitle" *ngIf="data.action === actions.ALLOCATE">{{ fundAllocationsTitles.ALLOCATE }}</h2>
+    <p class="matDialogSubtitle">
+      {{ fundAllocationsTitles.PERMISSIONS }}
+    </p>
+    <mat-dialog-actions class="matDialogActions">
+      <button
+        mat-flat-button
+        class="matDialogActionButton fundAllocationsPrimaryColorItems"
+        matDialogClose
+      >
+        {{ fundAllocationButtons.CANCEL }}
+      </button>
+      <button
+        mat-flat-button
+        [ngClass]="{
+          enabledButton: true
+        }"
+        (click)="onConfirm()"
+      >
+        {{ fundAllocationButtons.CONFIRM }}
+      </button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+
+  <app-add-funds
+    [data]="data"
+    [fundAllocationForm]="fundAllocationForm"
+    [fundAllocationStep]="(fundAllocationStep$ | async) ?? 0"
+    [universitiesWithCapped]="(universitiesWithCapped$ | async) ?? []"
+    [allocationMoney]="allocationMoney"
+    [splitOrAdd]="(splitOrAdd$ | async) ?? false"
+    [universityMaxAllocationCap]="universityMaxAllocationCap"
+    [universitiesToSplitMoney]="universitiesToSplitMoney"
+    (next)="onNext()"
+    (cancel)="onCancel()"
+    (back)="onBack()"
+    (confirm)="onConfirm()"
+    (allocationMoneyChange)="allocationMoney = $event"
+    (addToTotal)="addToTotalFund($event)"
+    *ngIf="data.action === actions.ADD"
+  ></app-add-funds>
+
+  <app-reallocate-funds
+    [data]="data"
+    [reallocateFundsForm]="reallocateFundsForm"
+    [checkDecimals]="checkDecimals"
+    [fundAllocationStep]="(fundAllocationStep$ | async) ?? 0"
+    [universityMaxAllocationCap]="universityMaxAllocationCap"
+    [reallocationUniversities]="(reallocationUniversities$ | async) ?? []"
+    [filterUniversityAmounts]="filterUniversityAmounts.bind(this)"
+    (setInput)="setInput($event.event, $event.type)"
+    (next)="onNext()"
+    (cancel)="onCancel()"
+    (back)="onBack()"
+    (confirm)="onConfirm()"
+    (onInput)="onInput()"
+    *ngIf="data.action === actions.REALLOCATE"
+  ></app-reallocate-funds>
+
+  <app-move-funds
+    [data]="data"
+    [moveFundsForm]="moveFundsForm"
+    [checkDecimals]="checkDecimals"
+    [fundAllocationStep]="(fundAllocationStep$ | async) ?? 0"
+    [universityMaxAllocationCap]="universityMaxAllocationCap"
+    [moveFundsDepartments]="(moveFundsDepartments$ | async) ?? []"
+    [filterDepartmentAmounts]="filterDepartmentAmounts.bind(this)"
+    (setInput)="setInput($event.event, $event.type)"
+    (next)="onNext()"
+    (cancel)="onCancel()"
+    (back)="onBack()"
+    (confirm)="onConfirm()"
+    (onInput)="onInput()"
+    *ngIf="data.action === actions.MOVE_FUNDS"
+  ></app-move-funds>
+
+  <app-allocate-funds-dialog
+    [data]="data"
+    [allocateFundsForm]="allocateFundsForm"
+    [checkDecimals]="checkDecimals"
+    [fundAllocationStep]="(fundAllocationStep$ | async) ?? 0"
+    [unallocatedLess]="unallocatedLess"
+    [universitiesWithCapped]="(universitiesWithCapped$ | async) ?? []"
+    [filterUniversityAmounts]="filterUniversityAmounts.bind(this)"
+    (next)="onNext()"
+    (cancel)="onCancel()"
+    (back)="onBack()"
+    (confirm)="onConfirm()"
+    (onInput)="onInput()"
+    *ngIf="data.action === actions.ALLOCATE"
+  ></app-allocate-funds-dialog>
+
+  <mat-dialog-content *ngIf="(fundAllocationStep$ | async) === fundAllocationSteps.SUCCESS && (data.action === actions.ADD || data.action === actions.REALLOCATE || data.action === actions.MOVE_FUNDS || data.action === actions.ALLOCATE) && successfulAllocationsUpdate">
+    <h2 *ngIf="data.action === actions.ADD && !(splitOrAdd$ | async)" class="matDialogTitle">{{ fundAllocationsTitles.ADD_SUCCESS }}
+    </h2>
+    <h2 *ngIf="data.action === actions.REALLOCATE" class="matDialogTitle">{{ fundAllocationsTitles.REALLOCATE_SUCCESS }}
+    </h2>
+    <h2 *ngIf="data.action === actions.MOVE_FUNDS" class="matDialogTitle">{{ fundAllocationsTitles.MOVE_SUCCESS }}
+    </h2>
+    <h2 *ngIf="data.action === actions.ALLOCATE" class="matDialogTitle">{{ fundAllocationsTitles.ALLOCATE_SUCCESS }}
+    </h2>
+    <h2 *ngIf="data.action === actions.ADD && (splitOrAdd$ | async)" class="matDialogTitle">{{ fundAllocationsTitles.ADD_TO_FUND_SUCCESS }}
+    </h2>
+    <p class="matDialogSubtitle" *ngIf="data.action === actions.ADD && !(splitOrAdd$ | async)">
+      {{ fundAllocationsTitles.ADD_SUCCESS_SUB }}
+    </p>
+    <p class="matDialogSubtitle" *ngIf="data.action === actions.REALLOCATE">
+      {{ fundAllocationsTitles.REALLOCATE_SUCCESS_SUB }}
+    </p>
+    <p class="matDialogSubtitle" *ngIf="data.action === actions.MOVE_FUNDS">
+      {{ fundAllocationsTitles.MOVE_SUCCESS_SUB }}
+    </p>
+    <p class="matDialogSubtitle" *ngIf="data.action === actions.ALLOCATE">
+      {{ fundAllocationsTitles.ALLOCATE_SUCCESS_SUB }} {{ allocateFundsForm.get("university")?.value }}
+    </p>
+    <p class="matDialogSubtitle" *ngIf="data.action === actions.ADD && (splitOrAdd$ | async)">
+      {{ fundAllocationsTitles.ADD_TO_FUND_SUCCESS_SUB }}
+    </p>
+    <mat-dialog-actions [ngClass]="{
+  matDialogActionsSuccess: (fundAllocationStep$ | async) === fundAllocationSteps.SUCCESS,
+  matDialogActions: (fundAllocationStep$ | async) !== fundAllocationSteps.SUCCESS
+  }">
+      <button
+      mat-flat-button
+      [ngClass]="{
+  enabledButton: successfulAllocationsUpdate
+  }"
+      [disabled]="successfulAllocationsUpdate ? false : true"
+      (click)="backToAllocationFunds()"
+      class="backToAllocationFunds"
+      >
+        {{ fundAllocationButtons.BACK_TO_FUND_ALLOCATION }}
+      </button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+</ng-container>

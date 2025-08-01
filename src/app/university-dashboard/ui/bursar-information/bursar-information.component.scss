@@ -1,0 +1,16 @@
+.bursary-history-top {
+    margin-bottom: 1rem;
+  }
+.mat-grid-tile ::ng-deep .mat-grid-tile-content {
+    margin-left: 1rem;
+    max-width: 40rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .grey-text {
+    text-align: left;
+    color: grey;
+  }

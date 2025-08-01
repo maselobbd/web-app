@@ -1,0 +1,52 @@
+<section class="bursar-tier-container">
+  <mat-expansion-panel (opened)="onPanelOpened(tier)" (closed)="onPanelClosed(tier)">
+    <mat-expansion-panel-header class="tier-container">
+      <section class="tier-container">
+        <h2 class="tier-heading">Tier {{ tier }} bursars</h2>
+      </section>
+    </mat-expansion-panel-header>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <section class="table-container panel-body-wrapper" [class.hidden]="!openTiers.has(tier)">
+      <table mat-table class="custom-table" [dataSource]="bursars">
+        <ng-container matColumnDef="bursarName">
+          <th mat-header-cell *matHeaderCellDef class="bold-header">
+            Bursar full name
+          </th>
+          <td mat-cell *matCellDef="let element" data-label="Bursar Name">
+            {{ element.name + ' ' + element.surname }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="universityName">
+          <th mat-header-cell *matHeaderCellDef class="bold-header">
+            University
+          </th>
+          <td mat-cell *matCellDef="let element" data-label="University Name">
+            {{ element.universityName }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="bursarSelection">
+          <th mat-header-cell *matHeaderCellDef class="bold-header">
+            <mat-checkbox
+              color="primary"
+              [checked]="isAllSelected()"
+              (change)="toggleAll()"
+            ></mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let element" data-label="Bursar Selection">
+            <mat-checkbox
+              color="primary"
+              [disabled]="!isPreview && isInCurrentInvitees(element)"
+              [checked]="isSelected(element)"
+              (change)="toggleRow(element)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" 
+        [ngClass]="{'disabled-row': !isPreview && isInCurrentInvitees(row)}"></tr>
+      </table>
+    </section>
+  </mat-expansion-panel>
+</section>

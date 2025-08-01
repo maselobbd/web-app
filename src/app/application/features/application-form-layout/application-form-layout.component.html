@@ -1,0 +1,142 @@
+<main class="form-container">
+  <section class="form-top-section">
+    <header class="stepper-container">
+      <section class="title-section">
+        <h1>{{isRenewal ? formTitle.APPLY_TO_RENEW_BURSARIES: formTitle.APPLICATION_FORM}}</h1>
+        <p>{{isRenewal ? formMessages.APPLICATION_RENEWAL_FORM_MESSAGE:formMessages.APPLICATION_FORM_MESSAGE}}</p>
+      </section>
+      <app-stepper
+        #stepperRef
+        [context]="StepperContext.APPLICATION_FORM_LAYOUT"
+        [formGroups]="{
+        yearOfStudy: yearOfStudy,
+        applicationsForm: applicationsForm
+        }"
+        [completedChecks]="{ step2: step2Completed }"
+      ></app-stepper>
+    </header>
+
+    <article class="information">
+      <mat-divider class="divider"></mat-divider>
+
+      <ng-container *ngIf="stepperRef.selectedIndex === 0">
+        <section class="year-of-bursary-container">
+          <app-application-form-bursary-year
+            (yearSelected)="yearSelected($event)"
+            [year]="currentYear"
+            [enableYearSelection]="enableYearSelection"
+            [errorMessage]="isRenewal?errorMessages.NO_APPLICANTS_TO_RENEW:errorMessages.DEPARTMENT_NOT_EXISTS"
+          ></app-application-form-bursary-year>
+        </section>
+          <mat-error *ngIf=" currentYear && remainingAmount < allocationMin" class="message-container"> {{noFundsMessage}}</mat-error>
+      </ng-container>
+
+      <ng-container *ngIf="stepperRef.selectedIndex === 1">
+        <section class="add-candidates-container" *ngIf = "!isRenewal">
+          <h1>Add candidates</h1>
+          <p>Add the candidates you would like to receive a bursary.</p>
+          <form [formGroup]="applicationsForm">
+            <section
+             >
+              <ng-container
+                *ngFor="let application of applicationsFormArray.controls; let i = index"
+              >
+                <app-applicationform
+                  [formNumber]="i+1"
+                  [applicationData]="getFormGroup(application)"
+                  [university]="university"
+                  [faculty]="faculty"
+                  [department]="department"
+                  [canBeDeleted]="applicationsFormArray.length > 1"
+                  (formDeleted)="deleteForm($event)"
+                  [isOnboarding]="false"
+                ></app-applicationform>
+              </ng-container>
+            </section>
+          </form>
+        </section>
+
+        <section class="add-new-candidate" *ngIf = "!isRenewal">
+          <button
+            mat-flat-button
+            color="accent"
+            class="add-new-candidate-button"
+            (click)="addApplicantForm()"
+          >
+          {{buttonAction.ADDNEWCANDIDATES}}
+          </button>
+        </section>
+        <app-renewal-list  class="allocate-funds-container"  *ngIf = "isRenewal" [applicationsForm]="applicationsForm" (enableContinue)=enableContinue($event)></app-renewal-list>
+      </ng-container>
+
+      <ng-container *ngIf="stepperRef.selectedIndex === 2">
+        <section class="allocate-funds-container">
+          <app-allocate-funds
+            [applications]="getFormArray(applicationsFormArray)"
+            [error]="error"
+            (outputAmountExceeded)="amountExceeded($event)"
+            [allocationMaximum]="allocationMax"
+            [allocationMinimum]="allocationMin"
+          >
+            ></app-allocate-funds
+            >
+        </section>
+      </ng-container>
+    </article>
+  </section>
+  <section
+    class="footer"
+    [ngClass]="{ 'footer-split': stepperRef.selectedIndex !== 0 }"
+  >
+    <ng-container *ngIf="stepperRef.selectedIndex !== 0">
+      <button
+        id="back-button"
+        mat-flat-button
+        color="accent"
+        class="footer-buttons back-button"
+        (click)="stepperRef.previous()"
+      >
+      {{buttonAction.BACK}}
+      </button>
+    </ng-container>
+
+    <section class="forward-progress-buttons">
+      <button
+        id="save-button"
+        mat-flat-button
+        color="accent"
+        [disabled]="!isFormFilled()"
+        class="footer-buttons saveForLater"
+        (click)="saveForLater()"
+        *ngIf="stepperRef.selectedIndex !== 0"
+      >
+      {{buttonAction.SAVEFORLATER}}
+      </button>
+      <ng-container *ngIf="stepperRef.selectedIndex === 2">
+        <button
+          id="submit-button"
+          mat-flat-button
+          color="primary"
+          class="footer-buttons"
+          [disabled]="applicationsFormArray.invalid"
+          (click)="submit()"
+        >
+        {{isRenewal? buttonAction.APPLYTORENEW:buttonAction.SUBMIT}}
+        </button>
+      </ng-container>
+      <ng-container *ngIf="stepperRef.selectedIndex !== 2">
+        <button
+          id="continue-button"
+          mat-flat-button
+          color="primary"
+          class="footer-buttons"
+          [disabled]="(stepperRef.selectedIndex === 1 && applicationsForm.invalid) || (stepperRef.selectedIndex === 0 && yearOfStudy.invalid) || (remainingAmount < allocationMin)"
+          (click)="stepperRef.next()"
+        >
+          {{buttonAction.CONTINUE}}
+        </button>
+      </ng-container>
+    </section>
+  </section>
+</main>
+<app-loader></app-loader>

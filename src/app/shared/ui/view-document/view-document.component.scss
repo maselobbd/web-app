@@ -1,0 +1,54 @@
+main {
+    display: flex;
+    flex-direction: row;
+    height: 25%;
+    justify-content: space-between;
+}
+
+mat-dialog-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+iframe {
+    width: fit-content;
+    height: 100%;
+    border: none;
+}
+
+
+.dialogHeader {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.button-actions{
+    display: flex;
+    gap: 1rem;
+}
+.close{
+  padding-top: 2%;
+  cursor: pointer;
+  padding: 1rem;
+}
+@media screen and (max-width: 600px) {
+  .dialogHeader{
+    display: flex;
+    flex-direction: column;
+  }
+  .button-actions{
+    flex-wrap: wrap;
+    gap: 1%;
+  }
+  .quick-view{
+    padding: 0;
+    margin: 0;
+  }
+  main{
+    height:35%
+  }
+}

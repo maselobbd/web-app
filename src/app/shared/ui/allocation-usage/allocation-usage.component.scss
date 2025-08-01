@@ -1,0 +1,163 @@
+.matCard {
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.7rem rgba(0, 0, 0, 0.25);
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.noBoxShadow {
+  border-radius: 0.5rem;
+  padding-bottom: 1rem;
+  box-shadow: none;
+  margin-bottom: 0.5rem;
+}
+
+.barValues {
+  display: flex;
+  justify-content: space-between;
+}
+
+.totalAllocation {
+  font-weight: 400;
+}
+
+.tileAmount {
+  font-weight: 900;
+}
+
+span {
+  font-weight: 600;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-weight: 800;
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.matDivider {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.7rem;
+  border-radius: 0.5rem;
+}
+
+.matDividerApproved {
+  margin-left: -0.5rem;
+  background: var(--primary-color);
+}
+
+.matDividerRequested {
+  background: var(--accent-color);
+}
+
+.matDividerRemaining {
+  background: var(--primary-dark-color);
+}
+
+.progressBarMatDivider {
+  background: var(--primary-color);
+  margin-top: 0;
+  height: 1.4rem;
+  border-radius: 0.5rem;
+  margin-bottom: -1.4rem;
+  position: relative;
+  z-index: 99;
+}
+
+.matCardContent {
+  margin: 0.7rem 0;
+}
+
+::ng-deep .mdc-linear-progress__bar-inner {
+  border-radius: 0.5rem;
+}
+
+.progressBar {
+  border-radius: 0.5rem;
+  --mdc-linear-progress-active-indicator-height: 1.4rem;
+  --mdc-linear-progress-track-height: 1.4rem;
+  --mdc-linear-progress-track-color: var(--primary-dark-color);
+  --mdc-linear-progress-active-indicator-color: var(--accent-color);
+}
+
+.giveWarning {
+  border-radius: 0.5rem;
+  --mdc-linear-progress-active-indicator-height: 1.4rem;
+  --mdc-linear-progress-track-height: 1.4rem;
+  --mdc-linear-progress-active-indicator-color: var(--warn-color);
+  --mdc-linear-progress-active-indicator-radius: 0.5rem;
+}
+
+.matCardTitle {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.matCardSubtitle {
+  margin-top: 0.3rem;
+  padding-left: 0.2rem;
+  --mat-card-subtitle-text-color: var(--primary-color);
+}
+
+.matGridList {
+  color: var(--primary-color);
+  margin: 1rem;
+}
+
+.progressBarSection {
+  padding-bottom: 0.2rem;
+}
+
+.warnRequested {
+  background: var(--warn-color);
+  margin-top: 0;
+  height: 1.4rem;
+  border-radius: 0.5rem;
+  margin-bottom: -1.4rem;
+  position: relative;
+  z-index: 999;
+}
+
+.errors {
+  color: var(--warn-color);
+  margin-left: 1rem;
+}
+.matCardFooter {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  bottom: -4%;
+  transform: translateX(-50%);
+}
+.viewMoreButton {
+  border-radius: 1rem;
+  height: 1.2rem;
+}
+.viewMoreButtonIcon {
+  width: 100%;
+  font-size: 1.4rem;
+   &  {
+     margin: 0;
+     height: auto;
+   }
+}
+.dean-header{
+  padding: 2rem 0;
+}
+@media (max-width: 600px) {
+  .matCardFooter {
+    bottom: calc(-6% + 1rem);
+  }
+}

@@ -1,0 +1,54 @@
+.dialogHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+}
+h2{
+    margin: 0;
+    padding: 0;
+}
+.dialogContainer{
+    padding: 1rem;
+}
+.dialogContent{
+    margin: 0;
+    padding: 0;
+    padding-top: 1rem;
+    width: 100%;
+}
+.matDialogInput{
+    width: 100%;
+
+}
+.hodForm{
+    width: 100%;
+}
+.hodFormFields{
+    width: 100%;
+}
+.matDialogActions{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.hodNameFormFields{
+    padding-bottom: 1rem;
+    width: 100%;
+}
+
+.errorHodNameFormFields {
+    width: 100%;
+}
+
+.universityFormFields{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.validationMatErrors {
+    padding: 0.25rem 0;
+}

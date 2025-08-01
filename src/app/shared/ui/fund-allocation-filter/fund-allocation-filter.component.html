@@ -1,0 +1,14 @@
+<section class="fund-allocations-header" *ngIf="!universityName">
+  <h2>{{title}}</h2>
+  <form class="fundAllocationsForm" [formGroup]="yearOfStudyForm">
+    <mat-form-field appearance="outline"  subscriptSizing="dynamic" class="fundAllocationsFormField">
+      <mat-label>Year of study</mat-label>
+      <mat-select formControlName="yearOfStudy" [(value)]="currentYear" (selectionChange)="onSelectionChange($event)">
+        <mat-option *ngFor="let year of yearsOfFunding" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</section>
+  

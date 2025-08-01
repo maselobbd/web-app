@@ -1,0 +1,10 @@
+<ng-container 
+    *ngIf="
+        isLoggedIn &&
+        isAdmin">
+    <app-side-nav-menu></app-side-nav-menu>
+</ng-container>
+<ng-container 
+    *ngIf=" !isAdmin">
+    <app-navbar></app-navbar>
+</ng-container>

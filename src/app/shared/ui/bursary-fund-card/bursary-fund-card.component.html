@@ -1,0 +1,12 @@
+<main class="bursary-fund-card" (click)="onCardClick(fund.name)" *ngIf="fund">
+  <section class="upper-card">
+    <img [src]="fund.logo" [alt]="fund.name" class="logo" />
+    <p class="fund-allocation">Fund allocation: {{ fund.fundAllocation | customCurrency }}</p>
+  </section>
+
+  <p class="divider"></p>
+  <section class="details">
+    <p>{{ fund.activeBursaries }} active bursaries</p>
+    <p>{{ fund.applications }} applications</p>
+  </section>
+</main>

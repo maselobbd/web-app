@@ -1,0 +1,16 @@
+mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+   
+  }
+  .dropdown-form-field {
+    margin-bottom: 1rem;
+  }
+  mat-dialog-actions{
+    display: flex;
+    justify-content: space-between;
+  }
+  .dialog-body{
+    padding-top: 1rem !important;
+  }

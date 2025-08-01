@@ -1,0 +1,69 @@
+<mat-table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0" hod-table>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> {{ tabLabel === studentLabel ? columnHeadings.STUDENT : columnHeadings.ADMIN }}</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <section class="cell-content">
+        <p class="mobile-header">{{ tabLabel === studentLabel ? columnHeadings.STUDENT : columnHeadings.ADMIN }}: </p>
+        <p class="mobile-content">
+          {{ element.givenName + " " + element.surname }}
+        </p>
+      </section>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="role">
+    <mat-header-cell *matHeaderCellDef>{{ columnHeadings.ROLE }}</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <section class="cell-content" >
+        <p class="mobile-header">{{ columnHeadings.ROLE }}:</p>
+        <p class="mobile-content">{{element.role}}</p>
+      </section>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="rank">
+    <mat-header-cell *matHeaderCellDef>{{ columnHeadings.RANK }}</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <section class="cell-content" >
+        <p class="mobile-header">Rank:</p>
+        <p class="mobile-content">{{element.rank.replace('_'," ")}}</p>
+      </section>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="contactNumber">
+    <mat-header-cell *matHeaderCellDef>{{ columnHeadings.CELL }}</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <section class="cell-content">
+        <p class="mobile-header">{{ columnHeadings.CELL }}:</p>
+        <p class="mobile-content">{{ element.contactNumber  || "Not supplied" }}</p>
+      </section>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>{{ columnHeadings.EMAIL }}</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <section class="cell-content">
+        <p class="mobile-header">{{ columnHeadings.EMAIL }}:</p>
+        <p class="mobile-content">{{ element.emailAddress + " " }}</p>
+      </section>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell class="edit-button" *matCellDef="let element">
+      <button  *ngIf="isDepartmentEnabled && element.InvitedStatus !== 'Pending'&&role === rolesEnum.admin" mat-icon-button (click)="editProfile(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button  *ngIf="isDepartmentEnabled && element.InvitedStatus !== 'Pending'&&role === rolesEnum.admin" mat-icon-button (click)="deleteProfile(element.id,element.emailAddress)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button  *ngIf="isDepartmentEnabled && element.InvitedStatus === 'Pending'&&role === rolesEnum.admin" mat-icon-button (click)="declineInvitation(element)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button  *ngIf="isDepartmentEnabled && element.InvitedStatus === 'Pending'&&role === rolesEnum.admin" mat-icon-button (click)="acceptInvitation(element)">
+        <mat-icon>check</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+  

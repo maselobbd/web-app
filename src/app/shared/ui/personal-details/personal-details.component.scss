@@ -1,0 +1,62 @@
+.personal-info-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.personal-info-container {
+    display: flex;
+}
+
+.information-container{
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+.text-container {
+    width: 85%;
+}
+
+.student-info-item {
+    width: 5%;
+    overflow-wrap: break-word;
+}
+.profile-image-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1% 3% 0 0;
+    cursor: pointer;
+}
+.profile-image-container img{
+    height: 10rem;
+    width: 10rem;
+}
+.photo-action{
+    padding: 1rem;
+    color: var(--primary-color)
+}
+
+@media screen and (max-width: 530px) {
+    .personal-info-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .profile-image-container {
+        padding-bottom: 0;
+    }
+
+    .Information-container {
+        flex-wrap: wrap;
+    }
+
+    .grey-text {
+        margin: 0;
+    }
+  }

@@ -1,0 +1,103 @@
+<ng-container *ngIf="student; else noData">
+    <h2 class="bursary">Bursary Information</h2>
+    <mat-divider class="divider"></mat-divider>
+
+    <section class="custom-grid" *ngIf="
+    student.status === documentsStatus.IN_REVIEW || student.status === documentsStatus.AWAITING_EXEC_APPROVAL ||
+    student.status === documentsStatus.AWAITING_FINANCE_APPROVAL || student.status === documentsStatus.PENDING_RENEWAL ||
+    student.status === documentsStatus.ONBOARDED
+  "
+    >
+      <mat-grid-list
+        rowHeight="5rem"
+        class="custom-grid"
+        [gridCols]="{ xs: 1, sm: 2, md: 4, lg: 6, xl: 8 }"
+      >
+        <mat-grid-tile>
+          <div class="tile-content">
+            <p class="grey-text">Bursary Amount</p>
+            <p class="black-text">{{ student.amount | customCurrency }}</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="tile-content">
+            <p class="grey-text">Status</p>
+            <p class="black-text">{{ getCurrentStatusDisplay() }}</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="rejectionReasonDisplay">
+          <div class="tile-content">
+            <p class="grey-text">Rejection Reason</p>
+            <p class="black-text">{{ rejectionReasonDisplay }}</p>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-grid-list
+        rowHeight="5rem"
+        class="custom-grid"
+        [gridCols]="{ xs: 1, sm: 2, md: 4, lg: 6, xl: 8 }"
+      >
+        <mat-grid-tile>
+          <div class="tile-content">
+            <p class="grey-text">Year of Funding</p>
+            <p class="black-text">{{ student.yearOfFunding }}</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="tile-content">
+            <p class="grey-text">Application Date</p>
+            <p class="black-text">{{ student.applicationDate | date: "medium" }}</p>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </section>
+
+    <ng-container
+    *ngIf="
+    student.status === documentsStatus.APPROVED || student.status === documentsStatus.APPLICATION_ACTIVE || student.status === documentsStatus.AWAITING_FUND_DISTRIBUTION ||
+    student.status === documentsStatus.CONTRACT || student.status === documentsStatus.INVOICE || student.status === documentsStatus.PAYMENT || student.status === documentsStatus.TERMINATED
+  "
+    >
+      <section class="student-info-less">
+        <section class="amount">
+          <p class="grey-text">Bursary Amount</p>
+          <p class="black-text">{{ student.amount | customCurrency }}</p>
+        </section>
+        <section class="status">
+          <p class="grey-text">Status</p>
+          <p class="black-text">{{ student.status }}</p>
+        </section>
+      </section>
+
+      <section class="student-info-more row2">
+        <section class="student-info-item">
+          <p class="grey-text">Year of funding</p>
+          <p class="black-text">{{ student.yearOfFunding }}</p>
+        </section>
+        <section class="student-info-item">
+          <p class="grey-text">Application Date</p>
+          <p class="black-text">{{ student.applicationDate | date: "medium" }}</p>
+        </section>
+        <section class="student-info-item">
+          <p class="grey-text">Approved Date</p>
+          <p class="black-text">{{ student.approvedDate | date: "medium" }}</p>
+        </section>
+        <section class="student-info-item">
+          <p class="grey-text">Date of Commencement</p>
+          <p class="black-text">
+            {{ student.commencementDate ? (student.commencementDate | date: "medium") : "-" }}
+          </p>
+        </section>
+      </section>
+    </ng-container>
+
+    <section *ngIf="student.applicatioMotivation" class="motivation-section">
+      <h3 class="grey-text sub-heading">Motivation from HOD</h3>
+      <p class="black-text motivation-text">{{ student.applicatioMotivation }}</p>
+    </section>
+  </ng-container>
+
+  <ng-template #noData>
+    <p>Bursary information is currently unavailable.</p>
+  </ng-template>

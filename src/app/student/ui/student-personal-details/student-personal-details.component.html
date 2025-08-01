@@ -1,0 +1,6 @@
+<main *ngIf="student"> 
+<section >
+ <app-personal-details [student]="student" [applicationGuid]="applicationGuid" (studentDetailsChanged)="triggerStateUpdate($event)"></app-personal-details>
+ <app-university-information [student]="student" [applicationGuid]="applicationGuid"></app-university-information>
+</section>
+</main>

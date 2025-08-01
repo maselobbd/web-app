@@ -1,0 +1,217 @@
+<section class="fund-spread-container" *ngIf="fundDistributed == null">
+  <section class="header-container">
+    <h1>
+      Distribute Funds: <span>{{ data.application?.fullName }}</span>
+    </h1>
+    <p>Please distribute funds for this student</p>
+  </section>
+
+  <mat-dialog-content class="dialog-content">
+    <section class="amount-container">
+      <p>Total bursary amount</p>
+      <p class="amount">{{ data.application?.amount | customCurrency }}</p>
+    </section>
+    <form [formGroup]="expensesForm" (ngSubmit)="postExpense()">
+      <section class="table-container">
+        <section class="form-container">
+          <mat-form-field appearance="outline" class="search-input">
+            <span matPrefix id="prefix">R &nbsp;</span>
+            <mat-label class="label">Tuition</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="tuition"
+              placeholder="Enter amount"
+              [defaultValue]="0"
+              class="label"
+            />
+            <mat-error *ngIf="expensesForm.get('tuition')?.hasError('pattern')">
+              Please enter a valid number.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="search-input">
+            <span matPrefix id="prefix">R &nbsp;</span>
+            <mat-label class="label">Accommodation</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="accommodation"
+              placeholder="Enter amount"
+              [defaultValue]="0"
+              class="label"
+            />
+            <mat-error *ngIf="expensesForm.get('accommodation')?.hasError('pattern')">
+              Please enter a valid number.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="search-input">
+            <span matPrefix id="prefix">R &nbsp;</span>
+            <mat-label class="label">Meals</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="meals"
+              placeholder="Enter amount"
+              [defaultValue]="0"
+              class="label"
+            />
+            <mat-error *ngIf="expensesForm.get('meals')?.hasError('pattern')">
+              Please enter a valid number.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="search-input">
+            <span matPrefix id="prefix">R &nbsp;</span>
+            <mat-label class="label">Other</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="other"
+              placeholder="Enter amount"
+              [defaultValue]="0"
+              class="label"
+            />
+            <mat-error *ngIf="expensesForm.get('other')?.hasError('pattern')">
+              Please enter a valid number.
+            </mat-error>
+          </mat-form-field>
+        </section>
+
+        <section class="other-input-container">
+          <mat-form-field
+            appearance="outline"
+            class="other-input"
+            *ngIf="expensesForm.get('other')?.value"
+          >
+            <mat-label class="other-label">Provide details of what "Other" will cover</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Enter details"
+              formControlName="reason"
+            />
+            <mat-error *ngIf="expensesForm.get('other')?.value > 0 && expensesForm.get('reason')?.hasError('required')">
+              This field is required.
+            </mat-error>
+            <mat-error *ngIf="expensesForm.get('reason')?.hasError('pattern')">
+              Please enter valid text.
+            </mat-error>
+          </mat-form-field>
+        </section>
+
+        <p *ngIf="!allFieldsFilled" class="error-message">
+          *The total amount does not match the application amount.
+        </p>
+      </section>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="funds-button-container">
+    <button mat-flat-button color="accent" matDialogClose>Cancel</button>
+    <section class="action-button">
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="
+          !isFundSpreadCorrect ||
+          (expensesForm.get('other')?.value > 0 &&
+            !expensesForm.get('reason')?.value)
+        "
+        (click)="openConfirmationDialog()"
+      >
+        Submit fund distribution
+      </button>
+    </section>
+  </mat-dialog-actions>
+</section>
+<section
+  #confirmDialog
+  class="confirm-container"
+  *ngIf="fundDistributed == true"
+>
+  <h2 mat-dialog-title class="dialog-title">
+    Confirm Fund Distribution:&nbsp;
+    <span class="dialog-title__name">{{ data.application.fullName }}</span>
+  </h2>
+  <p class="dialog-subtitle">
+    Please confirm that you are happy with how you have distributed funds for
+    this student
+  </p>
+  <p class="dialog-subheading">Fund distribution</p>
+  <mat-dialog-content class="dialog-content">
+    <mat-grid-list
+      rowHeight="2rem"
+      class="custom-grid"
+      [gridCols]="{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }"
+    >
+      <mat-grid-tile
+        class="dialog-content-container"
+        *ngIf="expensesForm.value.tuition > 0"
+      >
+        <p class="dialog-content-label">Tuition:</p>
+        <p class="dialog-content-value">
+          {{ expensesForm.value.tuition | customCurrency }}
+        </p>
+      </mat-grid-tile>
+      <mat-grid-tile
+        class="dialog-content-container"
+        *ngIf="expensesForm.value.accommodation > 0"
+      >
+        <p class="dialog-content-label">Accommodation:</p>
+        <p class="dialog-content-value">
+          {{ expensesForm.value.accommodation | customCurrency }}
+        </p>
+      </mat-grid-tile>
+      <mat-grid-tile
+        class="dialog-content-container"
+        *ngIf="expensesForm.value.meals > 0"
+      >
+        <p class="dialog-content-label">Meals:</p>
+        <p class="dialog-content-value">
+          {{ expensesForm.value.meals | customCurrency }}
+        </p>
+      </mat-grid-tile>
+      <mat-grid-tile
+        class="dialog-content-container"
+        *ngIf="expensesForm.value.other > 0"
+      >
+        <p class="dialog-content-label">
+          Other ({{ expensesForm.value.reason }}):
+        </p>
+        <p class="dialog-content-value">
+          {{ expensesForm.value.other | customCurrency }}
+        </p>
+      </mat-grid-tile>
+      <mat-grid-tile class="dialog-content-container">
+        <mat-divider class="divider"></mat-divider >
+      </mat-grid-tile>
+
+      <mat-grid-tile class="dialog-content-container">
+        <p class="dialog-content-label">Total bursary amount:</p>
+        <p class="dialog-content-value">{{ totalAmount | customCurrency }}</p>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <button
+      mat-button
+      mat-dialog-close
+      color="accent"
+      class="dialog-actions__button"
+    >
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="isExpensePosted"
+      (click)="postExpense()"
+      class="dialog-actions__button"
+    >
+      Confirm fund distribution
+    </button>
+  </mat-dialog-actions>
+</section>
