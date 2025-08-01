@@ -18,8 +18,6 @@ jobs:
         with:
           name: artifact-API
           path: artifacts/
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
       
       - name: 'Deploy function app'
         uses: Azure/functions-action@v1
