@@ -34,6 +34,5 @@ jobs:
         id: fa
         with:
           app-name: 'Tester'
-          slot-name: 'Production'
           package: ./artifacts/api_release.zip
           publish-profile: ${{ secrets.TESTER_PUBLISH_PROFILE }}

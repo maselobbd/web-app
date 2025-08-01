@@ -24,7 +24,8 @@ jobs:
 
       - name: Build SWA
         run: |
-          zip -r swa_release.zip . -i dist/
+          cp staticwebapp.config.json dist/ukukhula/browser
+          zip swa_release.zip dist/ -r
 
       - name: Upload QA SWA artifact
         uses: actions/upload-artifact@v4
