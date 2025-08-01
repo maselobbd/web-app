@@ -6,6 +6,10 @@ on:
     types: [completed]
     branches: [main]
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   download_deploy_release:
     runs-on: ubuntu-latest
