@@ -1,8 +1,0 @@
-[flyway]
-locations = ["filesystem:migrations"]
-
-[environments.default]
-locations = ["filesystem:migrations"]
-url = "jdbc:jtds:sqlserver://MaseloS/localhost\\SQLEXPRESS02;databaseName=QABacpac;encrypted=true;trustedConnection=true;domain=MaseloS"
-user = ""
-password = ""

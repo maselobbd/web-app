@@ -1,7 +1,0 @@
-export enum MaxAllocation {
-    MAX_ALLOCATION = 500000.00,
-    MIN_AMOUNT = 0,
-    MAX_AMOUNT = 3000000,
-    MAX_REALLOCATE_AMOUNT = 250000,
-    MAX_MOVE_AMOUNT = 125000
-}

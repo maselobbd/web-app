@@ -24,10 +24,7 @@ jobs:
 
       - name: Build SWA
         run: |
-          yarn
-          yarn build
-          cp staticwebapp.config.json dist/web-app/browser
-          zip swa_release.zip dist/ -r
+          zip -r swa_release.zip dist/
 
       - name: Upload QA SWA artifact
         uses: actions/upload-artifact@v4
