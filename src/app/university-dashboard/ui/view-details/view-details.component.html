@@ -1,0 +1,71 @@
+<section class="app-wrapper" [ngClass]="{ 'app-wrapper-non-admin': isLoggedIn && !isAdmin }">
+  <main class="view-details-container" *ngIf="student">
+    <section class="top-name-section" (click)="goBack()">
+      <mat-icon class="back-icon">chevron_left</mat-icon>
+      <h1 class="candidate-name">{{ student.name }} {{ student.surname }}</h1>
+    </section>
+    <article class="bursar-details">
+      <h2 class="info">Bursary Information</h2>
+      <mat-divider class="divider"></mat-divider>
+
+      <section class="amount-status">
+        <section class="bursar-amount">
+          <section>
+            <p>Bursary amount</p>
+            <p class="details">{{ student.amount | customCurrency }}</p>
+          </section>
+
+          <section>
+            <p class="'title">Status</p>
+            <p class="details">{{ student.status }}</p>
+          </section>
+        </section>
+
+        <section class="bursar-amount">
+          <section>
+            <p class="'title">Year of bursary</p>
+            <p class="details">{{ student.yearOfFunding }}</p>
+          </section>
+          <section>
+            <p class="'title">Application date</p>
+            <p class="details">
+              {{ student.applicationDate }}
+            </p>
+          </section>
+        </section>
+      </section>
+      <h2 class="info">Personal information</h2>
+      <mat-divider class="divider"></mat-divider>
+
+      <section class="personal-info">
+        <section class="bursar-amount bursary-detail">
+          <p class="'title">Name</p>
+          <p class="details">{{ student.name }} {{ student.surname }}</p>
+        </section>
+        <section class="bursar-amount bursary-detail">
+          <p class="'title">Email</p>
+          <p class="details">{{ student.email }}</p>
+        </section>
+      </section>
+      <h2 class="info">University information</h2>
+      <mat-divider class="divider"></mat-divider>
+      <section class="university-info">
+        <section>
+          <p class="'title">University</p>
+          <p class="details">{{ student.university }}</p>
+        </section>
+      </section>
+    </article>
+  </main>
+  <section class="footer" *ngIf="showActions">
+    <section class="footer-buttons footer-button">
+      <button mat-button color="primary" (click)="openEditStudentDialog()">
+        Edit student information
+      </button>
+      <button mat-flat-button color="primary" (click)="resendEmail()">
+        Resend email
+      </button>
+    </section>
+  </section>
+</section>
+<app-loader></app-loader>

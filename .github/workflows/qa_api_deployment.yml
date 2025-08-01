@@ -1,0 +1,31 @@
+name: Deploy QA API
+
+on:
+  workflow_run:
+    workflows: [Build and upload API artifacts]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  download_deploy_release:
+    runs-on: ubuntu-latest
+    name: Download artifacts and deploy to azure
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Download api artifact
+        id: daa
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-API
+          path: artifacts/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+      
+      - name: 'Deploy function app'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: 'qa-function-app-for-ukukhula'
+          slot-name: 'Production'
+          package: ./artifacts/api_release.zip
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_00E6FEA8F1C642A0B9847ED8AC4061BF }}

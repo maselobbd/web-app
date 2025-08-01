@@ -1,0 +1,58 @@
+<mat-accordion *ngIf="historyItems && historyItems.length > 0">
+    <mat-expansion-panel
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+      class="panel"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title class="bursary-history-heading">
+          <h2 class="history-title">Bursary History</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <mat-divider class="divider bursary-history-top"></mat-divider>
+  
+      <ng-container *ngIf="panelOpenState">
+        <section
+          class="approvers"
+          *ngFor="let item of historyItems; let i = index"
+        >
+          <section class="history-top-level">
+            <mat-icon
+              [ngClass]="{
+                'primaryCircle': isAStatus(item),
+                'secondaryCircle': !isAStatus(item)
+              }"
+              >brightness_1</mat-icon
+            >
+            <p class="history-top-level-text">{{ item.status }}</p>
+          </section>
+          <section
+            [ngClass]="{
+              'history-details-container': i < numberOfIterations,
+              'history-details-container-end': i === numberOfIterations
+            }"
+          >
+            <p *ngIf="!isStudent(item) && getApproverNameRole(item.Approver)" class="history-details-text">
+              {{ getApproverNameRole(item.Approver) }}{{ getApproverRole(item) }}
+            </p>
+            <p *ngIf="isStudent(item)" class="history-details-text">
+              {{ item.Approver }}, Student
+            </p>
+            <p class="history-details-text">{{ item.fromDate }}</p>
+            <p *ngIf="!isStudent(item) && getApproverEmail(item.Approver)" class="history-details-text">
+              {{ getApproverEmail(item.Approver) }}
+            </p>
+          </section>
+        </section>
+      </ng-container>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-divider
+    class="divider"
+    *ngIf="historyItems && historyItems.length > 0 && !panelOpenState"
+  ></mat-divider>
+  
+  <ng-template #noHistory>
+    <p>No application history available.</p>
+  </ng-template>

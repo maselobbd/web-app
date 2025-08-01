@@ -1,0 +1,61 @@
+<section class="app-wrapper" *ngIf="(fundAllocationsModel$ | async)">
+  <article *ngIf="(loading$ | async) === false" class="fundAllocationsContainer">
+    <app-fund-allocation-filter
+      [title]="title"
+      [formGroup]="yearOfStudyForm"
+    ></app-fund-allocation-filter>
+    <app-add-to-total-fund-allocation
+      [activeUniversities]="activeUniversities$ | async"
+      [activeUniversitiesFundAllocationsData]="
+      activeUniversitiesFundAllocationsData$ | async
+    "
+      [activeUniversitiesDepartmentsFundAllocationsData]="
+      (activeUniversitiesDepartmentsFundAllocationsData$ | async)
+    "
+      [yearOfStudyForm]="yearOfStudyForm"
+      [filterYear]="filterYear"
+      *ngIf="(individualUniversityView$ | async) === false"
+      [fundAmounts]="fundAmount$ | async"
+      [fundAllocationsValidators]="fundAllocationsValidators$ | async"
+    ></app-add-to-total-fund-allocation>
+    <mat-divider *ngIf="(individualUniversityView$ | async) === false"></mat-divider>
+    <app-fund-allocation-individual-university-view
+      class="view"
+      [activeUniversitiesFundAllocationsData]="
+      activeUniversitiesFundAllocationsData$ | async
+    "
+      [activeUniversitiesDepartmentsFundAllocationsData]="
+      activeUniversitiesDepartmentsFundAllocationsData$ | async
+    "
+      *ngIf="(individualUniversityView$ | async) === false"
+    ></app-fund-allocation-individual-university-view>
+    <app-fund-allocation-individual-university
+      *ngIf="(individualUniversityView$ | async)"
+      [yearOfStudyForm]="yearOfStudyForm"
+      [filterYear]="filterYear"
+      [activeUniversitiesDepartmentsFundAllocationsData]="
+    activeUniversitiesDepartmentsFundAllocationsData$ | async
+  "
+      [activeUniversitiesFundAllocationsData]="
+    activeUniversitiesFundAllocationsData$ | async
+  "
+      [fundAllocationsValidators]="fundAllocationsValidators$ | async"
+      (moveFundsClicked)="openDialogFromChild()"
+      [universityToViewIndividually]="(universityToViewIndividually$ | async)"
+      #individualUniversityComponent
+    ></app-fund-allocation-individual-university>
+  </article>
+  <section
+    class="footer"
+    *ngIf="(individualUniversityView$ | async) && individualUniversityComponent?.userRole?.role !== Roles[Roles.dean] && (loading$ | async) === false"
+  >
+    <button
+      mat-flat-button
+      class="footer-buttons moveFundsButton"
+      (click)="openDialogFromChild()"
+    >
+      {{ buttonAction.MOVEFUNDS }}
+    </button>
+  </section>
+</section>
+<app-loader></app-loader>

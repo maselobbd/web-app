@@ -1,0 +1,185 @@
+.landing-screen {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 10%, transparent);
+  color: #ffffff;
+}
+
+.landing-screen .sidebar-padding {
+  flex-shrink: 0;
+}
+
+.landing-screen .content {
+  width: 80%;
+  margin: 0 auto;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+}
+
+.landing-screen .content::-webkit-scrollbar {
+  display: none;
+}
+
+.landing-screen h1 {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.landing-screen h2 {
+  color: #ffffff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.bursary-funds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+  gap: clamp(1.5rem, 4vw, 2rem);
+  justify-content: center;
+  position: relative;
+}
+
+.bursary-fund-card {
+  background-color: #3a3a3a;
+  border-radius: 0.625rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.bursary-fund-card .logo {
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.bursary-fund-card .fund-allocation {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.bursary-fund-card .divider {
+  width: 80%;
+  height: 0.0625rem;
+  background-color: #555555;
+  margin: 1rem 0;
+}
+
+.bursary-fund-card .details {
+  font-size: 1rem;
+}
+
+.bursary-fund-card .details p {
+  margin: 0.5rem 0;
+  color: var(--primary-background);
+}
+
+.bursary-reporting-section {
+  background-color: var(--background-color);
+  border-radius: 0.625rem;
+  padding: 2rem;
+}
+
+.bursary-reporting-section .spending-chart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.bursary-reporting-section .label {
+  width: 12.5rem;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+.bursary-reporting-section .progress-bar-container {
+  flex-grow: 1;
+  background-color: var(--background-color);
+  height: 1.25rem;
+  border-radius: 0.3125rem;
+  overflow: hidden;
+  margin-left: 1rem;
+}
+
+.bursary-reporting-section .progress-bar {
+  height: 100%;
+  border-radius: 0.3125rem;
+}
+
+.bursary-reporting-section .amount {
+  width: 6.25rem;
+  text-align: right;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.bursary-reporting-wrapper {
+  position: relative;
+  overflow-y: auto;
+}
+
+.powered-by-bbd-image.fade-behind-reporting {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  opacity: 0.5;
+  max-width: 20rem;
+  pointer-events: none;
+}
+
+app-bursary-fund-card {
+  position: relative;
+  z-index: 1;
+}
+
+app-bursary-reporting {
+  position: relative;
+  z-index: 1;
+}
+.background-image {
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;
+  filter: brightness(0.7);
+}
+@media (max-width: 768px) {
+  .landing-screen .content {
+    width: 95%; 
+  }
+
+  .bursary-reporting-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .bursary-reporting-section .spending-chart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .bursary-reporting-section .label {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .bursary-reporting-section .progress-bar-container {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .bursary-reporting-section .amount {
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,117 @@
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+}
+.app-wrapper-non-admin {
+  height: 100%;
+}
+.view-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  padding-top: 1rem;
+  padding-left: 8%;
+  flex-grow: 1;
+}
+.footer {
+  margin-top: auto;
+  padding: 1rem 2rem;
+}
+.top-name-section {
+  display: flex;
+  gap: 1rem;
+  align-self: flex-start;
+  height: 2rem;
+  padding-left: 1.2rem;
+  cursor: pointer;
+}
+.candidate-name {
+  margin: 0;
+  padding-top: 0.3rem;
+  color: var(--primary-color);
+}
+.back-icon {
+  font-size: 2.5rem;
+  height: 2rem;
+  width: 2rem;
+  color: var(--primary-color);
+}
+.bursar-details {
+  align-self: flex-start;
+  width: calc(100% - 4rem);
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-top: 2rem;
+}
+.bursar-amount {
+  flex: 1 1 50%;
+}
+.info {
+  margin: 0;
+  padding-bottom: 0.5rem;
+}
+.amount-status {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.personal-info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.title {
+  padding-bottom: 0;
+}
+.bursary-detail {
+  display: flex;
+  flex-direction: column;
+}
+.university-info {
+  padding-top: 1rem;
+}
+p {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.2rem;
+  color: #282728;
+}
+.details {
+  font-weight: bold;
+}
+
+.footer-button {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  width: calc(100% - 4rem);
+}
+
+.footer-button button {
+  border-radius: 0.5rem;
+  margin-left: 0.625rem;
+  border: 1px solid var(--primary-color);
+  cursor: pointer;
+  padding: 0.625rem;
+}
+@media screen and (max-width: 610px) {
+  .amount-status {
+    flex-direction: column;
+  }
+  .footer-button button {
+    padding: 1.5rem;
+  }
+
+  .footer-button {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    width: 100%;
+  }
+}

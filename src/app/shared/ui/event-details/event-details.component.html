@@ -1,0 +1,141 @@
+<main
+  class="event-details-container"
+  [ngClass]="{ admin: isAdmin, 'main-event-review': isPreview }"
+>
+  <article *ngIf="!isLoading">
+    <section class="top-name-section" *ngIf="!isPreview" [ngClass]="{ admin: isAdmin }">
+      <a class="back-button" (click)="goBack()">
+        <mat-icon class="back-icon">keyboard_arrow_left</mat-icon>
+        <h1 class="event-name">{{ event.eventName }}</h1>
+      </a>
+      <section *ngIf="isAdmin && !eventNotEditable()" class="top-event-buttons">
+        <button mat-flat-button class="cancel-button" (click)="cancelEvent()">{{ ButtonAction.CANCEL_EVENT }}</button>
+        <button mat-flat-button color="accent" (click)="openEditEventDialog()">{{ ButtonAction.EDIT_EVENT }}</button>
+      </section>
+    </section>
+    <mat-divider class="divider"></mat-divider>
+    <hgroup>
+      <h2 class="event-info">Event Information</h2>
+      <mat-divider class="divider"></mat-divider>
+    </hgroup>
+    <article class="event-info-container">    
+      <figure class="event-photo-container" *ngIf="isValidImage()">
+        <figcaption class="grey-text">Event image</figcaption>
+        <img [src]="eventPhotoUrl" alt="Event Photo" class="event-photo"/>
+        <p class="text" *ngIf="isAdmin" (click)="openImageUpload()">Edit event image</p>
+      </figure >
+
+      <section class="information-container">
+        <section class="event-info">
+          <section class="event-info-item">
+            <p class="grey-text">Event Name</p>
+            <p>{{ event.eventName }}</p>
+          </section>
+          <section class="event-info-item">
+            <p class="grey-text">Event Type</p>
+            <p>{{ event.eventType }}</p>
+          </section>
+          <section class="event-info-item">
+            <p class="grey-text">Start date and Time</p>
+            <p> {{ event.startDate | date:'HH:mm dd MMMM yyyy' }} </p>
+          </section>
+          <section class="event-info-item">
+            <p class="grey-text">End date and Time</p>
+            <p> {{ event.endDate | date:'HH:mm dd MMMM yyyy' }} </p>
+          </section>
+        </section>
+        <section class="event-info">
+          <section class="event-info-item">
+            <p class="grey-text">Event description</p>
+            <p>{{ event.eventDescription }}</p>
+          </section>
+        </section>
+      </section>
+    </article>
+    <mat-divider class="divider"></mat-divider>
+
+    <article>
+      <section class="event-info-container" *ngFor="let eventLocation of eventLocations; let index = index">
+        <section class="event-info" *ngIf="eventLocation.location">
+          <section class="event-info-item">
+            <p class="grey-text">Location</p>
+            <p>{{ eventLocation.location }}</p>
+          </section>
+        </section>
+
+        <section class="address-info" *ngIf="isValidAddress(eventLocation)">
+          <section class="address-info-item">
+            <p class="grey-text">Address Line 1</p>
+            <p>{{ getAddressLine1(eventLocation) }}</p>
+          </section>
+          <section class="address-info-item">
+            <p class="grey-text">Address Line 2</p>
+            <p>{{ eventLocation.address.addressLine2 }}</p>
+          </section>
+          <section class="address-info-item">
+            <p class="grey-text">Suburb</p>
+            <p>{{ eventLocation.address.suburb }}</p>
+          </section>
+          <section class="address-info-item">
+            <p class="grey-text">City</p>
+            <p>{{ eventLocation.address.city }}</p>
+          </section>
+          <section class="address-info-item">
+            <p class="grey-text">Postal Code</p>
+            <p>{{ eventLocation.address.code }}</p>
+          </section>
+        </section>
+        <section class="address-info" *ngIf="isValidMeetingUrl(eventLocation)">
+          <section class="address-info-item">
+            <p class="grey-text">Meeting URL</p>
+            <a class="back-button">{{ eventLocation.meetingUrl }}</a>
+          </section>
+        </section>
+        <mat-divider class="divider" *ngIf="index < eventLocations.length - 1"></mat-divider>
+      </section>
+    </article>
+  </article>
+
+  <ng-container *ngIf="isAdmin">
+    <app-invitees
+      *ngIf="!isLoading"
+      [event]="event"
+      [bursars]="bursars"
+      [isPreview]="isPreview || eventNotEditable()"
+      (newInvitees)="handleNewInvitees($event)"
+      [inviteeFilters]="rsvpFilters"
+    ></app-invitees>
+  </ng-container>
+  <ng-container *ngIf="!isAdmin && event.rsvpDetails">
+    <mat-divider class="divider"></mat-divider>
+    <section class="top-name-section rsvp-top-section">
+      <h2 class="event-info">RSVP details</h2>
+      <button mat-flat-button color="accent" *ngIf="false">{{ ButtonAction.EDIT_RSVP }}</button>
+    </section>
+    <mat-divider class="divider"></mat-divider>
+
+    <section class="event-info">
+      <section class="event-info-item">
+        <p class="grey-text">RSVP</p>
+        <p>{{ event.rsvpDetails.rsvp }}</p>
+      </section>
+      <section class="event-info-item">
+        <p class="grey-text">Attendance location</p>
+        <p>{{ event.rsvpDetails.location }}</p>
+      </section>
+      <section class="event-info-item">
+        <p class="grey-text">Dietary requirements</p>
+        <p> {{ event.rsvpDetails.dietaryRequirements }} </p>
+      </section>
+    </section>
+    <section class="event-info">
+      <section class="event-info-item">
+        <p class="grey-text">Additional notes</p>
+        <p> {{ getNotes(event.rsvpDetails) }} </p>
+      </section>
+    </section>
+  </ng-container>
+
+</main>
+
+<app-loader></app-loader>

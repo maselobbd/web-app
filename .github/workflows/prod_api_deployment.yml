@@ -1,0 +1,42 @@
+name: Deploy Production API
+
+on:
+  workflow_dispatch:
+    inputs:
+      runId:
+        description: 'Enter workflow run id:'
+        required: true
+
+jobs:
+  download_deploy_release:
+    runs-on: ubuntu-latest
+    name: Download artifacts and deploy to azure
+    steps:
+      - name: Download api artifact
+        id: daa
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-API
+          path: artifacts/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.inputs.runId }}
+      
+      - name: 'Deploy function app'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: 'prod-function-app-for-ukukhula'
+          slot-name: 'Production'
+          package: ./artifacts/api_release.zip
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7039F1C4CA9740919AFEA75F6281B308 }}
+
+      - name: Create release and upload API release asset
+        id: create_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +%y.%m.%d.%H)
+          if ! gh release view "Release-$DATE" > /dev/null; then
+            gh release create "Release-$DATE" --repo ${{ vars.REPO }}
+          fi
+          gh release upload "Release-$DATE" artifacts/api_release.zip --repo ${{ vars.REPO }}

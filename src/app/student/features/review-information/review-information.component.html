@@ -1,0 +1,225 @@
+<main class="form-container">
+  <section class="form-top-section">
+    <header class="stepper-container">
+      <section class="title-section">
+        <h1>Application form</h1>
+        <p>
+          Please provide the following information as an application for a
+          {{personalInfo.bursaryType}} bursary.
+        </p>
+      </section>
+
+      <app-stepper
+        #stepperRef
+        [context]="StepperContext.REVIEW_INFORMATION"
+        [formGroups]="{
+        applicationConfirmationForm: applicationConfirmationForm,
+        additionalInfoApplicationForm: additionalInfoApplicationForm
+        }"
+        [completedChecks]="{ step3: uploadSubmit }"
+      ></app-stepper>
+    </header>
+    <article
+      *ngIf="invalidStudent && spinnerDone"
+      class="invalidStudentMatcardContainer"
+    >
+      <mat-card>
+        <app-error-message
+          [errorMessage]="invalidStudentErrorMessage"
+        ></app-error-message>
+      </mat-card>
+    </article>
+
+    <ng-container *ngIf="!invalidStudent">
+      <article
+        class="personal-information-container information"
+        *ngIf="
+          personalInfo.firstName &&
+          personalInfo.lastName &&
+          genders &&
+          races &&
+          !errors &&
+          stepper.selectedIndex === 0
+        "
+      >
+        <mat-divider class="divider"></mat-divider>
+
+        <section>
+          <h1>Review Information</h1>
+          <p>
+            Please review and confirm that the following information that was
+            provided by your university is correct.
+            <br />
+            If any of the information is incorrect, please contact
+            Ukukhula&commat;bbd.co.za.
+          </p>
+        </section>
+        <h2>Personal Information</h2>
+        <mat-divider class="divider"></mat-divider>
+        <article class="personal-info">
+          <section class="personal-info-details">
+            <p class="personal-info-data-heading">Full Name</p>
+            <p class="personal-info-details-data">
+              {{ personalInfo.firstName }} {{ personalInfo.lastName }}
+            </p>
+          </section>
+          <section class="personal-info-details">
+            <p class="personal-info-data-heading">Email</p>
+            <p class="personal-info-details-data">
+              {{ personalInfo.Email }}
+            </p>
+          </section>
+        </article>
+
+        <h2 class="personal-info-heading">University Information</h2>
+        <mat-divider class="divider"></mat-divider>
+        <section class="personal-info-details">
+          <p class="personal-info-data-heading">University</p>
+          <p class="personal-info-details-data">
+            {{ personalInfo.University }}
+          </p>
+        </section>
+
+        <form [formGroup]="applicationConfirmationForm" class="checkbox-form">
+          <mat-card
+            class="review-info-mat-card"
+            formGroupName="confirmationCheckBox"
+          >
+            <mat-checkbox
+              color="primary"
+              (click)="onClick()"
+              formControlName="checkbox"
+            >
+              <h3 class="mat-checkbox-heading">
+                I confirm that the information above is correct
+              </h3>
+            </mat-checkbox>
+            <p class="errorMessage">{{errorMessage}}</p>
+          </mat-card>
+        </form>
+      </article>
+
+      <article class="invalidStudentContainer">
+        <mat-card *ngIf="invalidStudent && spinnerDone">
+          <app-error-message
+            [errorMessage]="invalidStudentErrorMessage"
+          ></app-error-message>
+        </mat-card>
+      </article>
+
+      <form
+        *ngIf="stepper.selectedIndex === 1"
+        class="additional-info"
+        [formGroup]="additionalInfoApplicationForm"
+      >
+        <app-additional-information
+          [races]="races"
+          [genders]="genders"
+          [titles]="titles"
+          [personalInfo]="personalInfo"
+          [formGroup]="additionalInfoApplicationForm"
+          [back]="back"
+          [degreeList]="degreeList"
+          [canRequestLocation]="allowMapRequests"
+        ></app-additional-information>
+      </form>
+
+      <article
+        *ngIf="stepper.selectedIndex === 2"
+        class="questionnaire-container"
+      >
+        <app-questionnaire
+          *ngIf="stepper.selectedIndex === 2"
+          [personalInfo]="personalInfo"
+          [questions]="questions"
+          [formGroup]="questionnaireForm"
+        ></app-questionnaire>
+      </article>
+    </ng-container>
+  </section>
+  <ng-container *ngIf="!invalidStudent">
+    <section
+      class="footer"
+      [ngClass]="{ 'footer-split': stepper.selectedIndex !== 0 }"
+    >
+      <ng-container *ngIf="stepper.selectedIndex !== 0">
+        <button
+          id="back-button"
+          mat-flat-button
+          color="accent"
+          class="footer-buttons back-button"
+          (click)="onBack()"
+        >
+          Back
+        </button>
+      </ng-container>
+      <section class="forward-progress-buttons">
+        <button
+          *ngIf="stepper.selectedIndex < 2"
+          mat-flat-button
+          color="primary"
+          class="footer-buttons"
+          (click)="onContinue()"
+          [disabled]="
+            stepper.selectedIndex === 0 &&
+            applicationConfirmationForm.valid &&
+            applicationConfirmationForm.get('confirmationCheckBox.checkbox')
+              ?.value
+              ? false
+              : stepper.selectedIndex === 1 &&
+                  applicationConfirmationForm.valid &&
+                  additionalInfoApplicationForm.valid &&
+                  additionalInfoApplicationForm.get(
+                    'termsAndConditionsPrivacyPolicy.termsAndConditionsCheckbox'
+                  )?.value &&
+                  additionalInfoApplicationForm.get(
+                    'termsAndConditionsPrivacyPolicy.privacyPolicyCheckbox'
+                  )?.value &&
+                  additionalInfoApplicationForm.get('documentation.matric')
+                    ?.value?.file &&
+                  additionalInfoApplicationForm.get(
+                    'documentation.proofOfIdentification'
+                  )?.value?.file &&
+                  additionalInfoApplicationForm.get(
+                    'documentation.academicRecord'
+                  )?.value?.file &&
+                  additionalInfoApplicationForm.get(
+                    'documentation.financialStatement'
+                  )?.value?.file
+                ? false
+                : stepper.selectedIndex === 2
+                  ? false
+                  : true
+          "
+        >
+          Continue
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          *ngIf="stepper.selectedIndex === 2"
+          class="footer-buttons submit-button"
+          (click)="onSubmit()"
+          [disabled]="
+            additionalInfoApplicationForm.valid &&
+            applicationConfirmationForm.get('confirmationCheckBox.checkbox')
+              .value &&
+            applicationConfirmationForm.valid &&
+            additionalInfoApplicationForm.get(
+              'termsAndConditionsPrivacyPolicy.termsAndConditionsCheckbox'
+            ).value &&
+            additionalInfoApplicationForm.get(
+              'termsAndConditionsPrivacyPolicy.privacyPolicyCheckbox'
+            ).value &&
+            questionnaireForm.valid
+              ? false
+              : true
+          "
+        >
+          Submit
+        </button>
+      </section>
+    </section>
+  </ng-container>
+</main>
+<app-loader></app-loader>

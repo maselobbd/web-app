@@ -1,0 +1,1327 @@
+<article class="information">
+  <mat-divider class="divider"></mat-divider>
+  <h1 class="heading">Additional Information</h1>
+  <section class="container">
+    <p class="confirm">
+      Please provide us with the following additional information
+    </p>
+    <form class="personalInfoForm" [formGroup]="additionalInfoApplicationForm">
+      <h2>Personal Information</h2>
+      <mat-divider class="divider"></mat-divider>
+
+      <section
+        class="personalInfoTitleIdNumber"
+        formGroupName="personalInformation"
+      >
+        <section class="titleOther">
+          <fieldset class="titleErrorFieldSet title">
+            <mat-form-field
+              appearance="outline"
+              subscriptSizing="dynamic"
+              class="additionalInfoFormFields"
+              required
+            >
+              <mat-label class="mat-label">Title</mat-label>
+              <mat-select placeholder="Select Title" formControlName="title"
+              (selectionChange)="addValidator($event)">
+                <mat-option *ngFor="let title of titles" [value]="title">{{
+                  title
+                }}</mat-option>
+
+              </mat-select>
+            </mat-form-field>
+            <mat-error
+              *ngIf="
+                additionalInfoApplicationForm
+                  .get('personalInformation')
+                  ?.get('title')?.touched &&
+                additionalInfoApplicationForm
+                  .get('personalInformation')
+                  ?.get('title')
+                  ?.hasError('required')
+              "
+              class="matError"
+            >
+              *Title {{ errorMessages.REQUIRED }}
+            </mat-error>
+            <mat-error
+              *ngIf="
+                additionalInfoApplicationForm
+                  .get('personalInformation')
+                  ?.get('title')
+                  ?.hasError('pattern')
+              "
+              class="matError"
+            >
+              {{ errorMessages.INVALID_ENTRY }}
+            </mat-error>
+          </fieldset>
+
+          <fieldset class="inputAndErrorFieldSet title"
+          *ngIf="
+            additionalInfoApplicationForm
+            .get('personalInformation.title')?.value === 'Other'
+            ">
+            <mat-form-field
+              appearance="outline"
+              subscriptSizing="dynamic"
+              class="additionalInfoFormFields"
+            >
+              <mat-label class="mat-label"
+                >Other</mat-label
+              >
+              <input matInput placeholder="Input other" formControlName="other"/>
+            </mat-form-field>
+            <mat-error
+              *ngIf="
+              additionalInfoApplicationForm
+              .get('personalInformation.other')?.touched &&
+              additionalInfoApplicationForm
+              .get('personalInformation.other')
+              ?.hasError('required')
+              "
+              class="matError"
+            >
+              *Other {{ errorMessages.REQUIRED }}
+            </mat-error>
+            <mat-error
+              *ngIf="
+              additionalInfoApplicationForm
+              .get('personalInformation.other')
+              ?.hasError('pattern')
+              "
+              class="matError"
+            >
+              {{ errorMessages.INVALID_ENTRY }}
+            </mat-error>
+          </fieldset>
+        </section>
+
+        <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields firstName name"
+          >
+            <mat-label class="mat-label mat-label-first-name"
+              >First Name</mat-label
+            >
+            <input matInput formControlName="firstName" />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('firstName')?.touched &&
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('firstName')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *First Name {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('firstName')
+                ?.hasError('pattern')
+            "
+            class="matError"
+          >
+            {{ errorMessages.INVALID_ENTRY }}
+          </mat-error>
+        </fieldset>
+        <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields lastName"
+          >
+            <mat-label class="mat-label">Last Name</mat-label>
+            <input matInput formControlName="lastName" />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('lastName')?.touched &&
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('lastName')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *Last Name {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('lastName')
+                ?.hasError('pattern')
+            "
+            class="matError"
+          >
+            {{ errorMessages.INVALID_ENTRY }}
+          </mat-error>
+        </fieldset>
+      </section>
+
+      <section
+        class="personalInfoGenderRace"
+        formGroupName="personalInformation">
+        <fieldset class="inputAndErrorFieldSet gender">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Gender</mat-label>
+            <mat-select placeholder="Select Gender" formControlName="gender">
+              <mat-option
+                *ngFor="let gender of genders; let i = index"
+                [value]="gender"
+                >{{ gender }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('gender')?.touched &&
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('gender')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *Gender {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('race')?.touched &&
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('race')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+          </mat-error>
+        </fieldset>
+
+        <fieldset class="inputAndErrorFieldSet">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Race</mat-label>
+            <mat-select placeholder="Select Race" formControlName="race">
+              <mat-option
+                *ngFor="let race of races; let i = index"
+                [value]="race"
+                >{{ race }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('race')?.touched &&
+              additionalInfoApplicationForm
+                .get('personalInformation')
+                ?.get('race')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *Race {{ errorMessages.REQUIRED }}
+          </mat-error>
+        </fieldset>
+      </section>
+
+      <section
+        class="inputAndErrorFieldSet"
+        formGroupName="personalInformation"
+      >
+        <p class="identityHeading">
+          Please input your Identification number (for non-South African
+          citizens, please select and input you passport number)
+        </p>
+        <mat-radio-group
+          formControlName="citizenShipControl"
+          aria-label="Select an option"
+          color="primary"
+        >
+          <mat-radio-button [value]="radioValue" name="identity">
+            South African ID number
+          </mat-radio-button>
+          <mat-radio-button [value]="!radioValue" name="identity">
+            Passport number
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <fieldset class="inputAndErrorFieldSet">
+          <mat-form-field
+            *ngIf="
+              additionalInfoApplicationForm.get(
+                'personalInformation.citizenShipControl'
+              )?.value
+            "
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields IdNumber">
+            <mat-label class="mat-label">ID number</mat-label>
+            <input
+              matInput
+              placeholder="Input ID number"
+              formControlName="idNumber"
+            />
+            
+          </mat-form-field>
+          <mat-error
+              *ngIf="
+                additionalInfoApplicationForm.get('personalInformation.idNumber')
+                  ?.touched &&
+                (additionalInfoApplicationForm
+                  .get('personalInformation.idNumber')
+                  ?.hasError('invalid') ||
+                  additionalInfoApplicationForm
+                    .get('personalInformation.idNumber')
+                    ?.hasError('minlength') ||
+                  additionalInfoApplicationForm
+                    .get('personalInformation.idNumber')
+                    ?.hasError('maxlength'))
+              "
+              class="matError"
+            >
+              {{ errorMessages.INVALID_ID }}
+            </mat-error>
+            <mat-error
+              *ngIf="
+                additionalInfoApplicationForm.get('personalInformation.idNumber')
+                  ?.touched &&
+                additionalInfoApplicationForm
+                  .get('personalInformation.idNumber')
+                  ?.hasError('required')
+              "
+              class="matError"
+            >
+              *ID number {{ errorMessages.REQUIRED }}
+            </mat-error>
+        </fieldset>
+      </section>
+
+      <section
+        class="personalInfoPassportDOB"
+        formGroupName="personalInformation">
+        <fieldset
+          class="inputAndErrorFieldSet passport">
+          <mat-form-field
+            *ngIf="
+              !additionalInfoApplicationForm.get(
+                'personalInformation.citizenShipControl'
+              )?.value
+            "
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields">
+            <mat-label class="mat-label">Passport number</mat-label>
+            <input
+              matInput
+              placeholder="Input Passport Number"
+              formControlName="passportNumber"
+            />
+          </mat-form-field>
+          <mat-error
+              *ngIf="
+                additionalInfoApplicationForm.get(
+                  'personalInformation.passportNumber'
+                )?.touched &&
+                additionalInfoApplicationForm
+                  .get('personalInformation.passportNumber')
+                  ?.hasError('pattern')
+              "
+              class="matError"
+            >
+              *Passport number is invalid
+          </mat-error>
+          <mat-error
+              *ngIf="
+                additionalInfoApplicationForm.get(
+                  'personalInformation.passportNumber'
+                )?.touched &&
+                additionalInfoApplicationForm
+                  .get('personalInformation.passportNumber')
+                  ?.hasError('required')
+              "
+              class="matError"
+            >
+              *Passport number {{ errorMessages.REQUIRED }}
+          </mat-error>
+        </fieldset>
+
+        <fieldset
+        class="inputAndErrorFieldSet">
+          <mat-form-field
+            class="additionalInfoFormFields"
+            *ngIf="
+              !additionalInfoApplicationForm.get(
+                'personalInformation.citizenShipControl'
+              )?.value
+            "
+            appearance="outline"
+            subscriptSizing="dynamic"
+          >
+            <mat-label class="mat-label mat-label-first-name"
+              >Date of birth</mat-label
+            >
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Select date of birth"
+              formControlName="dateOfBirth"
+              (dateChange)="updateDateOfBirth($event)"
+              [min]="minDate"
+              [max]="maxDate"
+              (click)="picker.open()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>arrow_drop_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-error
+              *ngIf="
+                additionalInfoApplicationForm.get(
+                  'personalInformation.dateOfBirth'
+                )?.touched &&
+                additionalInfoApplicationForm
+                  .get('personalInformation.dateOfBirth')
+                  ?.hasError('required')
+              "
+              class="matError"
+            >
+              *Date of birth {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+              *ngIf=" additionalInfoApplicationForm.get(
+                'personalInformation.dateOfBirth'
+              )?.touched &&
+                additionalInfoApplicationForm
+                  .get('personalInformation.dateOfBirth')
+                  ?.hasError('invalidBirthDate')
+              "
+              class="matError"
+            >
+              {{ errorMessages.MIN_AGE }}
+          </mat-error>
+          </fieldset>
+      </section>
+
+      <h2>Contact Number</h2>
+      <mat-divider class="divider"></mat-divider>
+
+      <section class="personalInfoContactNumber" formGroupName="contactNumber">
+        <fieldset class="contactNumberInputErrorSet countryCode">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Country Code</mat-label>
+            <input
+              matInput
+              placeholder="Input Code"
+              formControlName="countryCode"
+            />
+          </mat-form-field>
+        </fieldset>
+
+        <fieldset class="contactNumberInputErrorSet contactNumber">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Contact Number</mat-label>
+            <input
+              matInput
+              placeholder="Input Contact Number"
+              formControlName="phoneNumber"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('contactNumber')
+                ?.get('phoneNumber')?.touched &&
+              additionalInfoApplicationForm
+                .get('contactNumber')
+                ?.get('phoneNumber')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *Contact Number {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('contactNumber')
+                ?.get('phoneNumber')?.touched &&
+              additionalInfoApplicationForm
+                .get('contactNumber')
+                ?.get('phoneNumber')
+                ?.hasError('phoneNumber')
+            "
+            class="matError"
+          >
+            {{ errorMessages.INVALID_CONTACT_NUMBER }}
+          </mat-error>
+        </fieldset>
+      </section>
+      <ng-container *ngIf="isOnboarding">
+        <h2>Bursary information</h2>
+        <mat-divider class="divider"></mat-divider>
+  
+        <section class="personalInfoAddress" formGroupName="bursaryInformation">
+          <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields addressLine1">
+              <mat-form-field
+                subscriptSizing="dynamic"
+                appearance="outline"
+                class="personalInfoAddressInputFields"
+              >
+                <mat-label for="email">Input Email Address</mat-label>
+                <input
+                  matInput
+                  type="email"
+                  class="additionalInfoFormFields"
+                  formControlName="email"
+                />
+              </mat-form-field>
+              <mat-error
+                *ngIf="
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.invalid &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.touched &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.hasError('required')
+                "
+                class="error-message"
+              >
+                {{ errorMessages.EMAIL_REQUIRED }}
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.invalid &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.touched &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.hasError('email')
+                "
+                class="error-message"
+              >
+                {{ errorMessages.INVALID_EMAIL }}
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.hasError('unique')"
+                class="error-message"
+              >
+                {{ errorMessages.DUPLICATE_EMAILS }}
+              </mat-error>
+              <mat-error
+                *ngIf="userExists 
+                && !additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.hasError('duplicateEmail')
+                && !additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.hasError('required')
+                && additionalInfoApplicationForm.get('bursaryInformation')?.get('email')?.value"
+                class="error-message"
+              >
+                {{ errorMessages.EXISTING_STUDENT }}
+              </mat-error>
+          </fieldset>
+          <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields addressLine1">
+              <mat-form-field
+                subscriptSizing="dynamic"
+                appearance="outline"
+              >
+                <mat-label for="university">University</mat-label>
+                
+                <mat-select
+                  id="university"
+                  formControlName="university"
+                >
+                  <mat-option
+                    *ngFor="let university of universities"
+                    [value]="university"
+                  >
+                    {{ university }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error
+                *ngIf="
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('university')?.invalid &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('university')?.touched&&
+                  !additionalInfoApplicationForm.get('bursaryInformation')?.get('university')?.hasError('pattern')
+                "
+                class="error-message"
+              >
+                {{ errorMessages.UNIVERSITY_REQUIRED }}
+              </mat-error>
+          </fieldset>
+          <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields addressLine1">
+            <mat-form-field
+            subscriptSizing="dynamic"
+            appearance="outline"
+          >
+            <mat-label for="faculty">Faculty</mat-label>
+            
+            <mat-select
+              id="faculty"
+              formControlName="faculty"
+            >
+              <mat-option
+                *ngFor="let faculty of faculties"
+                [value]="faculty"
+              >
+                {{ faculty }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+              <mat-error
+                *ngIf="
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('faculty')?.invalid &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('faculty')?.touched&&
+                  !additionalInfoApplicationForm.get('bursaryInformation')?.get('faculty')?.hasError('pattern')
+                "
+                class="error-message"
+              >
+                {{ errorMessages.FACULTY_REQUIRED }}
+              </mat-error>
+              <mat-error
+              *ngIf="
+                 additionalInfoApplicationForm.get('bursaryInformation')?.get('faculty')?.hasError('pattern')&& !additionalInfoApplicationForm.get('bursaryInformation')?.get('faculty')?.hasError('required')
+              "
+              class="error-message"
+            >
+              {{ errorMessages.FACULTY_REQUIRED }}
+            </mat-error>
+          </fieldset>
+          <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields addressLine1">
+            <mat-form-field
+            subscriptSizing="dynamic"
+            appearance="outline"
+          >
+            <mat-label for="department">department</mat-label>
+            
+            <mat-select
+              id="department"
+              formControlName="department"
+            >
+              <mat-option
+                *ngFor="let department of departments"
+                [value]="department"
+              >
+                {{ department }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+              <mat-error
+                *ngIf="
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('department')?.invalid &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('department')?.touched&&
+                  !additionalInfoApplicationForm.get('bursaryInformation')?.get('department')?.hasError('pattern')
+                "
+                class="error-message"
+              >
+                {{ errorMessages.DEPARTMENT_REQUIRED }}
+              </mat-error>
+              <mat-error
+              *ngIf="
+                 additionalInfoApplicationForm.get('bursaryInformation')?.get('department')?.hasError('pattern')&& !additionalInfoApplicationForm.get('bursaryInformation')?.get('department')?.hasError('required')
+              "
+              class="error-message"
+            >
+             {{ errorMessages.DEPARTMENT_REQUIRED }}
+            </mat-error>
+          </fieldset>
+          <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields addressLine1">
+            <mat-form-field
+            subscriptSizing="dynamic"
+            id="faculty"
+            appearance="outline"
+          >
+            <mat-label for="Bursary amount">Bursary amount</mat-label>
+            <span matPrefix>R</span>
+            <input
+              matInput
+              type="number"
+              formControlName="amount"
+              [min]="1000"
+            />
+          </mat-form-field>
+              <mat-error
+                *ngIf="
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('amount')?.invalid &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('amount')?.touched
+                "
+                class="error-message"
+              >
+                {{ errorMessages.REQUIRED_BURSARY_AMOUNT }}
+              </mat-error>
+              <mat-error
+              *ngIf="
+                 additionalInfoApplicationForm.get('bursaryInformation')?.get('amount')?.hasError('pattern')&& !additionalInfoApplicationForm.get('bursaryInformation')?.get('amount')?.hasError('required')
+              "
+              class="error-message"
+            >
+              {{ errorMessages.REQUIRED_BURSARY_AMOUNT }}
+            </mat-error>
+          </fieldset>
+          <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields addressLine1">
+              <mat-form-field
+                subscriptSizing="dynamic"
+                id="bursaryType"
+                appearance="outline"
+              >
+                <mat-label for="Bursary type">Bursary type</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="bursaryType"
+                />
+              </mat-form-field>
+          </fieldset>
+          <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields addressLine1">
+              
+              <mat-form-field
+                  subscriptSizing="dynamic"
+                  id="bursaryTier"
+                  appearance="outline"
+                  class="postalCode"
+                >
+                  <mat-label for="bursaryTier">Bursary tier</mat-label>
+                  <mat-select 
+                    formControlName="bursaryTier"
+                  >
+                    <mat-option *ngFor="let tier of bursaryTiers" [value]="tier">
+                      {{ tier }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-error
+                *ngIf="
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('bursaryTier')?.invalid &&
+                  additionalInfoApplicationForm.get('bursaryInformation')?.get('bursaryTier')?.touched
+                "
+                class="error-message"
+              >
+                {{ errorMessages.REQUIRED_BURSARY_TIER }}
+              </mat-error>
+          </fieldset>
+        </section>
+      </ng-container>
+
+      <h2 class="additionalInfo">Address</h2>
+      <mat-divider class="divider"></mat-divider>
+
+      <section class="personalInfoAddress" formGroupName="address">
+        <fieldset
+          class="inputAndErrorFieldSet personalInfoAddressInputFields addressLine1"
+        >
+          <app-search-bar [control]="addressLine1Control" (updateAddress)="setAddress($event)" ></app-search-bar>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('address')
+                ?.get('addressLine1')
+                ?.hasError('required') &&
+              additionalInfoApplicationForm.get('address')?.get('addressLine1')
+                ?.touched
+            "
+            class="matError"
+          >
+            *Address Line 1 {{ errorMessages.REQUIRED }}
+          </mat-error>
+        </fieldset>
+
+        <fieldset
+          class="inputAndErrorFieldSet personalInfoAddressInputFields complexFlat"
+        >
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Complex/flat name(optional)</mat-label>
+            <input
+              matInput
+              placeholder="Input complex/flat name"
+              formControlName="complexFlat"
+            />
+          </mat-form-field>
+        </fieldset>
+
+
+        <fieldset
+          class="inputAndErrorFieldSet personalInfoAddressInputFields suburbDistrict"
+        >
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Suburb/District</mat-label>
+            <input
+              matInput
+              placeholder="Input suburb/district"
+              formControlName="suburbDistrict"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('address')
+                ?.get('suburbDistrict')
+                ?.hasError('required') &&
+              additionalInfoApplicationForm
+                .get('address')
+                ?.get('suburbDistrict')?.touched
+            "
+            class="matError"
+          >
+            *Suburb/District {{ errorMessages.REQUIRED }}
+          </mat-error>
+        </fieldset>
+
+        <fieldset
+          class="inputAndErrorFieldSet personalInfoAddressInputFields cityTown"
+        >
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">City/Town</mat-label>
+            <input
+              matInput
+              placeholder="Input city/town"
+              formControlName="cityTown"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('address')
+                ?.get('cityTown')
+                ?.hasError('required') &&
+              additionalInfoApplicationForm.get('address')?.get('cityTown')
+                ?.touched
+            "
+            class="matError"
+          >
+            *City/Town {{ errorMessages.REQUIRED }}
+          </mat-error>
+        </fieldset>
+
+        <fieldset class="inputAndErrorFieldSet personalInfoAddressInputFields postalCode">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields postalCode"
+          >
+            <mat-label class="mat-label">Postal Code</mat-label>
+            <input
+              matInput
+              placeholder="Input postal code"
+              formControlName="postalCode"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm.get('address')?.get('postalCode')
+                ?.touched &&
+              additionalInfoApplicationForm
+                .get('address')
+                ?.get('postalCode')
+                ?.hasError('pattern')
+            "
+            class="matError"
+          >
+            {{ errorMessages.INVALID_POSTAL_CODE }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('address')
+                ?.get('postalCode')
+                ?.hasError('required') &&
+              additionalInfoApplicationForm.get('address')?.get('postalCode')
+                ?.touched
+            "
+            class="matError"
+          >
+            *Postal Code {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('address')
+                ?.get('postalCode')
+                ?.hasError('maxlength') &&
+              additionalInfoApplicationForm.get('address')?.get('postalCode')
+                ?.touched
+            "
+            class="matError"
+          >
+            *{{ errorMessages.INVALID_SA_POSTAL_CODE }}
+          </mat-error>
+        </fieldset>
+      </section>
+
+      <h2 class="additionalInfo">University Information</h2>
+      <mat-divider class="divider"></mat-divider>
+
+      <section
+        class="personalInfoUniversityInformation"
+        formGroupName="universityInformation"
+      >
+        <fieldset class="inputAndErrorFieldSet degree">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Degree</mat-label>
+            <mat-select placeholder="Select Degree" formControlName="degree">
+              <mat-option *ngFor="let degree of degreeList" [value]="degree">{{
+                degree
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('degree')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('degree')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *Degree {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('degree')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('degree')
+                ?.hasError('pattern')
+            "
+            class="matError"
+          >
+            {{ errorMessages.INVALID_DEGREE }}
+          </mat-error>
+          <mat-form-field
+            *ngIf="
+              ['Other'].includes(
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('degree')?.value
+              )
+            "
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="other-input"
+          >
+            <mat-label class="mat-label">Please specify</mat-label>
+            <input matInput formControlName="other" />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('degree')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('other')
+                ?.hasError('required') &&
+              ['Other'].includes(
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('degree')?.value
+              )
+            "
+            class="matError"
+          >
+            *Degree {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('degree')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('other')
+                ?.hasError('pattern') &&
+              ['Other'].includes(
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('degree')?.value
+              )
+            "
+            class="matError"
+          >
+            {{ errorMessages.INVALID_DEGREE }}
+          </mat-error>
+        </fieldset>
+
+        <fieldset
+          class="inputAndErrorFieldSet universityInfoFormFields gradeAverage"
+        >
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Grade Average</mat-label>
+            <input
+              matInput
+              placeholder="Input Grade Average"
+              formControlName="gradeAverage"
+              appAllowNumbersOnly
+              (input)="onGradeAverageInput()"
+            />
+            <span matSuffix class="additionalInfoMatSuffix">%</span>
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('gradeAverage')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('gradeAverage')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *Grade Average {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('gradeAverage')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('gradeAverage')
+                ?.hasError('min')
+            "
+            class="matError"
+          >
+            {{ errorMessages.GRADE_AVERAGE_LOW }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('gradeAverage')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('gradeAverage')
+                ?.hasError('max')
+            "
+            class="matError"
+          >
+            {{ errorMessages.GRADE_AVERAGE_TOO_HIGH }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('gradeAverage')
+                ?.hasError('pattern') &&
+              !(
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('gradeAverage')
+                  ?.hasError('min') ||
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('gradeAverage')
+                  ?.hasError('max')
+              )
+            "
+          >
+            {{ errorMessages.INVALID_GRADE_AVERAGE }}
+          </mat-error>
+        </fieldset>
+
+        <fieldset class="inputAndErrorFieldSet yearOfStudy">
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields"
+          >
+            <mat-label class="mat-label">Year Of Study</mat-label>
+            <mat-select
+              placeholder="Select Year of Study"
+              formControlName="yearOfStudy"
+              (selectionChange)="setSelectedDegree($event)"
+            >
+              <mat-option value="1"> 1<sup>st</sup> Year </mat-option>
+              <mat-option value="2"> 2<sup>nd</sup> Year </mat-option>
+              <mat-option value="3"> 3<sup>rd</sup> Year </mat-option>
+              <mat-option value="4"> 4<sup>th</sup> Year </mat-option>
+              <mat-option value="Honors"> Honors </mat-option>
+              <mat-option value="Masters"> Masters </mat-option>
+              <mat-option value="Doctorate"> Doctorate </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('yearOfStudy')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('yearOfStudy')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *Year of study {{ errorMessages.REQUIRED }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('yearOfStudy')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('yearOfStudy')
+                ?.hasError('invalidYearOfStudy')
+            "
+            class="matError"
+          >
+            {{ errorMessages.INVALID_YEAR_OF_STUDY }}
+          </mat-error>
+        </fieldset>
+
+        <fieldset class="inputAndErrorFieldSet" >
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="additionalInfoFormFields universityInfoFormFields faculty"
+          >
+            <mat-label class="mat-label">Faculty</mat-label>
+            <input
+              matInput
+              placeholder="Input Faculty"
+              formControlName="faculty"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('faculty')?.touched &&
+              additionalInfoApplicationForm
+                .get('universityInformation')
+                ?.get('faculty')
+                ?.hasError('required')
+            "
+            class="matError"
+          >
+            *Faculty is {{ errorMessages.REQUIRED }}
+          </mat-error>
+        </fieldset>
+        <section class="duration-honors" *ngIf="!isOnboarding">
+          <fieldset class="inputAndErrorFieldSet duration">
+            <mat-form-field
+              appearance="outline"
+              subscriptSizing="dynamic"
+              class="additionalInfoFormFields"
+            >
+              <mat-label class="mat-label">What is the duration of your degree?</mat-label>
+              <mat-select
+                placeholder="Select duration"
+                formControlName="degreeDuration"
+                (selectionChange)="onDegreeDurationSelection($event)"
+              >
+                <mat-option *ngFor="let duration of durations" [value]="duration"> {{ duration }} Years </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error
+              *ngIf="
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('degreeDuration')?.touched &&
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('degreeDuration')
+                  ?.hasError('required')
+              "
+              class="matError"
+            >
+              *Duration {{ errorMessages.REQUIRED }}
+            </mat-error>
+            <mat-error
+              *ngIf="
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('degreeDuration')?.touched &&
+                additionalInfoApplicationForm
+                  .get('universityInformation')
+                  ?.get('degreeDuration')
+                  ?.hasError('invalidDuration')
+              "
+              class="matError"
+            >
+              {{ errorMessages.INVALID_DEGREE_DURATION }}
+            </mat-error>
+          </fieldset>
+          <p class="identityHeading" *ngIf="!confirmHonors">
+            Do you plan on pursuing an honors degree?
+          </p>
+          <mat-radio-group
+            aria-label="Select an option"
+            color="primary"
+            *ngIf="!confirmHonors"
+            formControlName="confirmHonors">
+            <mat-radio-button value="Yes" name="yes">
+              Yes
+            </mat-radio-button>
+            <mat-radio-button [checked]="true" value="No" name="no">
+              No
+            </mat-radio-button>
+            <mat-radio-button value="Not sure yet" name="not-sure-yet">
+              Not sure yet
+            </mat-radio-button>
+          </mat-radio-group>
+        </section>
+      </section>
+
+      <section class="additionalInfo">
+        <h2 class="documentationHeading">Documentation</h2>
+        <p class="additionalInfoDocumentationSubTitle">
+          Please provide the following documentation
+        </p>
+      </section>
+      <mat-divider class="divider"></mat-divider>
+      <section class="additionalInfoUploadFilesSection">
+        <app-upload-files
+          [fieldLabel]="'Matric Certificate'"
+          class="matricCertificate"
+          (fileEmitter)="receiveFile($event)"
+          [back]="back"
+          [matric]="matric"
+          *ngIf="!isOnboarding"
+        >
+        </app-upload-files>
+        <app-upload-files
+          [fieldLabel]="'Academic Record'"
+          (fileEmitter)="receiveFile($event)"
+          [back]="back"
+          [academicRecord]="academicRecord"
+          *ngIf="!isOnboarding"
+        >
+        </app-upload-files>
+        <app-upload-files
+          [fieldLabel]="'Proof Of Identification'"
+          class="proofOfIdentification"
+          (fileEmitter)="receiveFile($event)"
+          [back]="back"
+          [identity]="identity"
+        ></app-upload-files>
+        <app-upload-files
+        [fieldLabel]="'Financial Statement'"
+        (fileEmitter)="receiveFile($event)"
+        [back]="back"
+        [financial]="financial"
+        *ngIf="!isOnboarding"
+      ></app-upload-files>
+      <app-upload-files
+      [fieldLabel]="'contract'"
+      (fileEmitter)="receiveFile($event)"
+      [back]="back"
+      [financial]="financial"
+      *ngIf="isOnboarding"
+    ></app-upload-files>
+    <app-upload-files
+    [fieldLabel]="'payment'"
+    class="proofOfIdentification"
+    (fileEmitter)="receiveFile($event)"
+    [back]="back"
+    [financial]="financial"
+    *ngIf="isOnboarding"
+  ></app-upload-files>
+  <app-upload-files
+  [fieldLabel]="'invoice'"
+  (fileEmitter)="receiveFile($event)"
+  [back]="back"
+  [financial]="financial"
+  *ngIf="isOnboarding"
+></app-upload-files>
+      </section>
+    
+      <h2 class="additionalInfo termsAndConditionsHeading" *ngIf="!isOnboarding">
+        Terms & Conditions
+      </h2>
+      <mat-divider class="divider" *ngIf="!isOnboarding"></mat-divider>
+
+      <section
+        class="additionalInformationCheckBoxes"
+        formGroupName="termsAndConditionsPrivacyPolicy"
+        *ngIf="!isOnboarding"
+      >
+        <mat-checkbox
+          class="addtionalInformationCheckBox"
+          color="primary"
+          formControlName="termsAndConditionsCheckbox"
+        >
+          <p class="termsAndConditionsConfirmation">
+            I accept the
+            <a
+              class="TsCs"
+              [href]="urls.TERMS"
+              target="_blank"
+              >Terms and Conditions</a
+            >
+          </p>
+        </mat-checkbox>
+        <mat-checkbox
+          class="addtionalInformationCheckBox"
+          color="primary"
+          formControlName="privacyPolicyCheckbox"
+        >
+          <p class="termsAndConditionsConfirmation">
+            I accept the
+            <a
+              class="TsCs"
+              [href]="urls.PRIVACY_POLICY"
+              target="_blank"
+              >Privacy Policy</a
+            >
+          </p>
+        </mat-checkbox>
+      </section>
+    </form>
+    <p class="helpMessage" *ngIf="!isOnboarding">{{ helpMessage }}</p>
+  </section>
+</article>

@@ -1,0 +1,92 @@
+<mat-sidenav-container class="light-background">
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened" class="sidenav"
+    (closedStart)="toggleSideNavIndicator()"
+    *ngIf="!successScreenRoute()"
+    role="navigation"
+    [fixedInViewport]="true"
+    (mouseleave)="sidenav.close()"
+    [ngClass]="{'dark dark-background': darkNavBar()}"
+  >
+    <mat-toolbar class="side-nav-head">
+    <mat-icon 
+      [ngClass]="{'dark': darkNavBar()}"
+      (click)="sidenav.close()"
+      class="sidenav-back icon-hover"
+    >
+      keyboard_arrow_left
+    </mat-icon>
+    <a routerLink="/" class="logo">
+      <img
+        [src]="darkNavBar()
+        ? ImagePaths.BBD_LOGO_LIGHT
+        : ImagePaths.BBD_LOGO"
+        alt="Logo"
+        class="logo"
+        />
+      </a>
+    </mat-toolbar>
+    <section class="sidenav-section">
+        <mat-accordion>
+          <app-side-nav-sections
+            [dropdownData]="bursariesAndApplications"
+            [navTitle]="'Bursaries and applications'"
+            [isDark]="darkNavBar()"
+            >
+          </app-side-nav-sections>
+          <app-side-nav-sections
+            [dropdownData]="studentManagement"
+            [navTitle]="'Student management'"
+            [isDark]="darkNavBar()"
+            >
+          </app-side-nav-sections>
+          <app-side-nav-sections
+            [dropdownData]="funding"
+            [navTitle]="'Funding'"
+            [isDark]="darkNavBar()"
+          >
+          </app-side-nav-sections>
+          <app-side-nav-sections
+            [dropdownData]="reporting"
+            [navTitle]="'Reporting'"
+            [isDark]="darkNavBar()"
+          >
+          </app-side-nav-sections>
+          <app-side-nav-sections
+            [dropdownData]="profileManagement"
+            [navTitle]="'Profile management'"
+            [isDark]="darkNavBar()"
+          >
+          </app-side-nav-sections>
+          <app-side-nav-sections
+            [dropdownData]="events"
+            [navTitle]="'Events'"
+            [isDark]="darkNavBar()"
+          >
+          </app-side-nav-sections>
+        </mat-accordion>
+    </section>
+    <section class="log-out text-hover">
+      <mat-icon>logout</mat-icon>
+      <a (click)="logout()" [ngClass]="{'dark' : darkNavBar()}">
+        Log out
+      </a>
+    </section>
+  </mat-sidenav>
+
+  <mat-sidenav-content role="main">
+    <aside 
+      *ngIf="!successScreenRoute() && collapsed()"
+      [ngClass]="{'dark dark-background' : darkNavBar(), 'light-background': !darkNavBar()}"
+      class="sidenav-indicator" 
+      (mouseover)="sidenav.open()"
+    >
+      <mat-icon 
+        [ngClass]="{'dark' : darkNavBar()}"
+        class="sidenav-icon icon-hover"
+      >
+        menu
+      </mat-icon>
+    </aside>
+    <router-outlet class="main-content"></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

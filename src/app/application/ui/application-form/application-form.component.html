@@ -1,0 +1,436 @@
+<main class="form-container" *ngIf="showForm">
+  <article class="add-candidate" [ngClass]="{'admin' : isAdmin}">
+    <section class="form-title" (click)="toggleState()">
+      <ng-container
+        *ngIf="
+          applicationData.get('name')?.valid ||
+          applicationData.get('surname')?.valid;
+          else noName
+        "
+      >
+        <h1>
+          {{ formNumber }}.
+          {{ applicationData.get("name")?.value }}
+          {{ applicationData.get("surname")?.value }}
+        </h1>
+      </ng-container>
+      <ng-template #noName>
+        <section class="no-name">
+          <h2>{{ formNumber }}. Candidate {{ formNumber }}</h2>
+          <p *ngIf="applicationData.invalid && state ==='close'">
+            *The information for this candidate is incomplete
+          </p>
+        </section>
+      </ng-template>
+
+      <aside class="icons">
+        <mat-icon
+          (click)="deleteForm()"
+          [ngClass]="{ 'grey-icon': !canBeDeleted }"
+          >delete</mat-icon
+        >
+        <mat-icon
+          [class.open]="state === 'open'"
+          [class.close]="state === 'close'"
+        >
+          expand_more
+        </mat-icon>
+      </aside>
+    </section>
+    <form
+      [formGroup]="applicationData"
+      class="application-form"
+      *ngIf="state === 'open'"
+    >
+      <fieldset class="row-one">
+        <section class="name-container">
+          <mat-form-field
+            subscriptSizing="dynamic"
+            id="name"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="first-name">Input First Name</mat-label>
+            <input
+              matInput
+              type="text"
+              id="first-name{{ formNumber }}"
+              formControlName="name"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              applicationData.get('name')?.invalid &&
+              applicationData.get('name')?.touched&&
+              !applicationData.get('name')?.hasError('pattern')
+            "
+            class="error-message"
+          >
+            {{ errorMessages.FIRSTNAME }}
+          </mat-error>
+          <mat-error
+          *ngIf="
+             applicationData.get('name')?.hasError('pattern')&& !applicationData.get('name')?.hasError('required')
+          "
+          class="error-message"
+        >
+          {{ errorMessages.INVALID_FIRSTNAME }}
+        </mat-error>
+        </section>
+
+        <section class="lastname-container">
+          <mat-form-field
+            subscriptSizing="dynamic"
+            id="lastName"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="surname">Input surname</mat-label>
+            <input
+              matInput
+              type="text"
+              id="lastName{{ formNumber }}"
+              class="input-box"
+              formControlName="surname"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              applicationData.get('surname')?.invalid &&
+              applicationData.get('surname')?.touched&&
+              !applicationData.get('surname')?.hasError('pattern')
+            "
+            class="error-message"
+          >
+            {{ errorMessages.SURNAME }}
+          </mat-error>
+          <mat-error
+          *ngIf="
+             applicationData.get('surname')?.hasError('pattern')&& !applicationData.get('surname')?.hasError('required')
+          "
+          class="error-message"
+        >
+         {{ errorMessages.INVALID_SURNAME }}
+        </mat-error>
+        </section>
+      </fieldset>
+
+      <fieldset class="row-two">
+        <section class="email-container">
+          <mat-form-field
+            subscriptSizing="dynamic"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="email">Input Email Address</mat-label>
+            <input
+              matInput
+              type="email"
+              id="email{{ formNumber }}"
+              class="input-box"
+              formControlName="email"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              applicationData.get('email')?.invalid &&
+              applicationData.get('email')?.touched &&
+              applicationData.get('email')?.hasError('required')
+            "
+            class="error-message"
+          >
+            {{ errorMessages.EMAIL }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              applicationData.get('email')?.invalid &&
+              applicationData.get('email')?.touched &&
+              applicationData.get('email')?.hasError('email')
+            "
+            class="error-message"
+          >
+            {{ errorMessages.INVALID_EMAIL }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              applicationData.get('email')?.hasError('unique')"
+            class="error-message"
+          >
+            {{ errorMessages.DUPLICATE_EMAILS }}
+          </mat-error>
+          <mat-error
+            *ngIf="userExists 
+            && !applicationData.get('email')?.hasError('duplicateEmail')
+            && !applicationData.get('email')?.hasError('required')
+            && applicationData.get('email')?.value"
+            class="error-message"
+          >
+            {{ errorMessages.EXISTING_STUDENT }}
+          </mat-error>
+        </section>
+        <section class="university-container">
+          <mat-form-field
+            subscriptSizing="dynamic"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="university">University</mat-label>
+            
+            <mat-select
+              id="university"
+              formControlName="university"
+              *ngIf="!isOnboarding"
+            >
+              <mat-option
+                *ngFor="let university of universities"
+                [value]="university"
+              >
+                {{ university }}
+              </mat-option>
+            </mat-select>
+        
+            <input
+              matInput
+              id="university{{ formNumber }}"
+              *ngIf="isOnboarding"
+              [matAutocomplete]="uniAuto"
+              formControlName="university"
+            />
+            
+            <mat-autocomplete #uniAuto="matAutocomplete">
+              <mat-option
+                *ngFor="let university of filteredUniversities | async"
+                [value]="university"
+              >
+                {{ university }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </section>
+      </fieldset>
+      <fieldset class="row-one" *ngIf="isOnboarding">
+        <section class="name-container">
+          <mat-form-field
+            subscriptSizing="dynamic"
+            id="faculty"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="faculty">Input Faculty</mat-label>
+            <input
+              matInput
+              type="text"
+              id="faculty{{ formNumber }}"
+              formControlName="faculty"
+              
+              [matAutocomplete]="facAuto"
+            />
+          </mat-form-field>
+          <mat-autocomplete #facAuto="matAutocomplete">
+            <mat-option *ngFor="let faculty of filteredFaculties | async" [value]="faculty">
+              {{ faculty }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-hint *ngIf="applicationData.get('university')?.value && !(filteredFaculties | async)?.length">
+            No faculties available
+          </mat-hint>
+          <mat-error
+            *ngIf="
+              applicationData.get('faculty')?.invalid &&
+              applicationData.get('faculty')?.touched&&
+              !applicationData.get('faculty')?.hasError('pattern')
+            "
+            class="error-message"
+          >
+            {{ errorMessages.FIRSTNAME }}
+          </mat-error>
+          <mat-error
+          *ngIf="
+             applicationData.get('faculty')?.hasError('pattern')&& !applicationData.get('faculty')?.hasError('required')
+          "
+          class="error-message"
+        >
+          {{ errorMessages.INVALID_FIRSTNAME }}
+        </mat-error>
+        </section>
+
+        <section class="lastname-container" >
+          <mat-form-field
+            subscriptSizing="dynamic"
+            id="department"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="department">Input department</mat-label>
+            <input
+              matInput
+              type="text"
+              id="department{{ formNumber }}"
+              class="input-box"
+              formControlName="department"
+              
+              [matAutocomplete]="depAuto"
+            />
+            <mat-autocomplete #depAuto="matAutocomplete">
+              <mat-option *ngFor="let department of filteredDepartments | async" [value]="department">
+                {{ department }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-hint *ngIf="applicationData.get('faculty')?.value && !(filteredDepartments | async)?.length">
+              No departments available
+            </mat-hint>
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              applicationData.get('department')?.invalid &&
+              applicationData.get('department')?.touched&&
+              !applicationData.get('department')?.hasError('pattern')
+            "
+            class="error-message"
+          >
+            {{ errorMessages.SURNAME }}
+          </mat-error>
+          <mat-error
+          *ngIf="
+             applicationData.get('department')?.hasError('pattern')&& !applicationData.get('department')?.hasError('required')
+          "
+          class="error-message"
+        >
+         {{ errorMessages.INVALID_SURNAME }}
+        </mat-error>
+        </section>
+      </fieldset>
+      <fieldset class="row-one" *ngIf="isOnboarding">
+        <section class="name-container">
+          <mat-form-field
+            subscriptSizing="dynamic"
+            id="faculty"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="Bursary amount">Bursary amount</mat-label>
+            <input
+              matInput
+              type="number"
+              id="amount{{ formNumber }}"
+              formControlName="amount"
+              [min]="1000"
+            />
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              applicationData.get('amount')?.invalid &&
+              applicationData.get('amount')?.touched
+            "
+            class="error-message"
+          >
+            {{ errorMessages.REQUIRED_BURSARY_AMOUNT }}
+          </mat-error>
+          <mat-error
+          *ngIf="
+             applicationData.get('amount')?.hasError('pattern')&& !applicationData.get('amount')?.hasError('required')
+          "
+          class="error-message"
+        >
+          {{ errorMessages.REQUIRED_BURSARY_AMOUNT }}
+        </mat-error>
+        </section>
+        <section class="name-container" *ngIf="isOnboarding">
+          <mat-form-field
+            subscriptSizing="dynamic"
+            id="bursaryType"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="Bursary type">Bursary type</mat-label>
+            <input
+              matInput
+              type="text"
+              id="bursaryType{{ formNumber }}"
+              formControlName="bursary"
+              [defaultValue]="bursaryType"
+            />
+          </mat-form-field>
+         
+        </section>
+
+          <section class="name-container" >
+          <mat-form-field
+              subscriptSizing="dynamic"
+              id="bursaryTier"
+              appearance="outline"
+              class="input-box"
+              
+            >
+              <mat-label for="bursaryTier">Bursary tier</mat-label>
+              <mat-select
+                id="bursaryTier{{ formNumber }}"
+                formControlName="bursaryTier"
+              >
+                <mat-option *ngFor="let tier of bursaryTiers" [value]="tier">
+                  {{ tier }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error
+            *ngIf="
+              applicationData.get('bursaryTier')?.invalid &&
+              applicationData.get('bursaryTier')?.touched
+            "
+            class="error-message"
+          >
+            {{ errorMessages.REQUIRED_BURSARY_TIER }}
+          </mat-error>
+        </section>
+
+      </fieldset>
+
+      <fieldset class="row-three" *ngIf="!isOnboarding">
+        <section class="motivation-container">
+          <mat-form-field
+            subscriptSizing="dynamic"
+            appearance="outline"
+            class="input-box"
+          >
+            <mat-label for="motivation">Motivation</mat-label>
+            <textarea
+              matInput
+              type="Motivation"
+              id="Motivation{{ formNumber }}"
+              class="input-box"
+              formControlName="motivation"
+            ></textarea>
+          </mat-form-field>
+          <mat-error
+            *ngIf="
+              applicationData.get('motivation')?.touched &&
+              applicationData.get('motivation')?.hasError('required')"
+            class="error-message"
+          >
+            {{ errorMessages.MOTIVATION }}
+          </mat-error>
+        </section>
+      </fieldset>
+    </form>
+    <section *ngIf="isOnboarding">
+    <mat-slide-toggle [(ngModel)]="uploadStudentFinancialDocs">Upload student financial documents</mat-slide-toggle>
+    </section>
+    <section class="documents" *ngIf="uploadStudentFinancialDocs">
+      <app-upload-files
+        [fieldLabel]="'Payment'"
+        (fileEmitter)="receiveFile($event)"
+      >
+    </app-upload-files>
+    <app-upload-files
+      [fieldLabel]="'Invoice'"
+      (fileEmitter)="receiveFile($event)"
+    >
+    </app-upload-files>
+    <app-upload-files
+      [fieldLabel]="'Contract'"
+      (fileEmitter)="receiveFile($event)"
+    ></app-upload-files>
+  </section>
+  </article>
+</main>
+<app-loader></app-loader>

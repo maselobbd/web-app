@@ -1,0 +1,20 @@
+<app-landing-screen [backgroundImageUrl]="backgroundImageUrl">
+  <section class="contents-container">
+    <section class="contents">
+      <section class="title">
+        <h1>Forbidden</h1>
+        <p>Apologies, but access to the site is currently restricted.</p>
+        <p>Please try login again or go back home.</p>
+        <section class="buttons">
+          <button id="button" mat-flat-button color="primary" (click)="login()">
+            Login
+          </button>
+          <button id="button" mat-flat-button color="primary" [routerLink]="['/']">
+            Home
+          </button>
+        </section>
+      </section>
+      <br />
+    </section>
+  </section>
+</app-landing-screen>

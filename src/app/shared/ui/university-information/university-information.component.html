@@ -1,0 +1,218 @@
+<section *ngIf="student.status !== awaitingStudentResponse">
+  <ng-container *ngIf="!enableEdit">
+    <h2 class="university">University Information</h2>
+    <mat-divider class="divider"></mat-divider>
+    <mat-grid-list rowHeight="5rem" class="custom-grid" [gridCols]="gridCols">
+      <mat-grid-tile>
+        <p class="grey-text">University</p>
+        <p>{{ student.university }}</p>
+      </mat-grid-tile>
+      <ng-container *ngIf="shouldShowDetails">
+        <mat-grid-tile>
+          <p class="grey-text">Degree</p>
+          <p>{{ student.degree || '-' }}</p>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <p class="grey-text">Faculty</p>
+          <p>{{ student.faculty || '-' }}</p>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <p class="grey-text">Current Year of Study</p>
+          <p>{{ getYearOfStudyString(student.yearOfStudy) || '-' }}</p>
+        </mat-grid-tile>
+      </ng-container>
+    </mat-grid-list>
+    <mat-grid-list
+      *ngIf="isAdmin && shouldShowDetails"
+      rowHeight="5rem"
+      class="custom-grid"
+      [gridCols]="gridCols"
+    >
+      <mat-grid-tile>
+        <p class="grey-text">Degree duration</p>
+        <p>{{ student.degreeDuration }}</p>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <p class="grey-text">Intent to pursue honors</p>
+        <p>{{ student.confirmHonors }}</p>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </ng-container>
+
+ <ng-container *ngIf="enableEdit">
+  <h2 class="university">Edit University Information</h2>
+  <mat-divider class="divider"></mat-divider>
+  <form [formGroup]="editDetailsForm">
+    <mat-grid-list rowHeight="7rem" class="custom-grid" [gridCols]="gridCols">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" class="fit-content-field">
+          <mat-label>University</mat-label>
+          <input matInput formControlName="university" name="university" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <ng-container *ngIf="shouldShowDetails">
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" class="fit-content-field">
+            <mat-label>Degree</mat-label>
+            <input matInput formControlName="degree" name="degree">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" class="fit-content-field">
+            <mat-label>Faculty</mat-label>
+            <input matInput formControlName="faculty" name="faculty">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" class="fit-content-field">
+            <mat-label>Current Year of Study</mat-label>
+            <input matInput type="number" formControlName="yearOfStudy" name="yearOfStudy">
+          </mat-form-field>
+        </mat-grid-tile>
+      </ng-container>
+    </mat-grid-list>
+    <mat-grid-list
+      *ngIf="isAdmin && shouldShowDetails"
+      rowHeight="7rem"
+      class="custom-grid"
+      [gridCols]="gridCols"
+    >
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" class="fit-content-field">
+          <mat-label>Degree duration</mat-label>
+          <input matInput type="number" formControlName="degreeDuration" name="degreeDuration">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" class="fit-content-field">
+          <mat-label>Intent to pursue honors</mat-label>
+          <input matInput formControlName="honors" name="confirmHonors">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" class="fit-content-field">
+          <mat-label>Department</mat-label>
+          <input matInput formControlName="department" name="department">
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</ng-container>
+
+  <section *ngIf="isNonStudentRole && shouldShowDetails">
+    <h2 class="supporting-documents">Supporting Documents</h2>
+    <ng-container class="supporting-docs-container">
+      <section class="btn-tile" *ngIf="isDocumentAvailable('Matric Certificate')">
+        <section class="doc-type-view">
+          <p class="support-text">Matric Certificate</p>
+          <button
+            mat-flat-button
+            color="accent"
+            (click)="viewDocument('Matric Certificate')"
+          >
+            View
+          </button>
+        </section>
+        <section class="calculated-average">
+          <p class="average" *ngIf="getAverageGrade('matric'); else noAverageMatric">
+            <strong>Average grade:</strong>
+            {{ averages ? averages["matric"] : null }}%
+          </p>
+          <ng-template #noAverageMatric>
+            <p class="icon">Unable to process document</p>
+            <mat-icon
+              color="primary"
+              aria-label="Info"
+              matTooltip="We were unable to calculate the average on this document using our tool, please verify manually"
+              >info_outline</mat-icon
+            >
+          </ng-template>
+        </section>
+      </section>
+
+      <section class="btn-tile">
+        <section class="doc-type-view" *ngIf="isDocumentAvailable('Academic Record')">
+          <p class="support-text">Academic Record</p>
+          <button
+            mat-flat-button
+            color="accent"
+            (click)="viewDocument('Academic Record')"
+          >
+            View
+          </button>
+        </section>
+        <section class="calculated-average" *ngIf="isDocumentAvailable('Academic Record')">
+          <p
+            class="average"
+            *ngIf="getAverageGrade('academicRecord'); else noAverageAcademic"
+          >
+            <strong>Average grade:</strong>
+            {{ averages ? averages["academicRecord"] : null }}%
+          </p>
+          <ng-template #noAverageAcademic>
+            <p class="icon">Unable to process document</p>
+            <mat-icon
+              color="primary"
+              aria-label="Info"
+              matTooltip="We were unable to calculate the average on this document using our tool, please verify manually"
+              >info_outline</mat-icon
+            >
+          </ng-template>
+        </section>
+      </section>
+
+      <section class="btn-tile" *ngIf="isDocumentAvailable('Proof of Identification')">
+        <section class="doc-type-view">
+          <p class="support-text">Proof of Identification</p>
+          <button
+            mat-flat-button
+            color="accent"
+            (click)="viewDocument('Proof of Identification')"
+          >
+            View
+          </button>
+        </section>
+        <section class="calculated-average"></section>
+      </section>
+
+      <section class="btn-tile" *ngIf="isDocumentAvailable('Financial Statement')">
+        <section class="doc-type-view">
+          <p class="support-text">Financial Statement</p>
+          <button
+            mat-flat-button
+            color="accent"
+            (click)="viewDocument('Financial Statement')"
+          >
+            View
+          </button>
+        </section>
+        <section class="calculated-average"></section>
+      </section>
+    </ng-container>
+  </section>
+
+  <ng-content select="[Documentation]"></ng-content>
+  <ng-content select="[documentationContent]"></ng-content>
+  <ng-content select="[history]"></ng-content>
+
+  <section *ngIf="shouldShowQuestionnaire">
+    <h2 class="quesionnaire-section">Questionnaire</h2>
+    <mat-divider class="divider view-here-divider"></mat-divider>
+    <section class="view-responses">
+      <p class="view-here">
+        {{
+          role === 'student'
+            ? 'View your answers to the questionnaire here:'
+            : "View the student’s answers to the questionnaire here:"
+        }}
+      </p>
+      <button
+        mat-flat-button
+        color="accent"
+        (click)="viewQuestionnaire()"
+      >
+        View
+      </button>
+    </section>
+  </section>
+</section>

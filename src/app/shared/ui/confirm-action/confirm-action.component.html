@@ -1,0 +1,26 @@
+<h2 class="matDialogTitle" >{{dialogTitle}}</h2>
+<mat-dialog-content>
+    <p class="matDialogSubtitle">
+     {{dialogContent}}
+    </p>
+    <form [formGroup]="inputFormGroup" *ngIf="dialogType == dialogTypeEnum.CONFIRM_WITH_INPUT">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Enter reason</mat-label>
+        <textarea
+          matInput
+          type="text"
+          formControlName="input"
+        ></textarea>
+      </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions">
+  <button
+    mat-flat-button
+    mat-dialog-close
+    color="accent"
+  >
+    cancel
+  </button>
+  <button mat-flat-button color="primary" [disabled]="!inputFormGroup.valid && dialogType===dialogTypeEnum.CONFIRM_WITH_INPUT" (click)="confirm()">{{dialogType===dialogTypeEnum.CONFIRM_WITH_INPUT?"Save":"Confirm"}}</button>
+</mat-dialog-actions>

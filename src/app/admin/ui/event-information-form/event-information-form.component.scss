@@ -1,0 +1,168 @@
+.events-stepper-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.event-date-time-container,
+.online-meeting-url-container,
+.rsvp-information {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+h3 {
+  font-weight: bold;
+}
+
+event-date-time-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-name-type {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+
+  .event-name {
+    width: 100%;
+  }
+  .event-type {
+    width: 100%;
+  }
+}
+
+.event-description-image {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+
+  .event-description {
+    width: 100%;
+  }
+  .event-image {
+    width: 100%;
+    height: 100%
+  }
+  .description-image-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+.location-title-radio {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.event-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+textarea {
+  resize: none;
+}
+
+.online-meeting-url-container {
+  width: 100%;
+
+  .meeting-url {
+    width: 100%;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.search-box {
+  padding-bottom: 1rem;
+  width: 100%;
+}
+
+.rsvp-checkboxes {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputAndErrorFieldSet {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .event-name-type {
+    flex-direction: column;
+  }
+
+  .event-description-image {
+    flex-direction: column;
+
+    .description-image-container {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 1rem;
+    }
+  }
+
+  .event-date {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    mat-form-field,
+    app-time-picker {
+      width: 100%;
+    }
+
+    span {
+      display: none;
+    }
+  }
+
+  .location-title-radio {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-name-type {
+    gap: 0.5rem;
+  }
+
+  .event-description-image {
+    gap: 0.5rem;
+
+    .description-image-container {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 1rem;
+    }
+  }
+
+  .event-date {
+    gap: 0.5rem;
+
+    mat-form-field,
+    app-time-picker {
+      min-width: unset;
+    }
+  }
+
+  .rsvp-checkboxes {
+    gap: 0.5rem;
+  }
+}

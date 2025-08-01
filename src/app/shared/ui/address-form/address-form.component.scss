@@ -1,0 +1,42 @@
+.address-information {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 1rem;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .address-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    width: 100%;
+  }
+}
+
+.grey-icon {
+  color: var(--background-color);
+}
+.mat-icon {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.inputAndErrorFieldSet {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .address-information {
+    .address-row {
+      flex-direction: column;
+    }
+  }
+}

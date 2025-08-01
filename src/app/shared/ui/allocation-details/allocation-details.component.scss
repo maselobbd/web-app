@@ -1,0 +1,49 @@
+.matDivider {
+  width: 7.5rem;
+  height: 1.5rem;
+  margin-right: 0.7rem;
+  border-radius: 0.5rem;
+}
+
+.progressBarMatDivider {
+  background: var(--primary-color);
+  margin-top: 0;
+  height: 1.4rem;
+  border-radius: 0.5rem;
+  margin-bottom: -1.4rem;
+  position: relative;
+  z-index: 999;
+}
+
+.matCardContent {
+  margin: 0.7rem 0;
+}
+
+::ng-deep .mdc-linear-progress__bar-inner {
+  border-radius: 0.5rem;
+}
+
+.progressBar {
+  border-radius: 0.5rem;
+  --mdc-linear-progress-active-indicator-height: 1.4rem;
+  --mdc-linear-progress-track-height: 1.4rem;
+  --mdc-linear-progress-track-color: var(--primary-dark-color);
+  --mdc-linear-progress-active-indicator-color: var(--accent-color);
+}
+
+.giveWarning {
+  border-radius: 0.5rem;
+  --mdc-linear-progress-active-indicator-height: 1.4rem;
+  --mdc-linear-progress-track-height: 1.4rem;
+  --mdc-linear-progress-active-indicator-color: var(--warn-color);
+  --mdc-linear-progress-active-indicator-radius: 0.5rem;
+}
+
+.matGridList {
+  color: var(--primary-color);
+  margin: 1rem;
+}
+
+.progressBarSection {
+  padding-bottom: 0.2rem;
+}

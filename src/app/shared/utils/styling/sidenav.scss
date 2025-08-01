@@ -1,0 +1,29 @@
+@import "../../../../theme/component-dark-theme.scss";
+
+.section-text {
+    color: map-get(map-get($map: $component-dark-accent-palette, $key: contrast), $key: 50);
+}
+
+.dark {
+    color: map-get($map: $component-dark-accent-palette, $key: 50);;
+}
+
+.dark-background {
+    background-color: map-get($map: $component-dark-primary-palette, $key: 400);
+}
+
+.light-background {
+    background-color: map-get(map-get($map: $component-dark-primary-palette, $key: contrast),$key: 50);
+}
+
+@media (hover: hover){
+    .icon-hover:hover {
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .text-hover:hover {
+        border-radius: 0.6rem;
+        background: rgba(0, 0, 0, 0.1);
+    }
+}

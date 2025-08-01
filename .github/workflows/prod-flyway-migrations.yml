@@ -1,0 +1,37 @@
+name: Prod Flyway Migration
+
+on:
+    workflow_dispatch:
+
+jobs:
+    FlywayMigration:
+        name: Run Flyway Migration
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Continuous Integration Flyway Migration
+              run: >-
+                  docker run --rm
+                  --volume ${{ github.workspace }}/db/migrations:/flyway/sql:ro
+                  redgate/flyway
+                  -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
+                  -url="${{ secrets.DB_URL_PROD }}"
+                  -user="${{ secrets.DB_USERNAME_PROD }}"
+                  -password="${{ secrets.DB_PASSWORD_PROD }}" migrate
+
+            - name: Zip migration scripts
+              run: zip db_migrations.zip db/migrations/ -r
+
+            - name: Create release and upload DB release asset
+              id: create_release
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                DATE=$(date +%Y.%m.%d.%H)
+                if ! gh release view "Release-$DATE" > /dev/null; then
+                  gh release create "Release-$DATE" --repo ${{ vars.REPO }}
+                fi
+                gh release upload "Release-$DATE" db_migrations.zip --repo ${{ vars.REPO }}

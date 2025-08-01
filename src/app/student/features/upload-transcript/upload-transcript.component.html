@@ -1,0 +1,74 @@
+<main class="upload-main">
+<article class="upload-files-container"> 
+    <header class="transcript-upload-header">
+        <h2>
+            Upload academic transcript
+        </h2>
+        <p>
+            Please upload your most recent academic transcript and ensure that the correct
+        </p>
+    </header>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <section class="transcript-upload-subheader">
+        <h3 class="transcript-upload-subheading">
+            Upload documentation
+        </h3>
+        <p>
+            Please provide the following documentation.
+        </p>
+    </section>
+
+    <mat-divider class="divider"></mat-divider>   
+
+    <section class="upload-file-field">
+        <form [formGroup]="transcriptForm"
+        class="transcript-form">
+            <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="transcript-type">
+                <mat-label>Academic transcript type</mat-label>
+                <mat-select
+                formControlName="transcriptTypes"
+                placeholder="Select transcript type">
+                    <mat-option *ngFor="let semester of semesters"
+                    value="{{semester}}">
+                        {{ semester }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="
+                transcriptForm.get('transcriptTypes')?.touched &&
+                transcriptForm.get('transcriptTypes')?.hasError('required')">
+                    *Transcript type {{ messages.REQUIRED }}
+                </mat-error>
+            </mat-form-field>
+        </form>
+
+        <app-upload-files
+            [fieldLabel]="'Academic Transcript'"
+            class="proofOfIdentification"
+            (fileEmitter)="receiveFile($event)"
+            class="upload-field"
+        ></app-upload-files>
+    </section>
+</article>
+<footer class="footer-container-final">
+    <button mat-flat-button
+    class="continue-button"
+    [ngClass]="
+    {
+        'continue-button': transcriptForm.valid,
+        'disabled-button': !transcriptForm.valid
+    }
+    "
+    (click)="uploadTranscript()"
+    [disabled]="
+        !transcriptForm.valid
+    ">
+        Continue
+    </button>
+</footer>
+</main>
+<app-loader></app-loader>

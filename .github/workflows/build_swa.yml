@@ -1,0 +1,38 @@
+name: Build and upload SWA artifacts
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'db/**'
+      - 'api/**'
+      - '.github/**'
+      - 'README.md'
+      - 'GUIDLINES.md'
+      - '.gitignore'
+      - 'AzureBlue/**'
+      - 'documentation/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v4
+
+      - name: Build SWA
+        run: |
+          yarn
+          yarn build
+          cp staticwebapp.config.json dist/ukukhula/browser
+          zip swa_release.zip dist/ -r
+
+      - name: Upload QA SWA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-SWA
+          path: swa_release.zip
+          if-no-files-found: error
+          

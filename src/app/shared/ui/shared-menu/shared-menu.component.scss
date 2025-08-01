@@ -1,0 +1,29 @@
+  .bursary-funds-arrow {
+    align-items: center;
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+  .bursary-funds-arrow-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 0 0 0.5rem;
+  }
+  .bursary-funds-arrow-container {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+  .label{
+    font-size: 1rem;
+  }
+  .white-label {
+    color: white;
+  }
+  .black-label {
+    color: black;
+  }
+  .menu{
+    cursor: pointer;
+    display: flex;
+  }

@@ -1,0 +1,16 @@
+.Fund-distribution{
+    margin: 0;
+  }
+  .student-info-more,
+  .student-info-less {
+    display: flex;
+  }
+  .student-info-item,
+  .amount {
+    flex: 1;
+  }
+
+  .grey-text {
+    text-align: left;
+    color: grey;
+  }

@@ -1,0 +1,280 @@
+<ng-container [ngSwitch]="fundAllocationStep">
+  <mat-dialog-content *ngSwitchCase="fundAllocationSteps.ALLOCATION_STEP_1">
+    <h2 class="matDialogTitle">{{ fundAllocationsTitles.MOVE_FUNDS_INPUT }}</h2>
+    <p class="matDialogSubtitle">{{ fundAllocationsTitles.MOVE_FUNDS_INPUT_SUB }}</p>
+    <form [formGroup]="moveFundsForm" class="fundAllocationsForm">
+      <p class="allocateToFrom">{{ fundAllocationsTitles.FROM }}</p>
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        class="fromUniversity"
+      >
+        <mat-label class="mat-label">{{ fundAllocationsTitles.SELECT_DEPARTMENT }}</mat-label>
+        <mat-select
+          placeholder="Select department"
+          formControlName="fromDepartment"
+        >
+          <mat-option *ngFor="let department of fundData.activeDepartmentNames" value="{{ department }}">
+            {{ department }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-error class="invalidMoveReallocateAmountError" *ngIf="
+          moveFundsForm
+            .get('fromDepartment')
+            ?.touched &&
+          moveFundsForm
+            .get('fromDepartment')
+            ?.hasError('required')
+        ">
+        *{{ fundAllocationsTitles.SELECT_DEPARTMENT }} {{ fundAllocationsMessages.REQUIRED }}
+      </mat-error>
+      <p class="allocateToFrom">{{ fundAllocationsTitles.TO }}</p>
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        class="toUniversity"
+      >
+        <mat-label class="mat-label">{{ fundAllocationsTitles.SELECT_DEPARTMENT }}</mat-label>
+        <mat-select
+          placeholder="Select department"
+          formControlName="toDepartment"
+        >
+          <mat-option *ngFor="let department of fundData.activeDepartmentNames" value="{{ department }}">{{ department }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-error class="invalidMoveReallocateAmountError" *ngIf="
+          moveFundsForm
+            .get('toDepartment')
+            ?.touched &&
+          moveFundsForm
+            .get('toDepartment')
+            ?.hasError('required')
+        ">
+        *{{ fundAllocationsTitles.SELECT_UNIVERSITY }} {{ fundAllocationsMessages.REQUIRED }}
+      </mat-error>
+      <mat-error class="invalidMoveReallocateAmountError" *ngIf="moveFundsForm.get('fromDepartment')?.value.includes(moveFundsForm.get('toDepartment')?.value) && (moveFundsForm.get('toDepartment')?.touched) && (moveFundsForm.get('fromDepartment')?.value && moveFundsForm.get('toDepartment')?.value)">
+        *{{ fundAllocationsTitles.SELECT_DEPARTMENT }} {{ fundAllocationsMessages.UNIQUE }}
+      </mat-error>
+    </form>
+    <mat-dialog-actions class="matDialogActions">
+      <button
+        mat-flat-button
+        (click)="handleCancel()"
+        matDialogClose
+        class="matDialogActionButton fundAllocationsPrimaryColorItems"
+      >
+        {{ fundAllocationButtons.CANCEL }}
+      </button>
+      <button
+        mat-flat-button
+        (click)="handleNext()"
+        class="matDialogActionButton fundAllocationsPrimaryColorItems"
+        [ngClass]="{
+          enabledButton: ((moveFundsForm.get('fromDepartment')?.value && moveFundsForm.get('toDepartment')?.value) || moveFundsForm.valid) && (moveFundsForm.get('fromDepartment')?.value !== moveFundsForm.get('toDepartment')?.value)
+        }"
+        [disabled]="
+        !(((moveFundsForm.get('fromDepartment')?.value && moveFundsForm.get('toDepartment')?.value) || moveFundsForm.valid) && (moveFundsForm.get('fromDepartment')?.value !== moveFundsForm.get('toDepartment')?.value))
+        "
+      >
+        {{ fundAllocationButtons.NEXT }}
+      </button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+
+  <mat-dialog-content *ngSwitchCase="fundAllocationSteps.ALLOCATION_STEP_2">
+    <section class="matDialogTitleSection">
+      <mat-icon class="fundAllocationsPrimaryColorItems matDialogTitleSectionItems" (click)="handleBack()">chevron_left</mat-icon>
+      <h2 class="matDialogTitle matDialogTitleSectionItems" (click)="handleBack()">
+        {{ fundAllocationsTitles.MOVE_FUNDS_AMOUNT }}
+      </h2>
+    </section>
+
+    <p class="matDialogSubtitle">
+      {{ fundAllocationsTitles.MOVE_FUNDS_AMOUNT_SUB }}
+    </p>
+
+    <section class="allocationsDetails">
+      <p class="allocateToFrom reallocateToFrom">{{ fundAllocationsTitles.FROM }}</p>
+      <p class="allocateToFrom reallocateToFrom">{{ fundAllocationsTitles.CURRENT_ALLOCATION }} </p>
+    </section>
+
+    <section class="allocationsDetails">
+      <p class="allocateToFrom"> {{ moveFundsForm.get('fromDepartment')?.value }} </p>
+      <p class="allocateToFrom"> {{ checkDecimals(filterDepartmentAmounts(moveFundsForm.get('fromDepartment')?.value)) | customCurrency }} </p>
+    </section>
+
+    <p class="allocateToFrom reallocateToFrom">{{ fundAllocationsTitles.TO }}</p>
+    <section class="allocationsDetails">
+      <p class="allocateToFrom"> {{ moveFundsForm.get('toDepartment')?.value }} </p>
+      <p class="allocateToFrom"> {{ checkDecimals(filterDepartmentAmounts(moveFundsForm.get('toDepartment')?.value)) | customCurrency }} </p>
+    </section>
+
+    <mat-divider class="allocationsMatDivider"></mat-divider>
+
+    <form class="fundAllocationsForm" [formGroup]="moveFundsForm">
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        class="matDialogFormField"
+      >
+        <mat-label class="matDialogMatLabel"> {{ fundAllocationsTitles.INPUT_FUNDS }} </mat-label>
+        <span matPrefix class="prefix">R &nbsp;</span>
+        <input
+          type="number"
+          matInput
+          appAllowNumbersOnly
+          class="matDialogInputField"
+          formControlName="moveFundsInput"
+          (input)="handleOnInput()"
+          [value]="
+          moveFundsForm.get('moveAll')?.value
+          ? filterDepartmentAmounts(moveFundsForm.get('fromDepartment')?.value)
+          : ''
+          "
+          class="moveInput"
+        />
+      </mat-form-field>
+      <mat-error class="invalidMoveReallocateAmountError" *ngIf="
+          moveFundsForm
+            .get('moveFundsInput')
+            ?.touched &&
+          moveFundsForm
+            .get('moveFundsInput')
+            ?.hasError('required')
+        ">
+        *{{ fundAllocationsTitles.INPUT_FUNDS }} {{ fundAllocationsMessages.REQUIRED }}
+      </mat-error>
+      <mat-error class="invalidMoveReallocateAmountError" *ngIf="moveFundsForm.get('moveFundsInput')?.touched && moveFundsForm.get('moveFundsInput')?.hasError('min')">
+        {{ fundAllocationsMessages.MIN_AMOUNT }} {{ universityMaxAllocationCap.MIN_AMOUNT | customCurrency }}
+      </mat-error>
+      <mat-error class="invalidMoveReallocateAmountError" *ngIf="moveFundsForm.get('moveFundsInput')?.touched && moveFundsForm.get('moveFundsInput')?.hasError('max')">
+        {{ fundAllocationsMessages.MAX_AMOUNT }} {{ universityMaxAllocationCap.MAX_MOVE_AMOUNT | customCurrency }}
+      </mat-error>
+
+      <mat-error class="invalidMoveReallocateAmountError" *ngIf="moveFundsDepartments.length > 0 && moveFundsForm.valid">
+        *Please enter a valid amount. {{ moveFundsDepartments[0].name }} only has {{ moveFundsDepartments[0].amount | customCurrency }} remaining, please resolve approved / pending applications before moving funds.
+      </mat-error>
+    </form>
+    <section [formGroup]="moveFundsForm"
+             class="move-all-checkbox-section">
+      <p class="move-all">{{ fundAllocationsTitles.MOVE_AVAILABLE_FUNDS }}</p>
+      <mat-checkbox formControlName="moveAll"
+                    color="primary"
+                    (change)="handleSetInput($event)"></mat-checkbox>
+    </section>
+    <mat-dialog-actions class="matDialogActions">
+      <button
+        mat-flat-button
+        (click)="handleCancel()"
+        matDialogClose
+        class="matDialogActionButton fundAllocationsPrimaryColorItems"
+      >
+        {{ fundAllocationButtons.CANCEL }}
+      </button>
+      <button
+        mat-flat-button
+        (click)="handleNext()"
+        class="matDialogActionButton fundAllocationsPrimaryColorItems"
+        [ngClass]="{
+          enabledButton: moveFundsForm.valid
+        }"
+        [disabled]="
+        !moveFundsForm.valid
+        "
+      >
+        {{ fundAllocationButtons.NEXT }}
+      </button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+
+  <mat-dialog-content *ngSwitchCase="fundAllocationSteps.CONFIRM_ALLOCATION">
+
+    <section class="matDialogTitleSection">
+      <mat-icon class="fundAllocationsPrimaryColorItems matDialogTitleSectionItems"  (click)="handleBack()">chevron_left</mat-icon>
+      <h2 class="matDialogTitle matDialogTitleSectionItems"  (click)="handleBack()">
+        {{ fundAllocationsTitles.CONFIRM_MOVE }}
+      </h2>
+    </section>
+
+    <p class="matDialogSubtitle reallocateSubtitle">
+      {{ fundAllocationsTitles.CONFIRM_MOVE_SUB }}
+    </p>
+
+
+    <section
+      class="transferAmountContainer"
+    >
+      <p class="reallocateToFrom transferAmount">{{ fundAllocationsTitles.AMOUNT }}</p>
+      <p class="allocateToFrom amount"> {{ moveFundsForm.get('moveFundsInput')?.value | customCurrency }} </p>
+    </section>
+
+    <mat-divider class="allocationsMatDivider"></mat-divider>
+
+    <ng-container
+      *ngIf="moveFundsForm.valid && moveFundsDepartments.length === 0"
+    >
+
+      <section class="allocationToFromItem allocationEntityFrom">
+        <p class="reallocateToFrom oldNew">{{ fundAllocationsTitles.FROM }}</p>
+        <p class="allocateToFrom">{{ moveFundsForm.get('fromDepartment')?.value }}</p>
+      </section>
+
+      <article class="allocationToFromContainer">
+
+        <section class="allocationToFromItem oldNewAllocationFrom oldNewContainer">
+          <p class="reallocateToFrom oldNew">{{ fundAllocationsTitles.OLD_ALLOCATION }}</p>
+          <p class="reallocateToFrom oldNew">{{ fundAllocationsTitles.NEW_ALLOCATION }}</p>
+        </section>
+
+        <section class="allocationToFromItem oldNewAmountContainer">
+          <p class="oldNew"> {{ checkDecimals(filterDepartmentAmounts(moveFundsForm.get('fromDepartment')?.value)) | customCurrency }} </p>
+          <p class="allocateToFrom oldNew"> {{ checkDecimals(filterDepartmentAmounts(moveFundsForm.get('fromDepartment')?.value) - moveFundsForm.get('moveFundsInput')?.value) | customCurrency }} </p>
+        </section>
+
+      </article>
+
+      <section class="allocationToFromItem allocationEntityFrom">
+        <p class="reallocateToFrom oldNew">{{ fundAllocationsTitles.TO }}</p>
+        <p class="allocateToFrom">{{ moveFundsForm.get('toDepartment')?.value }}</p>
+      </section>
+
+      <article class="allocationToFromContainer">
+        <section class="allocationToFromItem oldNewAllocationFrom oldNewContainer">
+          <p class="reallocateToFrom oldNew">{{ fundAllocationsTitles.OLD_ALLOCATION }}</p>
+          <p class="reallocateToFrom oldNew">{{ fundAllocationsTitles.NEW_ALLOCATION }}</p>
+        </section>
+
+        <section class="allocationToFromItem oldNewAmountContainer">
+          <p class="oldNew"> {{ checkDecimals(filterDepartmentAmounts(moveFundsForm.get('toDepartment')?.value)) | customCurrency }} </p>
+          <p class="allocateToFrom oldNew"> {{ checkDecimals(filterDepartmentAmounts(moveFundsForm.get('toDepartment')?.value) + moveFundsForm.get('moveFundsInput')?.value) | customCurrency }} </p>
+        </section>
+      </article>
+
+    </ng-container>
+
+    <mat-dialog-actions class="matDialogActions">
+      <button
+        mat-flat-button
+        (click)="handleCancel()"
+        matDialogClose
+        class="matDialogActionButton fundAllocationsPrimaryColorItems"
+      >
+        {{ fundAllocationButtons.CANCEL }}
+      </button>
+      <button
+        mat-flat-button
+        class="matDialogActionButton fundAllocationsPrimaryColorItems"
+        (click)="handleConfirm()"
+        [ngClass]="{
+          enabledButton: moveFundsForm.touched && moveFundsForm.valid
+        }"
+        [disabled]="
+        !(moveFundsForm.touched && moveFundsForm.valid)
+        "
+      >
+        {{ fundAllocationButtons.CONFIRM }}
+      </button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+</ng-container>

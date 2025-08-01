@@ -1,0 +1,122 @@
+<main>
+  <section class="upload-container">
+    <form [formGroup]="yearOfStudyForm" class="fundAllocationsForm">
+      <mat-form-field appearance="outline" class="fundAllocationsFormField">
+        <mat-label>Year of study</mat-label>
+        <mat-select formControlName="yearOfStudy">
+          <mat-option *ngFor="let year of docsYears" [value]="year">
+            {{ year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <button mat-flat-button color="primary" (click)="navigateToTranscriptUploads()">
+      Upload academic transcript
+    </button>
+  </section>
+
+  <section>
+    <section *ngIf="hasDocument('Matric Certificate') || hasDocument('Academic Record')" >
+      <h2 >Academic documentation</h2>
+      <mat-divider class="divider"></mat-divider>
+      <ng-container class="supporting-docs-container" >
+        <section class="btn-tile" *ngIf="hasDocument('Matric Certificate')">
+          <section class="doc-type-view">
+            <p class="support-text">Matric Certificate</p>
+            <button mat-flat-button color="accent" (click)="viewDocument('Matric Certificate')">
+              View
+            </button>
+          </section>
+          <section class="calculated-average">
+            <p class="average" *ngIf="averages.matric">
+              <strong>Average grade:</strong> {{ averages.matric }}%
+            </p>
+          </section>
+        </section>
+  
+        <section class="btn-tile" *ngIf="hasDocument('Academic Record')">
+          <section class="doc-type-view">
+            <p class="support-text">Academic Record</p>
+            <button mat-flat-button color="accent" (click)="viewDocument('Academic Record')">
+              View
+            </button>
+          </section>
+          <section class="calculated-average">
+            <p class="average" *ngIf="averages?.academicRecord !== undefined && averages.academicRecord > 0">
+              <strong>Average grade:</strong>
+              {{ averages.academicRecord }}%
+            </p>
+            
+          </section> 
+        </section>
+      </ng-container>
+    </section>
+
+    <ng-container *ngIf="hasBursaryDocuments()">
+      <h2>Bursary documentation</h2>
+      <mat-divider class="divider"></mat-divider>
+
+      <section class="documentation-buttons contract" *ngIf="contract">
+        <p class="invoices-payments contract-heading">Contract</p>
+        <button mat-flat-button color="accent" (click)="viewDocument('Contract')">View</button>
+      </section>
+
+      <mat-divider class="documentation-divider" *ngIf="contract"></mat-divider>
+
+      <section *ngIf="hasInvoices()">
+        <p class="invoices-payments">Invoices</p>
+        <ng-container *ngFor="let invoice of getInvoices()">
+          <section class="documentation-buttons expense-types">
+            <p class="support-text">{{ invoice.label }}</p>
+            <button mat-flat-button color="accent" (click)="viewDocument(invoice.type)">
+              View
+            </button>
+          </section>
+        </ng-container>
+      </section>
+
+      <mat-divider class="documentation-divider"  *ngIf="hasInvoices()"></mat-divider>
+
+      <section *ngIf="hasPayments()">
+        <p class="invoices-payments">Proof of payments</p>
+        <ng-container *ngFor="let payment of getPayments()">
+          <section class="documentation-buttons expense-types">
+            <p class="support-text">{{ payment.label }}</p>
+            <button mat-flat-button color="accent" (click)="viewDocument(payment.type, 'payment')">
+              View
+            </button>
+          </section>
+        </ng-container>
+      </section>
+    </ng-container>
+
+    <h2>Personal documentation</h2>
+    <mat-divider class="divider"></mat-divider>
+    <section class="btn-tile" *ngIf="hasDocument('Proof of Identification')">
+      <section class="doc-type-view">
+        <p class="support-text">Proof of Identification</p>
+        <button
+          mat-flat-button
+          color="accent"
+          (click)="viewDocument('Proof of Identification')"
+        >
+          View
+        </button>
+      </section>
+      <section class="calculated-average"></section>
+    </section>
+    <section class="btn-tile" *ngIf="hasDocument('Financial Statement')">
+      <section class="doc-type-view">
+        <p class="support-text">Financial Statement</p>
+        <button
+          mat-flat-button
+          color="accent"
+          (click)="viewDocument('Financial Statement')"
+        >
+          View
+        </button>
+      </section>
+      <section class="calculated-average"></section>
+    </section>
+</section>
+</main>

@@ -1,0 +1,152 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.add-candidate {
+  padding: 1.25rem;
+  width: 87vw;
+  border-radius: 0.438rem;
+}
+.add-candidate.admin {
+  width: 80vw;
+}
+.application-form {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.icons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+}
+.mat-icon {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+.grey-icon {
+  color: grey; /* Change color to grey */
+}
+.row-one {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-left: 0;
+  gap: 0.625rem;
+
+  .lastname-container {
+    width: 100%;
+  }
+  .name-container {
+    width: 100%;
+  }
+}
+.row-three {
+  padding-right: 0;
+  padding-left: 0;
+  margin-right: 0;
+}
+.no-name {
+  display: inline-flex;
+  gap: 0.5rem;
+  p {
+    padding: 0;
+    align-self: center;
+    color: var(--warn-color);
+  }
+}
+.clear {
+  color: var(--mat-select-enabled-arrow-color);
+}
+
+.input-box .mat-form-field-underline {
+  position: relative;
+}
+
+.input-box .error-message {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  gap: 0.625rem;
+  bottom: 0;
+  left: 0.625rem;
+  font-size: 0.75;
+  color: var(--warn-color);
+}
+
+.form-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  :host {
+    font-size: 100%;
+    font-family: inherit;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    height: 1.5rem;
+    outline: none;
+  }
+
+  .open {
+    transition: 0.3s transform ease-in-out;
+    transform: rotate(180deg);
+  }
+
+  .close {
+    transition: 0.3s transform ease-in-out;
+    transform: rotate(0);
+  }
+}
+.row-two {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.625rem;
+  padding-left: 0;
+  .email-container {
+    width: 100%;
+  }
+  .university-container {
+    width: 100%;
+  }
+}
+
+.mat-mdc-form-field-error {
+  height: 0.6rem;
+}
+fieldset {
+  border: none;
+}
+.input-box {
+  text-decoration-color: #9e9e9e;
+  border-inline-color: #424242;
+  border-width: 1px;
+  background-color: #ffffff;
+  border-color: #424242;
+  width: 100%;
+}
+
+.documents{
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 860px) {
+  .row-one {
+    flex-wrap: wrap;
+  }
+  .row-two {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .documents {
+    display: flex;
+    flex-direction: column;
+  }
+}

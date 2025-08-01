@@ -1,0 +1,38 @@
+name: QA Flyway Migration
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - db/migrations/**
+    workflow_dispatch:
+
+jobs:
+    FlywayMigration:
+        name: Run Flyway Migration
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Continuous Integration Flyway Migration
+              run: >-
+                  docker run --rm
+                  --volume ${{ github.workspace }}/db/migrations:/flyway/sql:ro
+                  redgate/flyway
+                  -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
+                  -url="${{ secrets.DB_URL_QA }}"
+                  -user="${{ secrets.DB_USERNAME_QA }}"
+                  -password="${{ secrets.DB_PASSWORD_QA }}" migrate
+
+            - name: Zip migration scripts
+              run: zip db_migrations.zip db/migrations/ -r
+
+            - name: Upload DB artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: artifact-DB
+                path: db_migrations.zip
+                if-no-files-found: error

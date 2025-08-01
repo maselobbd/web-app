@@ -1,0 +1,14 @@
+<mat-stepper *ngIf="stepperReady && steps.length" linear labelPosition="bottom" (selectionChange)="onStepChange($event)" class="stepper">
+  <ng-container *ngFor="let step of steps">
+    <mat-step
+    [label]="step.label"
+    [stepControl]="step.formGroup"
+    [completed]="step.completed()"
+    >
+    <ng-template matStepLabel>
+      <p class="custom-step-label">{{ step.label }}</p>
+      <p class="application-info">{{ step.description }}</p>
+    </ng-template>
+    </mat-step>
+  </ng-container>
+</mat-stepper>

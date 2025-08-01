@@ -1,0 +1,55 @@
+<mat-card
+  class="fundAllocationMatCard"
+  *ngIf="activeUniversities"
+>
+  <section class="fundAllocation flexContainer">
+    <section class="fundDetails flexContainer">
+      <p class="totalFundAllocation flexContainer">
+        <span class="total">Total fund allocation:</span>
+        <span class="totalAmountAllocated">
+          {{ totalAmountAllocated | customCurrency }}</span
+        >
+      </p>
+      <mat-divider [vertical]="true" class="vertical-divider"></mat-divider>
+      <p class="totalFundAllocation flexContainer">
+        <span class="total">Allocated funds:</span>
+        <span class="totalAmountAllocated"> 
+          {{ allocatedAmount| customCurrency }}</span
+        >
+      </p>
+      <mat-divider [vertical]="true" class="vertical-divider"></mat-divider>
+      <p class="totalFundAllocation flexContainer">
+        <span class="total">Unallocated funds:</span>
+        <span class="totalAmountAllocated">
+          {{ unallocatedAmount | customCurrency }}</span
+        >
+      </p>
+    </section>
+    <button
+      mat-button
+      *ngIf="filterYear >= currentYear"
+      [matMenuTriggerFor]="allocationOptions"
+      class="addToAllocationButton">
+      <mat-icon class="moreVertIcon">more_vert</mat-icon>
+    </button>
+    <mat-menu #allocationOptions="matMenu" class="matMenu">
+      <button 
+      class="allocationOption" 
+      (click)="openDialog(actions.ALLOCATE)"  
+      mat-button>
+        Allocate funds
+      </button>
+      <button 
+      class="allocationOption" 
+      (click)="openDialog(actions.REALLOCATE)"  
+      mat-button>
+        Reallocate funds
+      </button>
+      <button class="allocationOption" 
+      (click)="openDialog(actions.ADD)" 
+      mat-button>
+        Add to total fund allocation
+      </button>
+    </mat-menu>
+  </section>
+</mat-card>

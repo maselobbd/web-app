@@ -1,0 +1,40 @@
+.calculated-average.center-content {
+  display: flex;
+  justify-content: center;
+}
+.icon {
+  margin: 0 1rem; 
+}
+.view-responses {
+  display: flex;
+  align-items: center;
+  gap: 2%;
+  margin-top: 1rem;
+}
+.view-here {
+  font-weight: bold;
+  margin: 0;
+}
+.quesionnaire-section {
+  margin-top: 1rem;
+}
+.supporting-documents {
+  margin-left: 0;
+}
+
+.fit-content-field {
+  width: fit-content; /* Makes the form field only as wide as its content */
+  width: 90%;
+}
+
+@media screen and (max-width: 1024px) {
+  .view-responses {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .grey-text {
+      margin: 0;
+  }
+}

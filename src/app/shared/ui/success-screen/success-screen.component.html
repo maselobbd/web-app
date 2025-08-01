@@ -1,0 +1,47 @@
+<app-landing-screen [backgroundImageUrl]="backgroundImageUrl">
+  <section class="contents-container">
+    <section class="contents">
+      <section class="title">
+        <img
+          class="home-page-logo"
+          [src]="logoUrl"
+          alt="Logo"
+        />
+        <h1 *ngIf="!redirectToTranscriptSuccess &&  role !== 'student' && !redirectToStudentSuccess">
+          {{ successMessages.STUDENT_HEADING }}
+        </h1>
+      
+        <h1 *ngIf="redirectToStudentSuccess">
+          {{ successMessages.STUDENT_HEADING }}
+        </h1>
+        
+        
+        <section *ngIf="redirectToTranscriptSuccess || role === 'student'" class="transcript-message-container">
+          <h1>
+            {{ successMessages.TRASCRIPT_HEADING }}
+          </h1>
+          <p >
+            {{ successMessages.TRANSCRIPT_SUBHEADING }}
+          </p>
+          <p>
+            {{ successMessages.TRASCRIPT_HELP }}
+          </p>
+          <section class="button-container">
+            <button mat-flat-button color="primary" (click)="navigateToBursaryInfo()"> Return to My bursary</button>
+          </section>
+        </section>
+      </section>
+      <br />
+
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="navigateToBursaries()"
+        *ngIf="!redirectToStudentSuccess && isLoggedIn && !successScreenRoute()"
+      >
+        View my applications
+      </button>
+      <p class="error-text">{{ errorMessage }}</p>
+    </section>
+  </section>
+</app-landing-screen>

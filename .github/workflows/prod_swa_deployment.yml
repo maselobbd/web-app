@@ -1,0 +1,47 @@
+name: Deploy Production SWA
+
+on:
+  workflow_dispatch:
+    inputs:
+      runId:
+        description: 'Enter workflow run id:'
+        required: true
+
+jobs:
+  download_deploy_release:
+    runs-on: ubuntu-latest
+    name: Download artifacts and deploy to azure
+    steps:
+      - name: Download swa artifact
+        id: dsa
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-SWA
+          path: artifacts/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.inputs.runId }}
+
+      - name: Unzip SWA for deployment
+        run: |
+          unzip artifacts/swa_release.zip
+      
+      - name: 'Deploy static web app'
+        id: swa
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_POND_098594803 }}
+          action: "upload"
+          app_location: "dist/ukukhula/browser"
+          skip_app_build: true
+        
+      - name: Create release and upload SWA release asset
+        id: create_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +%Y.%m.%d.%H)
+          if ! gh release view "Release-$DATE" > /dev/null; then
+            gh release create "Release-$DATE" --repo ${{ vars.REPO }}
+          fi
+          gh release upload "Release-$DATE" artifacts/swa_release.zip --repo ${{ vars.REPO }}

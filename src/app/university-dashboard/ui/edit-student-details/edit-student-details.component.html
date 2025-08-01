@@ -1,0 +1,128 @@
+<mat-dialog-content class="view-details-container" *ngIf="student">
+  <section class="top-name-section">
+    <h1 class="candidate-name">{{ DialogTitles.EDIT_APPLICATION }}</h1>
+  </section>
+  <article class="bursar-details">
+    <h2 class="info">Bursary Information</h2>
+    <mat-divider class="divider"></mat-divider>
+
+    <section class="amount-status">
+      <section class="bursar-amount">
+        <section class="bursary-amount">
+          <p>Bursary amount</p>
+          <p class="details">{{ student.amount | customCurrency }}</p>
+        </section>
+        <mat-form-field appearance="outline" class="year">
+          <mat-label>Year of Study</mat-label>
+          <mat-select [value]="this.student.yearOfFunding">
+            <mat-option
+              *ngFor="let year of years"
+              [value]="year"
+              ngDefaultControl
+              (click)="onYearChange(year)"
+            >
+              {{ year }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+
+      <section class="bursar-amount">
+        <section class="status">
+          <p class="'title">Status</p>
+          <p class="details">{{ student.status }}</p>
+        </section>
+        <section>
+          <p class="'title">Application date</p>
+          <p class="details">
+            {{ student.applicationDate }}
+          </p>
+        </section>
+      </section>
+    </section>
+    <h2 class="info">Personal information</h2>
+    <mat-divider class="divider"></mat-divider>
+
+    <section class="personal-info">
+      <form [formGroup]="applicationForm" class="application-form">
+        <section class="row-one">
+          <section class="name-container">
+            <mat-form-field
+              subscriptSizing="dynamic"
+              id="name"
+              appearance="outline"
+              class="input-box"
+            >
+              <mat-label for="first-name">Input First Name</mat-label>
+              <input matInput type="text" formControlName="name" />
+              <mat-error> First Name is required. </mat-error>
+            </mat-form-field>
+          </section>
+
+          <section class="lastname-container">
+            <mat-form-field
+              subscriptSizing="dynamic"
+              id="surname"
+              appearance="outline"
+              class="input-box"
+            >
+              <mat-label for="surname">Input Surname</mat-label>
+              <input matInput type="text" formControlName="surname" />
+              <mat-error> Surname is required. </mat-error>
+            </mat-form-field>
+          </section>
+        </section>
+
+        <section class="row-two">
+          <section class="email-container">
+            <mat-form-field
+              subscriptSizing="dynamic"
+              appearance="outline"
+              class="input-box"
+            >
+              <mat-label for="email">Input Email Address</mat-label>
+              <input matInput type="email" formControlName="email" />
+              <mat-error> Please enter a valid email address. </mat-error>
+            </mat-form-field>
+          </section>
+          <section class="phone-container">
+            <mat-form-field
+              subscriptSizing="dynamic"
+              appearance="outline"
+              class="input-box"
+            >
+              <mat-label for="contactNumber">Cell phone number</mat-label>
+              <input matInput type="text" formControlName="contactNumber" />
+              <mat-error>Please enter numbers only</mat-error>
+            </mat-form-field>
+          </section>
+        </section>
+      </form>
+    </section>
+    <section class="university-container">
+      <app-university-information [editDetailsForm]="applicationForm" [enableEdit]="true" [student]="student" [applicationGuid]="applicationGuid"></app-university-information>
+    </section>
+  </article>
+</mat-dialog-content>
+
+<mat-dialog-actions class="footer update-dialog-buttons" *ngIf="student">
+  <button
+    mat-flat-button
+    color="accent"
+    class="footer-button cancel-button"
+    (click)="onCancel()"
+  >
+    cancel
+  </button>
+
+  <button 
+    mat-flat-button 
+    color="primary" 
+    class="footer-button update-button"
+    [disabled]="applicationForm.pristine"
+    (click)="updateApplication()"
+  >
+    <span class="button-text-full">{{ButtonAction.SAVE_STUDENT_INFO}}</span>
+    <span class="button-text-short">{{ ButtonAction.SAVE }}</span>
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,60 @@
+<main class="candidatesMainContainer">
+  <h1>Renew students</h1>
+  <p>Select students to renew</p>
+
+  <article class="candidatesSection" *ngIf="getFormArray().length > 0">
+    <section class="table-container">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Bursar Full Name</th>
+            <th>Previous Year of Study</th>
+            <th>Year of Study</th>
+            <th>Degree</th>
+            <th>Intent to Pursue Honours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of getFormArray().controls; let index = index">
+            <td data-label="Bursar Full Name">
+              <mat-checkbox 
+                [formControl]="getConfirmSelectionControl(element)" 
+                (change)="updateFormValidity($event, getFormGroup(element))">
+              </mat-checkbox>
+              {{ getFormGroup(element).get('name')?.getRawValue() + ' ' + getFormGroup(element).get('surname')?.getRawValue() }}
+            </td>
+            <td data-label="Previous Year of Study">
+              {{ getFormGroup(element).get('prevYearOfStudy')?.getRawValue() }}
+            </td>
+            <td data-label="Year of Study" class = "year-of-study-container">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class = "year-of-study-field">
+                <mat-select 
+                  [formControl]="getSelectYearControl(element)" 
+                  (selectionChange)="updateFormValidity($event, getFormGroup(element))">
+                  <mat-option value="1">1<sup>st</sup> Year</mat-option>
+                  <mat-option value="2">2<sup>nd</sup> Year</mat-option>
+                  <mat-option value="3">3<sup>rd</sup> Year</mat-option>
+                  <mat-option value="4">4<sup>th</sup> Year</mat-option>
+                  <mat-option value="Honors">Honors</mat-option>
+                  <mat-option value="Masters">Masters</mat-option>
+                  <mat-option value="Doctorate">Doctorate</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error
+                *ngIf="getConfirmSelectionControl(element).valid && getFormGroup(element).get('yearOfStudy')?.hasError('required')"
+                class="matError">
+                *Year of study required
+              </mat-error>
+            </td>
+            <td data-label="Degree">
+            {{ getFormGroup(element).get('degreeName')?.getRawValue() || 'N/A' }}
+            </td>
+            <td data-label="Intent to Pursue Honours">
+              {{ getFormGroup(element).get('confirmHonors')?.getRawValue() }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+</main>

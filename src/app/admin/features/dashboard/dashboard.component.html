@@ -1,0 +1,54 @@
+<app-loader *ngIf="isLoading" ></app-loader>
+<main class="main-container" *ngIf="!(selectedUniversity$ | async)">
+  <section class="search-container">
+    <mat-form-field
+      class="search-box"
+      appearance="outline"
+      subscriptSizing="dynamic"
+      *ngIf="selectedDate"
+    >
+      <mat-label>Filter by year</mat-label>
+      <mat-select
+        [(ngModel)]="selectedDate"
+        (selectionChange)="filterActiveApplicationsByDate(selectedDate)"
+      >
+        <mat-option *ngFor="let date of dateOptions" [value]="date">{{
+          date
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+  <article class="universities" *ngIf="!isLoading">
+    <ng-container *ngFor="let university of universities$ | async" id="university-section">
+      <app-university-card
+        *ngIf="university.universityDetails"
+        [university]="university"
+        [year]="selectedDate"
+        (selectedUniversity)="selectUniversity(university)"
+        [viewType]="viewType"
+      ></app-university-card>
+    </ng-container>
+    <ng-container class="error-text-container" *ngIf="!universitiesPresent">
+      <app-error-message
+        [errorMessage]="noApplicationErrorMessage"
+      ></app-error-message>
+    </ng-container>
+  </article>
+</main>
+
+<ng-container *ngIf="selectedUniversity$ | async as selectedUniversity">
+  <app-main-dashboard
+  (deselectUniversity)="deselectUniversity()"
+  [universityApplications]="selectedUniversity"
+  [dateOptions]="dateOptions"
+  [selectedDate]="selectedDate"
+  (triggerRefresh)="triggerStateRefresh($event)"
+  [viewType]="viewType"
+  ></app-main-dashboard>
+</ng-container>
+
+  <section class="error-text-container" *ngIf="error$ | async as error">
+    <app-error-message
+      [errorMessage]="error.message"
+    ></app-error-message>
+  </section>

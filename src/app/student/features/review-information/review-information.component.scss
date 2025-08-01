@@ -1,0 +1,69 @@
+.information {
+  flex-wrap: nowrap;
+}
+
+.back-button {
+  margin-right: 0.5rem;
+}
+
+.personal-info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 35rem;
+}
+
+.personal-info-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-right: 1rem;
+}
+
+.personal-info-data-heading {
+  font-weight: bold;
+  font-size: smaller;
+  margin-bottom: 0;
+}
+
+.checkbox-form {
+  margin-top: 2rem;
+  .mat-checkbox-heading {
+    padding: 0;
+    margin: 0;
+    font-weight: 100;
+  }
+}
+
+.questionnaire-container {
+  width: 90%;
+}
+
+.invalidStudentErrorMessage {
+  color: var(--warn-color);
+  margin: 0 0.5rem;
+}
+
+.invalidStudentMatcardContainer {
+  margin: 0 2rem;
+}
+
+.studentUploadSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.errorMessage{
+  padding:0.5rem 0.2rem;
+}
+@media screen and (max-width: 768px) {
+  .review-info{
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    text-wrap: wrap;
+    width:auto;
+    font-size: 0.7rem;
+  }
+}

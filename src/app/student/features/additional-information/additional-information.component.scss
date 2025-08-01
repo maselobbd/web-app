@@ -1,0 +1,240 @@
+.additionalInfoFormFields {
+  border-radius: 0.3rem;
+  background-color: white;
+  margin: 0;
+}
+
+.personalInfoAddress,
+.personalInfoUniversityInformation {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.personalInfoAddressInputFields {
+  flex: 1 1 45%;
+}
+
+.personalInfoContactNumber {
+  display: flex;
+}
+
+.helpMessage {
+  font-size: 0.8rem;
+  color: var(--warn-color);
+  margin: 0;
+}
+.other-input {
+  margin-top: 0.5rem;
+}
+.countryCode {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.contactNumber {
+  flex: 5;
+  margin-right: 0;
+}
+
+.personalInfoUniversityInformation {
+  display: flex;
+}
+
+.additionalInformationCheckBoxes {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    margin: 0;
+  }
+}
+
+.firstName,
+.title,
+.addressLine1,
+.suburbDistrict,
+.degree,
+.passport,
+.gender,
+.yearOfStudy {
+  margin-right: 1rem;
+}
+
+mat-checkbox.addtionalInformationCheckBox {
+  margin-left: -0.7rem;
+}
+
+.termsAndConditionsHeading {
+  margin: 1rem 0 0 0;
+}
+
+.documentationHeading {
+  margin-bottom: 0;
+}
+
+.personalInfoGenderRace {
+  margin-top: 0.5rem;
+  display: flex;
+}
+
+.passport,
+.gender,
+.title {
+  flex: 1;
+}
+
+.faculty,
+.title,
+.addressLine1,
+.suburbDistrict,
+.degree,
+.gradeAverage {
+  margin-bottom: 0.5rem;
+}
+
+.personalInfoTitleIdNumber {
+  display: flex;
+}
+
+.citizenshipHeading {
+  margin-bottom: 0;
+}
+
+.additionalInfoUploadFilesSection {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+app-upload-files {
+  flex: 1 1 35%;
+  padding: 0.5rem 0;
+  margin: 0;
+}
+
+.postalCode,
+.IdNumber {
+  width: 49.2%;
+}
+
+.additionalInfoMatSuffix {
+  margin-right: 0.5rem;
+}
+
+.contactNumberInputErrorSet,
+.titleErrorFieldSet {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.duration-honors,
+.inputAndErrorFieldSet {
+  border: none;
+  display: flex;
+  flex: 1 1 45%;
+  flex-direction: column;
+  padding: 0;
+}
+
+.matricCertificate,
+.proofOfIdentification {
+  padding-right: 1rem;
+}
+
+.TsCs {
+  color: #282728;
+}
+
+.citizenShipControls {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    margin: 0;
+  }
+}
+
+.personalInfoPassportDOB {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.duration-honors {
+  display: flex;
+  flex-direction: column;
+  max-width: 49.35%;
+  margin-right: 0;
+}
+
+@media (max-width: 760px) {
+  app-upload-files {
+    flex: 1 1 100%;
+  }
+
+  .firstName {
+    padding: 0;
+  }
+
+  .firstName,
+  .title,
+  .suburbDistrict,
+  .addressLine1,
+  .cityTown,
+  .degree,
+  .gender,
+  .countryCode,
+  .yearOfStudy,
+  .passport {
+    margin-right: 0;
+  }
+
+  .matricCertificate,
+  .proofOfIdentification {
+    padding-right: 0;
+  }
+
+  .titleOther,
+  .IdNumber {
+    width: 100%;
+  }
+
+  .personalInfoContactNumber,
+  .personalInfoGenderRace,
+  .personalInfoTitleIdNumber {
+    flex-wrap: wrap;
+  }
+
+  .additionalInfoFormFields {
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .cityTown,
+  .yearOfStudy,
+  .countryCode,
+  .complexFlat,
+  .gender,
+  .firstName,
+  .lastName,
+  .passport {
+    margin-bottom: 0.5rem;
+  }
+
+  .duration-honors {
+    max-width: 100%;
+  }
+}
+
+.identityHeading {
+  margin: 0.5rem 0 0 0;
+}
+
+.matError {
+  margin: 0;
+}
+
+.titleOther {
+  display: flex;
+  flex-direction: column;
+}

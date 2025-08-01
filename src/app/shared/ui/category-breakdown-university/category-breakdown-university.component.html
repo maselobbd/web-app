@@ -1,0 +1,16 @@
+<section> 
+  <h2 class="heading" *ngIf="reportsCategoryBreakdownUniversity || reportsStudentsFundedPerUniversity">Per University:</h2>
+  <mat-divider/>
+</section>
+<app-reports-fund-allocation-per-university
+  *ngIf="reportsCategoryBreakdownUniversity"
+  [reportsCategoryBreakdownUniversity]="reportsCategoryBreakdownUniversity ? reportsCategoryBreakdownUniversity : defaultReportsCategoryBreakdownUniversity"
+></app-reports-fund-allocation-per-university>
+<app-reports-students-funded-per-university
+  *ngIf="reportsStudentsFundedPerUniversity.activeStudents.length > 0"
+  [reportsStudentsFundedPerUniversity]="reportsStudentsFundedPerUniversity ? reportsStudentsFundedPerUniversity : []"
+></app-reports-students-funded-per-university>
+<app-reports-races-funded-per-university
+  *ngIf="reportsRacesFundedPerUniversity.activeRaces.length > 0"
+  [reportsRacesFundedPerUniversity]="reportsRacesFundedPerUniversity ? reportsRacesFundedPerUniversity : []"
+></app-reports-races-funded-per-university>

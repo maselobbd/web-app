@@ -1,0 +1,22 @@
+<mat-card class="invitee-info-card" appearance="outlined">
+  <mat-card-header class="event-card-header">
+    <section class="invitees-header">
+      <mat-card-title>Event invitees</mat-card-title>
+      <button mat-flat-button color="accent" *ngIf="!isPreview" (click)="openAddInviteesDialog()">
+        {{ buttonActions.ADD_INVITEES }}
+      </button>
+    </section>
+    <section class="filter-section">
+      <p><strong>{{ inviteeNumbers }}</strong> invites in total</p>
+      <span class="material-symbols-outlined" alt="filter-invitees" (click)="openDialog()">filter_alt</span>
+    </section>
+  </mat-card-header>
+  <mat-divider class="divider"></mat-divider>
+  <mat-card-content>
+    <app-consolidated-university-bursary-details
+      [details]="details"
+      [applicationArrayLength]="inviteeNumbers"
+      [isEventPage]="true"
+    ></app-consolidated-university-bursary-details>
+  </mat-card-content>
+</mat-card>

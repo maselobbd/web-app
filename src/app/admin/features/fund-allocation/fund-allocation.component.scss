@@ -1,0 +1,60 @@
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+}
+.footer {
+  margin-top: auto;
+  padding: 1rem 2rem;
+}
+.mat-divider {
+  margin-bottom: 1rem;
+  background-color: var(--primary-color);
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.spinner,
+.fundAllocationsContainer {
+  padding: 0.8rem 5rem 8.5rem 9rem;
+}
+
+.fund-allocations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+
+  flex-wrap: wrap;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.moveFundsButton {
+  color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color);
+}
+
+@media screen and (max-width: 900px) {
+  .fundAllocationsContainer {
+    padding: 0.8rem 2rem 0.5rem 6rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .fundAllocationsContainer {
+    padding: 0.8rem 1rem 0.5rem 1rem;
+  }
+
+  ::ng-deep .fund-allocations-header {
+    margin-left: 2rem;
+  }
+}

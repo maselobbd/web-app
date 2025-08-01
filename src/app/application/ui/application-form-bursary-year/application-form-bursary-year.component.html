@@ -1,0 +1,46 @@
+<article class="form-container" *ngIf="enableYearSelection">
+  <section class="title-bursary-year">
+    <h1>Select Year of Bursary</h1>
+  </section>
+  <section class="bursary-year-form">
+    <p>
+      Select the year of study you would like students to receive funding
+      for.<br />
+      If you would like to apply for students over multiple years, you will need
+      to do so in seperate application forms.
+    </p>
+
+    <section class="year-of-bursary">
+      <form [formGroup]="applicationFormyear">
+        <mat-form-field
+          subscriptSizing="dynamic"
+          appearance="outline"
+          class="year-of-study-field"
+        >
+          <mat-label for="year">Select year of study</mat-label>
+          <mat-select formControlName="year">
+            <mat-option
+              *ngFor="let year of years"
+              [value]="year"
+              (click)="yearSelected.emit(year)"
+              >{{ year }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-error
+          class="error-message"
+          *ngIf="
+            applicationFormyear.get('year')?.invalid &&
+            (applicationFormyear.get('year')?.dirty ||
+              applicationFormyear.get('year')?.touched)
+          "
+        >
+          Year of study is required.
+        </mat-error>
+      </form>
+    </section>
+  </section>
+</article>
+<mat-card class="error-text-container" *ngIf="!enableYearSelection">
+  <app-error-message [errorMessage]="errorMessage"></app-error-message>
+</mat-card>

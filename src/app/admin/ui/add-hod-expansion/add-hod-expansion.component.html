@@ -1,0 +1,33 @@
+<mat-expansion-panel (opened)="panelOpenState = true"
+(closed)="panelOpenState = false" [expanded]="showExpansion()" [hideToggle]="showExpansion()" >
+    <mat-expansion-panel-header>
+      <section  class="panel-header">
+        <mat-panel-title class="panel-title">
+        {{role===rolesEnum.dean ? 'Departments' : universityName}}
+        </mat-panel-title>
+        <mat-slide-toggle class="panel-toogle" [checked]="isUniversityEnabled" *ngIf="role!==rolesEnum.dean &&hasDepartments && tabLabel !== tabLabelsEnum.STUDENT" (change)="toogle($event)" color="primary" #toggle></mat-slide-toggle>
+      </section>
+    </mat-expansion-panel-header>
+    <ng-container *ngIf="panelOpenState">
+       
+        <section class="top-name-section" *ngIf="panelOpenState && tabLabel !==tabLabelsEnum.STUDENT && isUniversityEnabled">
+          <button mat-flat-button color="accent" class="add-profile" *ngIf="hasDepartments" (click)="addProfile()">
+            + Add Profile
+          </button>
+          <button mat-flat-button color="primary" (click)="addDepartment()" *ngIf="role === rolesEnum.admin">
+            + Add Department
+          </button>
+        </section>
+        <section class="department" *ngFor="let department of university.departments">
+          <app-department
+            [department]="department"
+            [university]="university"
+            [universityName]="universityName"
+            [tabLabel]="tabLabel"
+            [role]="role"
+            [rank]="rank"
+          ></app-department>
+        </section>
+      </ng-container>
+      
+</mat-expansion-panel>
