@@ -30,7 +30,7 @@ jobs:
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                DATE=$(date +%Y.%m.%d.%H)
+                DATE=$(date +%y.%m.%d.%H)
                 if ! gh release view "Release-$DATE" > /dev/null; then
                   gh release create "Release-$DATE" --repo ${{ vars.REPO }}
                 fi
