@@ -26,9 +26,8 @@ jobs:
         id: fa
         with:
           app-name: 'web-app'
-          slot-name: 'Production'
           package: ./artifacts/api_release.zip
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7039F1C4CA9740919AFEA75F6281B308 }}
+          publish-profile: ${{ secrets.TESTER_PUBLISH_PROFILE }}
 
       - name: Create release and upload API release asset
         id: create_release
