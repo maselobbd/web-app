@@ -17,15 +17,15 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Continuous Integration Flyway Migration
-              run: >-
-                  docker run --rm
-                  --volume ${{ github.workspace }}/db/migrations:/flyway/sql:ro
-                  redgate/flyway
-                  -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
-                  -url="${{ secrets.DB_URL_QA }}"
-                  -user="${{ secrets.DB_USERNAME_QA }}"
-                  -password="${{ secrets.DB_PASSWORD_QA }}" migrate
+            # - name: Continuous Integration Flyway Migration
+            #   run: >-
+            #       docker run --rm
+            #       --volume ${{ github.workspace }}/db/migrations:/flyway/sql:ro
+            #       redgate/flyway
+            #       -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
+            #       -url="${{ secrets.DB_URL_QA }}"
+            #       -user="${{ secrets.DB_USERNAME_QA }}"
+            #       -password="${{ secrets.DB_PASSWORD_QA }}" migrate
 
             - name: Zip migration scripts
               run: zip db_migrations.zip db/migrations/ -r
