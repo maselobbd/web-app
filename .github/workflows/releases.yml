@@ -1,0 +1,75 @@
+name: Deploy Production SWA
+
+on:
+  workflow_dispatch:
+    inputs:
+      apiRunId:
+        description: 'Enter workflow run id:'
+        required: true
+      swaRunId:
+        description: 'Enter workflow run id:'
+        required: true
+
+
+jobs:
+  create_api_release:
+    runs-on: ubuntu-latest
+    name: Download api artifact and deploy to azure
+    steps:
+      - name: Download api artifact
+        id: daa
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-API
+          path: artifacts/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.inputs.apiRunId }}
+  
+      - name: Create release and upload API release asset
+        id: create_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +%y.%m.%d.%H)
+          if ! gh release view "Release-$DATE" > /dev/null; then
+            gh release create "Release-$DATE" --repo ${{ vars.REPO }}
+          fi
+          gh release upload "Release-$DATE" artifacts/api_release.zip --repo ${{ vars.REPO }}
+
+  create_swa_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download SWA artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-SWA
+          path: artifacts/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.inputs.swaRunId }}
+
+      - name: Create release and upload SWA release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +%Y.%m.%d.%H)
+          if ! gh release view "Release-$DATE" --repo ${{ vars.REPO }} > /dev/null 2>&1; then
+            gh release create "Release-$DATE" --repo ${{ vars.REPO }}
+          fi
+          gh release upload "Release-$DATE" artifacts/swa_release.zip --repo ${{ vars.REPO }}
+
+  create_db_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Zip migration scripts
+        run: zip db_migrations.zip db/migrations/ -r
+
+      - name: Create release and upload DB release asset
+        id: create_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +%y.%m.%d.%H)
+          if ! gh release view "Release-$DATE" > /dev/null; then
+            gh release create "Release-$DATE" --repo ${{ vars.REPO }}
+          fi
+          gh release upload "Release-$DATE" db_migrations.zip --repo ${{ vars.REPO }}
