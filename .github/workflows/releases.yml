@@ -10,11 +10,26 @@ on:
         description: 'Enter **SWA build workflow** run ID: '
         required: true
 
-
 jobs:
+  prepare_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set release name
+        run: |
+          DATE=$(date +%Y.%m.%d.%H)
+          RELEASE_NAME=Release-$DATE
+          echo "RELEASE_NAME=Release-$DATE"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$RELEASE_NAME" --repo ${{ vars.REPO }}
+
   create_api_release:
     runs-on: ubuntu-latest
-    name: Download api artifact and deploy to azure
+    name: Create api release
+    needs: prepare_release
     steps:
       - run: echo "This workflow run ID is ${{ github.event.inputs.apiRunId }}"
       - name: Download api artifact
@@ -26,20 +41,15 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.inputs.apiRunId }}
   
-      - name: Create release and upload API release asset
-        id: create_release
+      - name: Upload API release asset
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          DATE=$(date +%y.%m.%d.%H)
-          if ! gh release view "Release-$DATE" > /dev/null; then
-            gh release create "Release-$DATE" --repo ${{ vars.REPO }}
-          fi
-          gh release upload "Release-$DATE" artifacts/api_release.zip --repo ${{ vars.REPO }}
+        run: gh upload "$RELEASE_NAME" artifacts/api_release.zip --repo ${{ vars.REPO }}
 
   create_swa_release:
     runs-on: ubuntu-latest
-    needs: create_api_release
+    needs: Create swa release
+    needs: prepare_release
     steps:
       - run: echo "This workflow run ID is ${{ github.event.inputs.swaRunId }}"
       - name: Download SWA artifact
@@ -50,19 +60,15 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.inputs.swaRunId }}
 
-      - name: Create release and upload SWA release asset
+      - name: Upload SWA release asset
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          DATE=$(date +%Y.%m.%d.%H)
-          if ! gh release view "Release-$DATE" --repo ${{ vars.REPO }} > /dev/null 2>&1; then
-            gh release create "Release-$DATE" --repo ${{ vars.REPO }}
-          fi
-          gh release upload "Release-$DATE" artifacts/swa_release.zip --repo ${{ vars.REPO }}
+        run: gh release upload "$RELEASE_NAME" artifacts/swa_release.zip --repo ${{ vars.REPO }}
 
   create_db_release:
     runs-on: ubuntu-latest
-    needs: create_swa_release
+    needs: Create db release
+    needs: prepare_release
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,13 +76,8 @@ jobs:
       - name: Zip migration scripts
         run: zip db_migrations.zip db/migrations/ -r
 
-      - name: Create release and upload DB release asset
+      - name: Upload DB release asset
         id: create_release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          DATE=$(date +%y.%m.%d.%H)
-          if ! gh release view "Release-$DATE" > /dev/null; then
-            gh release create "Release-$DATE" --repo ${{ vars.REPO }}
-          fi
-          gh release upload "Release-$DATE" db_migrations.zip --repo ${{ vars.REPO }}
+        run: gh release upload "$RELEASE_NAME" db_migrations.zip --repo ${{ vars.REPO }}
