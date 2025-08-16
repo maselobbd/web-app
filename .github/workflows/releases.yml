@@ -24,7 +24,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "$RELEASE_NAME" --repo ${{ vars.REPO }}
+           gh release create "$RELEASE_NAME" \
+            --repo ${{ vars.REPO }} \
+            --title "Release $RELEASE_NAME" \
+            --notes "Automated release for version $RELEASE_NAME"
 
   create_api_release:
     runs-on: ubuntu-latest
