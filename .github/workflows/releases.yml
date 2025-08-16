@@ -48,8 +48,9 @@ jobs:
 
   create_swa_release:
     runs-on: ubuntu-latest
-    needs: Create swa release
-    needs: prepare_release
+    needs: 
+      - Create swa release
+      - prepare_release
     steps:
       - run: echo "This workflow run ID is ${{ github.event.inputs.swaRunId }}"
       - name: Download SWA artifact
@@ -67,8 +68,9 @@ jobs:
 
   create_db_release:
     runs-on: ubuntu-latest
-    needs: Create db release
-    needs: prepare_release
+    needs: 
+      - Create db release
+      - prepare_release
     steps:
       - name: Checkout
         uses: actions/checkout@v4
