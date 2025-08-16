@@ -14,20 +14,13 @@ jobs:
   prepare_release:
     runs-on: ubuntu-latest
     steps:
-      - name: Set release name
-        run: |
-          DATE=$(date +%Y.%m.%d.%H)
-          RELEASE_NAME=Release-$DATE
-          echo "RELEASE_NAME=Release-$DATE"
-
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-           gh release create "$RELEASE_NAME" \
-            --repo ${{ vars.REPO }} \
-            --title "Release $RELEASE_NAME" \
-            --notes "Automated release for version $RELEASE_NAME"
+          DATE=$(date +%Y.%m.%d.%H)
+          RELEASE_NAME=Release-$DATE
+          gh release create "$RELEASE_NAME" --repo ${{ vars.REPO }}
 
   create_api_release:
     runs-on: ubuntu-latest
@@ -47,7 +40,10 @@ jobs:
       - name: Upload API release asset
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh upload "$RELEASE_NAME" artifacts/api_release.zip --repo ${{ vars.REPO }}
+        run: |
+          DATE=$(date +%Y.%m.%d.%H)
+          RELEASE_NAME=Release-$DATE
+          gh upload "$RELEASE_NAME" artifacts/api_release.zip --repo ${{ vars.REPO }}
 
   create_swa_release:
     runs-on: ubuntu-latest
@@ -67,7 +63,10 @@ jobs:
       - name: Upload SWA release asset
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "$RELEASE_NAME" artifacts/swa_release.zip --repo ${{ vars.REPO }}
+        run: |
+          DATE=$(date +%Y.%m.%d.%H)
+          RELEASE_NAME=Release-$DATE
+          gh release upload "$RELEASE_NAME" artifacts/swa_release.zip --repo ${{ vars.REPO }}
 
   create_db_release:
     runs-on: ubuntu-latest
@@ -85,4 +84,7 @@ jobs:
         id: create_release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "$RELEASE_NAME" db_migrations.zip --repo ${{ vars.REPO }}
+        run: |
+          DATE=$(date +%Y.%m.%d.%H)
+          RELEASE_NAME=Release-$DATE
+          gh release upload "$RELEASE_NAME" db_migrations.zip --repo ${{ vars.REPO }}
