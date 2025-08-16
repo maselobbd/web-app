@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Download api artifact and deploy to azure
     steps:
-      - run: echo "This workflow run ID is ${{ github.event.inputs.apiRunId }}
+      - run: echo "This workflow run ID is ${{ github.event.inputs.apiRunId }}"
       - name: Download api artifact
         id: daa
         uses: actions/download-artifact@v4
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: create_api_release
     steps:
-      - run: echo "This workflow run ID is ${{ github.event.inputs.swaRunId }}
+      - run: echo "This workflow run ID is ${{ github.event.inputs.swaRunId }}"
       - name: Download SWA artifact
         uses: actions/download-artifact@v4
         with:
