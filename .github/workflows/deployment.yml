@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       apiRunId:
-        description: 'Enter workflow run id:'
+        description: 'Enter **API build workflow** run ID'
         required: true
       swaRunId:
-        description: 'Enter workflow run id:'
+        description: 'Enter **SWA build workflow** run ID: '
         required: true
 
 
