@@ -1,14 +1,10 @@
-name: Releases
+name: Create and upload API, SWA and DB releases
 
 on:
-  workflow_dispatch:
-    inputs:
-      apiRunId:
-        description: 'Enter **API build workflow** run ID'
-        required: true
-      swaRunId:
-        description: 'Enter **SWA build workflow** run ID: '
-        required: true
+  workflow_run:
+    workflows: [Production deployment]
+    types: [completed]
+    branches: [main]
 
 jobs:
   prepare_release:
@@ -24,10 +20,9 @@ jobs:
 
   create_api_release:
     runs-on: ubuntu-latest
-    name: Create api release
+    name: Create and upload API release asset
     needs: prepare_release
     steps:
-      - run: echo "This workflow run ID is ${{ github.event.inputs.apiRunId }}"
       - name: Download api artifact
         id: daa
         uses: actions/download-artifact@v4
@@ -47,11 +42,11 @@ jobs:
 
   create_swa_release:
     runs-on: ubuntu-latest
+    name: Create and upload SWA release asset
     needs: 
       - create_api_release
       - prepare_release
     steps:
-      - run: echo "This workflow run ID is ${{ github.event.inputs.swaRunId }}"
       - name: Download SWA artifact
         uses: actions/download-artifact@v4
         with:
@@ -70,6 +65,7 @@ jobs:
 
   create_db_release:
     runs-on: ubuntu-latest
+    name: Create and upload DB release asset
     needs: 
       - create_swa_release
       - prepare_release
