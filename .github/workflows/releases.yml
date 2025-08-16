@@ -43,7 +43,7 @@ jobs:
         run: |
           DATE=$(date +%Y.%m.%d.%H)
           RELEASE_NAME=Release-$DATE
-          gh upload "$RELEASE_NAME" artifacts/api_release.zip --repo ${{ vars.REPO }}
+          gh release upload "$RELEASE_NAME" artifacts/api_release.zip --repo ${{ vars.REPO }}
 
   create_swa_release:
     runs-on: ubuntu-latest
