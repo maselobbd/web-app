@@ -1,10 +1,14 @@
 name: Create and upload API, SWA and DB releases
 
 on:
-  workflow_run:
-    workflows: [Production deployment]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      apiRunId:
+        description: 'Enter API build workflow run ID: '
+        required: true
+      swaRunId:
+        description: 'Enter SWA build workflow run ID: '
+        required: true
 
 jobs:
   prepare_release:
@@ -18,7 +22,7 @@ jobs:
           RELEASE_NAME=Release-$DATE
           gh release create "$RELEASE_NAME" --repo ${{ vars.REPO }}
 
-  create_api_release:
+  upload_api_release_asset:
     runs-on: ubuntu-latest
     name: Create and upload API release asset
     needs: prepare_release
@@ -40,11 +44,11 @@ jobs:
           RELEASE_NAME=Release-$DATE
           gh release upload "$RELEASE_NAME" artifacts/api_release.zip --repo ${{ vars.REPO }}
 
-  create_swa_release:
+  upload_swa_release_asset:
     runs-on: ubuntu-latest
     name: Create and upload SWA release asset
     needs: 
-      - create_api_release
+      - upload_api_release_asset
       - prepare_release
     steps:
       - name: Download SWA artifact
@@ -63,11 +67,11 @@ jobs:
           RELEASE_NAME=Release-$DATE
           gh release upload "$RELEASE_NAME" artifacts/swa_release.zip --repo ${{ vars.REPO }}
 
-  create_db_release:
+  upload_db_release_asset:
     runs-on: ubuntu-latest
     name: Create and upload DB release asset
     needs: 
-      - create_swa_release
+      - upload_swa_release_asset
       - prepare_release
     steps:
       - name: Checkout
