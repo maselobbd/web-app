@@ -48,7 +48,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Create and upload SWA release asset
     needs: 
-      - upload_api_release_asset
       - prepare_release
     steps:
       - name: Download SWA artifact
@@ -71,7 +70,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Create and upload DB release asset
     needs: 
-      - upload_swa_release_asset
       - prepare_release
     steps:
       - name: Checkout
